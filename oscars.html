@@ -123,22 +123,15 @@
       gap: 6px;
       overflow-x: auto;
       padding-bottom: 4px;
-      /* hide scrollbar but keep scroll */
       scrollbar-width: none;
     }
     .nominee-track::-webkit-scrollbar { display: none; }
 
-    /* divider between ranked and not-seen */
-    .not-seen-divider {
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-      margin: 0 4px;
-    }
-    .not-seen-divider-line {
-      width: 1px;
-      height: 60px;
-      background: var(--border);
+    .nominee-track.picture-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 140px);
+      grid-template-rows: repeat(2, auto);
+      overflow-x: visible;
     }
 
     /* ── Nominee cards ── */
@@ -326,24 +319,17 @@
       row.appendChild(label);
 
       const track = document.createElement("div");
-      track.className = "nominee-track";
+      track.className = "nominee-track" + (cat === "Best Picture" ? " picture-grid" : "");
 
       // Ranked cards
       ranked.forEach(n => {
         track.appendChild(buildCard(n, false));
       });
 
-      // Divider + not-seen cards
-      if (unseen.length > 0) {
-        const divider = document.createElement("div");
-        divider.className = "not-seen-divider";
-        divider.innerHTML = `<div class="not-seen-divider-line"></div>`;
-        track.appendChild(divider);
-
-        unseen.forEach(n => {
-          track.appendChild(buildCard(n, true));
-        });
-      }
+      // Not-seen cards (no divider, greying out is sufficient)
+      unseen.forEach(n => {
+        track.appendChild(buildCard(n, true));
+      });
 
       row.appendChild(track);
       container.appendChild(row);
