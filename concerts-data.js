@@ -7,7 +7,7 @@ const CONCERTS = [
   { artist: "Lady Gaga",       venue: "The O2",               city: "London", date: "2025-10-02", openers: [] },
   { artist: "BLACKPINK",       venue: "Wembley Stadium",      city: "London", date: "2025-08-15", openers: [] },
   { artist: "Camila Cabello",  venue: "Eventim Apollo",       city: "London", date: "2025-07-08", openers: [] },
-  { festival: "BST Hyde Park", venue: "Hyde Park",            city: "London", date: "2025-06-27", headliners: ["Olivia Rodrigo"], support: ["Girl in Red", "The Last Dinner Party", "Between Friends"] },
+  { festival: "BST Hyde Park", venue: "Hyde Park",            city: "London", date: "2025-06-27", headliners: ["Olivia Rodrigo"], support: ["girl in red", "The Last Dinner Party", "Between Friends"], guests: ["Ed Sheeran"] },
   { artist: "Jade",            venue: "Roundhouse",           city: "London", date: "2025-10-22", openers: ["Say Now", "DJ Adam Theo"] },
   { artist: "Jade",            venue: "Roundhouse",           city: "London", date: "2025-10-19", openers: ["DJ Adam Theo"] },
   { artist: "Nemo",            venue: "O2 Academy Islington", city: "London", date: "2025-11-13", openers: ["Punchbag"] },
