@@ -260,12 +260,13 @@
     }
     .progress-year-total span { color: var(--text); }
 
+    .progress-category-wrap { margin-bottom: 9px; }
+
     .progress-category-row {
       display: grid;
-      grid-template-columns: 160px 1fr 36px;
+      grid-template-columns: 160px 1fr 36px 20px;
       align-items: center;
       gap: 12px;
-      margin-bottom: 9px;
     }
 
     .progress-cat-label {
@@ -296,6 +297,44 @@
       color: var(--muted);
       text-align: right;
       white-space: nowrap;
+    }
+
+    .progress-chevron {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--faint);
+      font-size: 0.65rem;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.12s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .progress-chevron:hover { color: var(--muted); }
+    .progress-chevron.open { transform: rotate(180deg); color: var(--muted); }
+
+    .progress-film-list {
+      display: none;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 8px 0 4px 172px; /* align with bar */
+    }
+    .progress-film-list.open { display: flex; }
+
+    .progress-film-chip {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.03em;
+      padding: 3px 9px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+    }
+    .progress-film-chip.unseen {
+      opacity: 0.4;
     }
 
     /* ── Floating nav ── */
@@ -531,6 +570,9 @@
         const total = nominees.length;
         const pct   = total > 0 ? (seen / total) * 100 : 0;
 
+        const wrap = document.createElement("div");
+        wrap.className = "progress-category-wrap";
+
         const row = document.createElement("div");
         row.className = "progress-category-row";
         row.innerHTML = `
@@ -540,7 +582,34 @@
           </div>
           <div class="progress-cat-count">${seen}/${total}</div>
         `;
-        yearBlock.appendChild(row);
+
+        const chevron = document.createElement("button");
+        chevron.className = "progress-chevron";
+        chevron.innerHTML = "▾";
+        row.appendChild(chevron);
+
+        // Film list (hidden by default)
+        const filmList = document.createElement("div");
+        filmList.className = "progress-film-list";
+
+        // Seen films first, then unseen
+        const seenNominees   = nominees.filter(n => !n.notSeen);
+        const unseenNominees = nominees.filter(n =>  n.notSeen);
+        [...seenNominees, ...unseenNominees].forEach(n => {
+          const chip = document.createElement("div");
+          chip.className = "progress-film-chip" + (n.notSeen ? " unseen" : "");
+          chip.textContent = n.name ? `${n.name} · ${n.film}` : n.film;
+          filmList.appendChild(chip);
+        });
+
+        chevron.addEventListener("click", () => {
+          const open = filmList.classList.toggle("open");
+          chevron.classList.toggle("open", open);
+        });
+
+        wrap.appendChild(row);
+        wrap.appendChild(filmList);
+        yearBlock.appendChild(wrap);
       }
 
       container.appendChild(yearBlock);
