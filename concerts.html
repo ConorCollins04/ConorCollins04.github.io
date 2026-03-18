@@ -313,8 +313,11 @@
   // ── Render ────────────────────────────────────────────────────────────────
 
   // entry: { show, role: "headliner"|"opener", headliner?: string }
+  // show is either a concert { artist, venue, city, date, openers }
+  //                 or a festival { festival, venue, city, date, headliners, support }
   function buildRow(entry) {
     const { show, role = "headliner", headliner } = entry;
+    const isFestival = !!show.festival;
 
     const row = document.createElement("div");
     row.className = "concert-row";
@@ -328,23 +331,34 @@
     if (currentView === "year") {
       dateEl.textContent = formatShortDate(show.date);
 
-      const artist = document.createElement("div");
-      artist.className = "concert-artist";
-      artist.textContent = show.artist;
-      main.appendChild(artist);
+      const primaryEl = document.createElement("div");
+      primaryEl.className = "concert-artist";
+      primaryEl.textContent = isFestival ? show.festival : show.artist;
+      main.appendChild(primaryEl);
 
       const venue = document.createElement("div");
       venue.className = "concert-secondary";
       venue.textContent = show.venue + (show.city ? ` · ${show.city}` : "");
       main.appendChild(venue);
 
+      // w/ line
+      const allArtists = isFestival
+        ? [...(show.headliners || []), ...(show.support || [])]
+        : (show.openers || []);
+      if (allArtists.length > 0) {
+        const op = document.createElement("div");
+        op.className = "concert-openers";
+        op.innerHTML = `<span class="opener-label">w/</span>${allArtists.join(", ")}`;
+        main.appendChild(op);
+      }
+
     } else if (currentView === "artist") {
       dateEl.textContent = formatDate(show.date);
 
-      const venue = document.createElement("div");
-      venue.className = "concert-artist";
-      venue.textContent = show.venue;
-      main.appendChild(venue);
+      const primaryEl = document.createElement("div");
+      primaryEl.className = "concert-artist";
+      primaryEl.textContent = isFestival ? show.festival : show.venue;
+      main.appendChild(primaryEl);
 
       if (show.city) {
         const city = document.createElement("div");
@@ -356,24 +370,28 @@
       if (role === "opener") {
         const roleEl = document.createElement("div");
         roleEl.className = "concert-role";
-        roleEl.textContent = `opened for ${headliner}`;
+        roleEl.textContent = isFestival ? `support at ${show.festival}` : `opened for ${headliner}`;
         main.appendChild(roleEl);
       }
 
     } else {
+      // venue view
       dateEl.textContent = formatDate(show.date);
 
-      const artist = document.createElement("div");
-      artist.className = "concert-artist";
-      artist.textContent = show.artist;
-      main.appendChild(artist);
-    }
+      const primaryEl = document.createElement("div");
+      primaryEl.className = "concert-artist";
+      primaryEl.textContent = isFestival ? show.festival : show.artist;
+      main.appendChild(primaryEl);
 
-    if (role === "headliner" && show.openers && show.openers.length > 0) {
-      const op = document.createElement("div");
-      op.className = "concert-openers";
-      op.innerHTML = `<span class="opener-label">w/</span>${show.openers.join(", ")}`;
-      main.appendChild(op);
+      const allArtists = isFestival
+        ? [...(show.headliners || []), ...(show.support || [])]
+        : (show.openers || []);
+      if (allArtists.length > 0) {
+        const op = document.createElement("div");
+        op.className = "concert-openers";
+        op.innerHTML = `<span class="opener-label">w/</span>${allArtists.join(", ")}`;
+        main.appendChild(op);
+      }
     }
 
     row.appendChild(dateEl);
@@ -438,9 +456,18 @@
         byArtist.get(name).push(entry);
       };
       for (const show of CONCERTS) {
-        addEntry(show.artist, { show, role: "headliner" });
-        for (const opener of (show.openers || [])) {
-          addEntry(opener, { show, role: "opener", headliner: show.artist });
+        if (show.festival) {
+          for (const artist of (show.headliners || [])) {
+            addEntry(artist, { show, role: "headliner" });
+          }
+          for (const artist of (show.support || [])) {
+            addEntry(artist, { show, role: "opener" });
+          }
+        } else {
+          addEntry(show.artist, { show, role: "headliner" });
+          for (const opener of (show.openers || [])) {
+            addEntry(opener, { show, role: "opener", headliner: show.artist });
+          }
         }
       }
 
