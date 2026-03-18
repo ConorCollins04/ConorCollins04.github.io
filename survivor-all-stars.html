@@ -336,9 +336,13 @@
     }
     .remove-btn:hover { color: var(--text); }
 
-    .reset-btn {
+    .cast-footer {
       margin-top: auto;
       padding-top: 16px;
+      display: flex;
+      gap: 16px;
+    }
+    .reset-btn {
       font-family: var(--mono);
       font-size: 0.6rem;
       letter-spacing: 0.08em;
@@ -534,7 +538,10 @@
       <div class="cast-section-label">Men</div>
       <div class="cast-slots" id="slots-m"></div>
     </div>
-    <button class="reset-btn" id="reset-btn">↺ clear all</button>
+    <div class="cast-footer">
+      <button class="reset-btn" id="reset-btn">↺ clear all</button>
+      <button class="reset-btn" id="randomize-cast-btn">⚄ randomise</button>
+    </div>
     <button class="continue-btn" id="continue-btn" disabled>Draft Tribes →</button>
   </div>
 </div>
@@ -544,10 +551,10 @@
     <div class="tribes-header">
       <div class="tribes-header-left">
         <h1>Tribe Draft</h1>
-        <p class="pool-subtitle" id="tribes-subtitle">Drag castaways into their tribes — or randomize</p>
+        <p class="pool-subtitle" id="tribes-subtitle">Drag castaways into their tribes (or randomise)</p>
       </div>
       <div class="tribes-header-actions">
-        <button class="action-btn" id="randomize-btn">↺ randomize</button>
+        <button class="action-btn" id="randomize-btn">↺ randomise</button>
         <button class="action-btn" id="back-cast-btn">← back to cast</button>
       </div>
     </div>
@@ -891,6 +898,24 @@ function renderPanel() {
 
 document.getElementById("reset-btn").addEventListener("click", () => {
   castW.length = 0; castM.length = 0; renderPool(); renderPanel();
+});
+
+document.getElementById("randomize-cast-btn").addEventListener("click", () => {
+  const shuffle = arr => {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
+  const allWomen = [], allMen = [];
+  SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
+    (p.gender === "f" ? allWomen : allMen).push(p.name);
+  })));
+  castW.length = 0; castM.length = 0;
+  shuffle(allWomen).slice(0, MAX).forEach(n => castW.push(n));
+  shuffle(allMen).slice(0, MAX).forEach(n => castM.push(n));
+  renderPool(); renderPanel();
 });
 
 // ─── Tribe draft ────────────────────────────────────────────────────────────
