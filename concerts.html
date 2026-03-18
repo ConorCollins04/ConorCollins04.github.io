@@ -294,6 +294,37 @@
       margin-top: 4px;
     }
 
+    .stat-bar-row {
+      display: grid;
+      grid-template-columns: 30px 1fr 22px;
+      gap: 8px;
+      align-items: center;
+      padding: 4px 0;
+    }
+    .stat-bar-label {
+      font-family: var(--mono);
+      font-size: 0.57rem;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+      text-align: right;
+    }
+    .stat-bar-track {
+      height: 5px;
+      background: var(--border);
+      border-radius: 3px;
+    }
+    .stat-bar-fill {
+      height: 100%;
+      background: var(--text);
+      border-radius: 3px;
+    }
+    .stat-bar-count {
+      font-family: var(--mono);
+      font-size: 0.57rem;
+      color: var(--faint);
+      text-align: right;
+    }
+
     /* ── Floating nav ── */
     .nav-wrap {
       position: fixed;
@@ -613,6 +644,17 @@
     const seatedCount   = CONCERTS.filter(s => s.seated).length;
     const standingCount = CONCERTS.length - seatedCount;
 
+    // 6. Shows by month
+    const monthCount = new Array(12).fill(0);
+    for (const show of CONCERTS) {
+      monthCount[parseInt(show.date.split("-")[1]) - 1]++;
+    }
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const maxMonth = Math.max(...monthCount);
+
+    // 7. Festivals
+    const festivalCount = CONCERTS.filter(s => s.festival).length;
+
     // Build grid
     const grid = document.createElement("div");
     grid.className = "stats-grid";
@@ -642,6 +684,36 @@
         subEl.className = "stat-sub";
         subEl.textContent = sub;
         card.appendChild(subEl);
+      }
+      return card;
+    }
+
+    function makeBarCard(label, data, maxVal, fullWidth = false) {
+      const card = document.createElement("div");
+      card.className = "stat-card" + (fullWidth ? " full-width" : "");
+      const labelEl = document.createElement("div");
+      labelEl.className = "stat-label";
+      labelEl.textContent = label;
+      card.appendChild(labelEl);
+      for (const { name, count } of data) {
+        const row = document.createElement("div");
+        row.className = "stat-bar-row";
+        const lbl = document.createElement("div");
+        lbl.className = "stat-bar-label";
+        lbl.textContent = name;
+        const track = document.createElement("div");
+        track.className = "stat-bar-track";
+        const fill = document.createElement("div");
+        fill.className = "stat-bar-fill";
+        fill.style.width = maxVal > 0 ? `${(count / maxVal) * 100}%` : "0%";
+        track.appendChild(fill);
+        const cnt = document.createElement("div");
+        cnt.className = "stat-bar-count";
+        cnt.textContent = count || "";
+        row.appendChild(lbl);
+        row.appendChild(track);
+        row.appendChild(cnt);
+        card.appendChild(row);
       }
       return card;
     }
@@ -679,9 +751,16 @@
     }
     grid.appendChild(cityCard);
 
+    // Shows by month bar chart
+    const monthData = monthNames.map((name, i) => ({ name, count: monthCount[i] }));
+    grid.appendChild(makeBarCard("Shows by month", monthData, maxMonth, true));
+
+    // Festivals count
+    grid.appendChild(makeCard("Festivals attended", festivalCount, ""));
+
     // Seated vs standing card
     const seatedCard = document.createElement("div");
-    seatedCard.className = "stat-card full-width";
+    seatedCard.className = "stat-card";
     const seatedLabel = document.createElement("div");
     seatedLabel.className = "stat-label";
     seatedLabel.textContent = "Seated vs standing";
