@@ -251,7 +251,7 @@
 <div class="page">
   <div class="page-header">
     <h1>Oscars</h1>
-    <p class="page-subtitle">Nominees ranked by preference, left to right. Greyed out = not yet seen.</p>
+    <p class="page-subtitle">My personal rankings.</p>
   </div>
 
   <div class="year-tabs" id="year-tabs"></div>
@@ -326,7 +326,6 @@
         track.appendChild(buildCard(n, false));
       });
 
-      // Not-seen cards (no divider, greying out is sufficient)
       unseen.forEach(n => {
         track.appendChild(buildCard(n, true));
       });

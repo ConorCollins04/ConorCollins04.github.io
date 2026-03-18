@@ -24,11 +24,11 @@ const OSCARS = {
       { film: "Frankenstein",              rank: 10 },
     ],
     "Best Actress": [
-      { name: "Emma Stone",        film: "Bugonia",                    rank: 1 },
+      { name: "Emma Stone",        film: "Bugonia",                    rank: 3 },
       { name: "Rose Byrne",        film: "If I Had Legs I'd Kick You", notSeen: true },
-      { name: "Jessie Buckley",    film: "Hamnet",       winner: true, rank: 3 },
-      { name: "Kate Hudson",       film: "Song Sung Blue",             rank: 4 },
-      { name: "Renate Reinsve",    film: "Sentimental Value",          rank: 5 },
+      { name: "Jessie Buckley",    film: "Hamnet",       winner: true, rank: 1 },
+      { name: "Kate Hudson",       film: "Song Sung Blue", notSeen: true },
+      { name: "Renate Reinsve",    film: "Sentimental Value",          rank: 2 },
     ],
     "Best Actor": [
       { name: "Michael B. Jordan",  film: "Sinners",                  winner: true, rank: 1 },
