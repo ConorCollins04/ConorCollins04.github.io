@@ -227,11 +227,14 @@
     /* ── Stats view ── */
     .stats-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 16px;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
       .stats-grid { grid-template-columns: 1fr; }
     }
 
@@ -242,7 +245,8 @@
       padding: 22px 24px;
     }
 
-    .stat-card.full-width { grid-column: 1 / -1; }
+    .stat-card.full-width  { grid-column: span 4; }
+    .stat-card.half-width  { grid-column: span 2; }
 
     .stat-label {
       font-family: var(--mono);
@@ -680,16 +684,22 @@
       .map(s => s.artist || (s.headliners || []).join(" & ") || s.festival)
       .join(", ");
 
-    // 9. Festivals
+    // 9. Shows by month
+    const monthCount = new Array(12).fill(0);
+    for (const show of CONCERTS) {
+      monthCount[parseInt(show.date.split("-")[1]) - 1]++;
+    }
+
+    // 10. Festivals
     const festivalCount = CONCERTS.filter(s => s.festival).length;
 
     // Build grid
     const grid = document.createElement("div");
     grid.className = "stats-grid";
 
-    function makeCard(label, number, names, sub, fullWidth = false) {
+    function makeCard(label, number, names, sub, spanClass = "") {
       const card = document.createElement("div");
-      card.className = "stat-card" + (fullWidth ? " full-width" : "");
+      card.className = "stat-card" + (spanClass ? " " + spanClass : "");
 
       const labelEl = document.createElement("div");
       labelEl.className = "stat-label";
@@ -717,9 +727,9 @@
       return card;
     }
 
-    function makeVBarCard(label, data, fullWidth = false) {
+    function makeVBarCard(label, data, spanClass = "") {
       const card = document.createElement("div");
-      card.className = "stat-card" + (fullWidth ? " full-width" : "");
+      card.className = "stat-card" + (spanClass ? " " + spanClass : "");
       const labelEl = document.createElement("div");
       labelEl.className = "stat-label";
       labelEl.textContent = label;
@@ -750,8 +760,8 @@
       return card;
     }
 
-    grid.appendChild(makeCard("Most seen artist", maxSeen, topSeen.join(", ")));
-    grid.appendChild(makeCard("Most seen headliner", maxHL, topHL.join(", ")));
+    grid.appendChild(makeCard("Most seen artist", maxSeen, topSeen.join(", "), null, "half-width"));
+    grid.appendChild(makeCard("Most seen headliner", maxHL, topHL.join(", "), null, "half-width"));
 
     // Most visited venue — with chronological headliners as subtext
     const venueHeadliners = topVenues.map(v => {
@@ -759,11 +769,11 @@
       const names = shows.map(s => s.artist || (s.headliners || []).join(" & ") || s.festival);
       return topVenues.length > 1 ? `${v}: ${names.join(", ")}` : names.join(", ");
     }).join(" · ");
-    grid.appendChild(makeCard("Most visited venue", maxVenue, topVenues.join(", "), venueHeadliners));
+    grid.appendChild(makeCard("Most visited venue", maxVenue, topVenues.join(", "), venueHeadliners, "half-width"));
 
     // Shows by city card
     const cityCard = document.createElement("div");
-    cityCard.className = "stat-card";
+    cityCard.className = "stat-card half-width";
     const cityLabel = document.createElement("div");
     cityLabel.className = "stat-label";
     cityLabel.textContent = "Shows by city";
@@ -785,14 +795,16 @@
 
     // Shows by year
     const yearData = years.map(y => ({ name: `'${y.slice(2)}`, count: yearCount.get(y) }));
-    grid.appendChild(makeVBarCard("Shows by year", yearData, true));
+    grid.appendChild(makeVBarCard("Shows by year", yearData, "full-width"));
 
-    // Day of week
+    // Day of week + shows by month
     const dowData = dowNames.map((name, i) => ({ name, count: dowCount[i] }));
-    grid.appendChild(makeVBarCard("Shows by day of week", dowData));
+    grid.appendChild(makeVBarCard("Shows by day of week", dowData, "half-width"));
+    const monthData = monthNames.map((name, i) => ({ name, count: monthCount[i] }));
+    grid.appendChild(makeVBarCard("Shows by month", monthData, "half-width"));
 
-    // Busiest month
-    grid.appendChild(makeCard("Most shows in a month", busiestShows.length, busiestLabel, busiestHeadlines));
+    // Busiest month (half) + festivals (quarter) + seated (quarter)
+    grid.appendChild(makeCard("Most shows in a month", busiestShows.length, busiestLabel, busiestHeadlines, "half-width"));
 
     // Festivals count
     grid.appendChild(makeCard("Festivals attended", festivalCount, ""));
