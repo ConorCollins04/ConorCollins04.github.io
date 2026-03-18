@@ -291,7 +291,7 @@
   </div>
   <div id="person-filter-wrap" style="margin-bottom: 20px;">
     <select id="person-filter-select" class="person-filter-select">
-      <option value="">filter by person</option>
+      <option value="">went with…</option>
     </select>
   </div>
 
@@ -508,7 +508,11 @@
     const sorted = sortedByDate(CONCERTS, true); // newest first by default
 
     if (currentView === "year") {
-      const filtered = personFilter ? sorted.filter(s => (s.with || []).includes(personFilter)) : sorted;
+      const filtered = personFilter === "__alone__"
+        ? sorted.filter(s => !s.with || s.with.length === 0)
+        : personFilter
+          ? sorted.filter(s => (s.with || []).includes(personFilter))
+          : sorted;
       const byYear = groupBy(filtered, s => getYear(s.date));
       const years = [...byYear.keys()].sort((a, b) => b - a);
       for (const year of years) {
@@ -643,9 +647,15 @@
         countMap.set(p, (countMap.get(p) || 0) + 1);
       }
     }
+    const aloneCount = CONCERTS.filter(s => !s.with || s.with.length === 0).length;
     const people = [...countMap.keys()].sort((a, b) => countMap.get(b) - countMap.get(a));
     const select = document.getElementById("person-filter-select");
-    select.innerHTML = `<option value="">filter by person</option>`;
+    select.innerHTML = `<option value="">went with…</option>`;
+    const aloneOpt = document.createElement("option");
+    aloneOpt.value = "__alone__";
+    aloneOpt.textContent = `alone (${aloneCount})`;
+    if (personFilter === "__alone__") aloneOpt.selected = true;
+    select.appendChild(aloneOpt);
     for (const person of people) {
       const opt = document.createElement("option");
       opt.value = person;
