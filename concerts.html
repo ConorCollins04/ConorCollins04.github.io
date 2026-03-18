@@ -321,7 +321,7 @@
   // show is either a concert { artist, venue, city, date, openers }
   //                 or a festival { festival, venue, city, date, headliners, support }
   function buildRow(entry) {
-    const { show, role = "headliner", headliner, flat = false, guest = false } = entry;
+    const { show, role = "headliner", headliner, flat = false, guest = false, member = false } = entry;
     const isFestival = !!show.festival;
 
     const row = document.createElement("div");
@@ -386,6 +386,11 @@
           : flat ? `performed at ${show.festival}`
           : isFestival ? `support at ${show.festival}`
           : `opened for ${headliner}`;
+        main.appendChild(roleEl);
+      } else if (role === "member") {
+        const roleEl = document.createElement("div");
+        roleEl.className = "concert-role";
+        roleEl.textContent = `as part of ${show.artist}`;
         main.appendChild(roleEl);
       }
 
@@ -491,18 +496,21 @@
             addEntry(artist, { show, role: "opener", guest: true });
           }
         } else {
-          for (const artist of (show.guests || [])) {
-            addEntry(artist, { show, role: "opener", guest: true });
-          }
           addEntry(show.artist, { show, role: "headliner" });
           for (const opener of (show.openers || [])) {
             addEntry(opener, { show, role: "opener", headliner: show.artist });
+          }
+          for (const artist of (show.guests || [])) {
+            addEntry(artist, { show, role: "opener", guest: true });
+          }
+          for (const member of (show.members || [])) {
+            addEntry(member, { show, role: "member" });
           }
         }
       }
 
       const allArtists = [...byArtist.keys()].sort((a, b) => a.localeCompare(b));
-      const headliners   = allArtists.filter(a => byArtist.get(a).some(e => e.role === "headliner"));
+      const headliners   = allArtists.filter(a => byArtist.get(a).some(e => e.role === "headliner" || e.role === "member"));
       const openerOnly   = allArtists.filter(a => byArtist.get(a).every(e => e.role === "opener"));
 
       for (const artist of headliners) {
