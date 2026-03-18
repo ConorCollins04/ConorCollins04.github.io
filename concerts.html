@@ -264,7 +264,7 @@
     </div>
   </div>
 
-  <div id="venue-sort-toggle" style="display:none; margin-bottom: 20px;">
+  <div id="secondary-sort-toggle" style="display:none; margin-bottom: 20px;">
     <div class="view-toggle">
       <button class="view-btn active" data-sort="alpha">A–Z</button>
       <button class="view-btn" data-sort="count">Most shows</button>
@@ -286,7 +286,7 @@
 <script src="concerts-data.js"></script>
 <script>
   let currentView = "year";
-  let venueSort = "alpha";
+  let secondarySort = "alpha";
 
   // ── Helpers ──────────────────────────────────────────────────────────────
 
@@ -517,7 +517,9 @@
         }
       }
 
-      const allArtists = [...byArtist.keys()].sort((a, b) => a.localeCompare(b));
+      const allArtists = [...byArtist.keys()].sort((a, b) => secondarySort === "count"
+        ? byArtist.get(b).length - byArtist.get(a).length || a.localeCompare(b)
+        : a.localeCompare(b));
       const headliners   = allArtists.filter(a => byArtist.get(a).some(e => e.role === "headliner" || e.role === "member"));
       const openerOnly   = allArtists.filter(a => byArtist.get(a).every(e => e.role === "opener"));
 
@@ -553,7 +555,7 @@
 
     } else {
       const byVenue = groupBy(sortedByDate(CONCERTS), s => s.venue);
-      const venues = [...byVenue.keys()].sort((a, b) => venueSort === "count"
+      const venues = [...byVenue.keys()].sort((a, b) => secondarySort === "count"
         ? byVenue.get(b).length - byVenue.get(a).length || a.localeCompare(b)
         : a.localeCompare(b));
       for (const venue of venues) {
@@ -592,19 +594,22 @@
 
   // ── View toggle ───────────────────────────────────────────────────────────
 
-  document.querySelectorAll("#venue-sort-toggle .view-btn").forEach(btn => {
+  document.querySelectorAll("#secondary-sort-toggle .view-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-      venueSort = btn.dataset.sort;
-      document.querySelectorAll("#venue-sort-toggle .view-btn").forEach(b => b.classList.toggle("active", b === btn));
+      secondarySort = btn.dataset.sort;
+      document.querySelectorAll("#secondary-sort-toggle .view-btn").forEach(b => b.classList.toggle("active", b === btn));
       render();
     });
   });
 
-  document.querySelectorAll(".view-toggle:not(#venue-sort-toggle .view-toggle) .view-btn").forEach(btn => {
+  document.querySelectorAll(".page-header .view-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       currentView = btn.dataset.view;
-      document.querySelectorAll(".view-toggle:not(#venue-sort-toggle .view-toggle) .view-btn").forEach(b => b.classList.toggle("active", b === btn));
-      document.getElementById("venue-sort-toggle").style.display = currentView === "venue" ? "" : "none";
+      document.querySelectorAll(".page-header .view-btn").forEach(b => b.classList.toggle("active", b === btn));
+      // Reset secondary sort when switching views
+      secondarySort = "alpha";
+      document.querySelectorAll("#secondary-sort-toggle .view-btn").forEach(b => b.classList.toggle("active", b.dataset.sort === "alpha"));
+      document.getElementById("secondary-sort-toggle").style.display = (currentView === "venue" || currentView === "artist") ? "" : "none";
       render();
     });
   });
