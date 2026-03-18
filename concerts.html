@@ -524,8 +524,11 @@
         }
       }
 
+      const filteredCount = (a) => artistFilter === "headlining"
+        ? byArtist.get(a).filter(e => e.role === "headliner" || e.role === "member").length
+        : byArtist.get(a).length;
       const allArtists = [...byArtist.keys()].sort((a, b) => secondarySort === "count"
-        ? byArtist.get(b).length - byArtist.get(a).length || a.localeCompare(b)
+        ? filteredCount(b) - filteredCount(a) || a.localeCompare(b)
         : a.localeCompare(b));
       const headliners   = allArtists.filter(a => byArtist.get(a).some(e => e.role === "headliner" || e.role === "member"));
       const openerOnly   = allArtists.filter(a => byArtist.get(a).every(e => e.role === "opener"));
