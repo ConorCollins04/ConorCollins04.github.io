@@ -188,4 +188,49 @@ const OSCARS = {
     ],
   },
 
+  // ── 94th Academy Awards (March 27, 2022) ─────────────────────────────────
+  2021: {
+    ceremony: "94th Academy Awards",
+    "Best Picture": [
+      { film: "CODA",                winner: true,  rank: 2 },
+      { film: "Belfast",                            notSeen: true },
+      { film: "Drive My Car",                       notSeen: true },
+      { film: "Dune",                               rank: 3 },
+      { film: "King Richard",                       rank: 4 },
+      { film: "Licorice Pizza",                     notSeen: true },
+      { film: "Don't Look Up",                      rank: 5 },
+      { film: "Nightmare Alley",                    notSeen: true },
+      { film: "The Power of the Dog",               notSeen: true },
+      { film: "West Side Story",                    rank: 1 },
+    ],
+    "Best Actress": [
+      { name: "Jessica Chastain",     film: "The Eyes of Tammy Faye", winner: true, notSeen: true },
+      { name: "Olivia Colman",        film: "The Lost Daughter",               notSeen: true },
+      { name: "Penélope Cruz",        film: "Parallel Mothers",                notSeen: true },
+      { name: "Nicole Kidman",        film: "Being the Ricardos",              notSeen: true },
+      { name: "Kristen Stewart",      film: "Spencer",                         notSeen: true },
+    ],
+    "Best Actor": [
+      { name: "Will Smith",           film: "King Richard",          winner: true, rank: 2 },
+      { name: "Javier Bardem",        film: "Being the Ricardos",              notSeen: true },
+      { name: "Benedict Cumberbatch", film: "The Power of the Dog",            notSeen: true },
+      { name: "Andrew Garfield",      film: "Tick, Tick... Boom!",             rank: 1 },
+      { name: "Denzel Washington",    film: "The Tragedy of Macbeth",          notSeen: true },
+    ],
+    "Best Supporting Actress": [
+      { name: "Ariana DeBose",        film: "West Side Story",       winner: true, rank: 1 },
+      { name: "Jessie Buckley",       film: "The Lost Daughter",               notSeen: true },
+      { name: "Judi Dench",           film: "Belfast",                         notSeen: true },
+      { name: "Kirsten Dunst",        film: "The Power of the Dog",            notSeen: true },
+      { name: "Aunjanue Ellis-Taylor", film: "King Richard",                   rank: 2 },
+    ],
+    "Best Supporting Actor": [
+      { name: "Troy Kotsur",          film: "CODA",                  winner: true, rank: 1 },
+      { name: "Ciarán Hinds",         film: "Belfast",                         notSeen: true },
+      { name: "Jesse Plemons",        film: "The Power of the Dog",            notSeen: true },
+      { name: "J.K. Simmons",         film: "Being the Ricardos",              notSeen: true },
+      { name: "Kodi Smit-McPhee",     film: "The Power of the Dog",            notSeen: true },
+    ],
+  },
+
 };
