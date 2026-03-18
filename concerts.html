@@ -294,35 +294,36 @@
       margin-top: 4px;
     }
 
-    .stat-bar-row {
-      display: grid;
-      grid-template-columns: 30px 1fr 22px;
-      gap: 8px;
+    .stat-vbar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      margin-top: 4px;
+    }
+    .stat-vbar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      padding: 4px 0;
+      gap: 4px;
     }
-    .stat-bar-label {
-      font-family: var(--mono);
-      font-size: 0.57rem;
-      letter-spacing: 0.03em;
-      color: var(--muted);
-      text-align: right;
-    }
-    .stat-bar-track {
-      height: 5px;
-      background: var(--border);
-      border-radius: 3px;
-    }
-    .stat-bar-fill {
-      height: 100%;
+    .stat-vbar-bar {
+      width: 100%;
       background: var(--text);
-      border-radius: 3px;
+      border-radius: 2px 2px 0 0;
+      min-height: 2px;
     }
-    .stat-bar-count {
+    .stat-vbar-count {
       font-family: var(--mono);
-      font-size: 0.57rem;
+      font-size: 0.52rem;
       color: var(--faint);
-      text-align: right;
+      min-height: 0.8rem;
+    }
+    .stat-vbar-label {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.02em;
+      color: var(--muted);
     }
 
     /* ── Floating nav ── */
@@ -644,15 +645,42 @@
     const seatedCount   = CONCERTS.filter(s => s.seated).length;
     const standingCount = CONCERTS.length - seatedCount;
 
-    // 6. Shows by month
-    const monthCount = new Array(12).fill(0);
+    // 6. Shows by year
+    const yearCount = new Map();
     for (const show of CONCERTS) {
-      monthCount[parseInt(show.date.split("-")[1]) - 1]++;
+      const y = getYear(show.date);
+      yearCount.set(y, (yearCount.get(y) || 0) + 1);
     }
-    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    const maxMonth = Math.max(...monthCount);
+    const years = [...yearCount.keys()].sort();
 
-    // 7. Festivals
+    // 7. Shows by day of week
+    const dowCount = new Array(7).fill(0);
+    const dowNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    for (const show of CONCERTS) {
+      const [y, m, d] = show.date.split("-").map(Number);
+      dowCount[new Date(y, m - 1, d).getDay()]++;
+    }
+
+    // 8. Busiest specific month
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const byYearMonth = new Map();
+    for (const show of CONCERTS) {
+      const ym = show.date.substring(0, 7);
+      if (!byYearMonth.has(ym)) byYearMonth.set(ym, []);
+      byYearMonth.get(ym).push(show);
+    }
+    let busiestYM = null, busiestShows = [];
+    for (const [ym, shows] of byYearMonth) {
+      if (shows.length > busiestShows.length) { busiestYM = ym; busiestShows = shows; }
+    }
+    const [bYear, bMon] = busiestYM.split("-").map(Number);
+    const busiestLabel = `${monthNames[bMon - 1]} ${bYear}`;
+    const busiestHeadlines = [...busiestShows]
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .map(s => s.artist || (s.headliners || []).join(" & ") || s.festival)
+      .join(", ");
+
+    // 9. Festivals
     const festivalCount = CONCERTS.filter(s => s.festival).length;
 
     // Build grid
@@ -671,13 +699,14 @@
       numEl.className = "stat-number";
       numEl.textContent = number;
 
-      const namesEl = document.createElement("div");
-      namesEl.className = "stat-names";
-      namesEl.textContent = names;
-
       card.appendChild(labelEl);
       card.appendChild(numEl);
-      card.appendChild(namesEl);
+      if (names) {
+        const namesEl = document.createElement("div");
+        namesEl.className = "stat-names";
+        namesEl.textContent = names;
+        card.appendChild(namesEl);
+      }
 
       if (sub) {
         const subEl = document.createElement("div");
@@ -688,33 +717,36 @@
       return card;
     }
 
-    function makeBarCard(label, data, maxVal, fullWidth = false) {
+    function makeVBarCard(label, data, fullWidth = false) {
       const card = document.createElement("div");
       card.className = "stat-card" + (fullWidth ? " full-width" : "");
       const labelEl = document.createElement("div");
       labelEl.className = "stat-label";
       labelEl.textContent = label;
       card.appendChild(labelEl);
+      const maxVal = Math.max(...data.map(d => d.count), 1);
+      const BAR_MAX_PX = 64;
+      const chart = document.createElement("div");
+      chart.className = "stat-vbar-chart";
       for (const { name, count } of data) {
-        const row = document.createElement("div");
-        row.className = "stat-bar-row";
+        const col = document.createElement("div");
+        col.className = "stat-vbar-col";
+        const countEl = document.createElement("div");
+        countEl.className = "stat-vbar-count";
+        countEl.textContent = count > 0 ? count : "";
+        const bar = document.createElement("div");
+        bar.className = "stat-vbar-bar";
+        bar.style.height = `${Math.max(2, Math.round((count / maxVal) * BAR_MAX_PX))}px`;
+        if (count === 0) bar.style.opacity = "0.15";
         const lbl = document.createElement("div");
-        lbl.className = "stat-bar-label";
+        lbl.className = "stat-vbar-label";
         lbl.textContent = name;
-        const track = document.createElement("div");
-        track.className = "stat-bar-track";
-        const fill = document.createElement("div");
-        fill.className = "stat-bar-fill";
-        fill.style.width = maxVal > 0 ? `${(count / maxVal) * 100}%` : "0%";
-        track.appendChild(fill);
-        const cnt = document.createElement("div");
-        cnt.className = "stat-bar-count";
-        cnt.textContent = count || "";
-        row.appendChild(lbl);
-        row.appendChild(track);
-        row.appendChild(cnt);
-        card.appendChild(row);
+        col.appendChild(countEl);
+        col.appendChild(bar);
+        col.appendChild(lbl);
+        chart.appendChild(col);
       }
+      card.appendChild(chart);
       return card;
     }
 
@@ -751,9 +783,16 @@
     }
     grid.appendChild(cityCard);
 
-    // Shows by month bar chart
-    const monthData = monthNames.map((name, i) => ({ name, count: monthCount[i] }));
-    grid.appendChild(makeBarCard("Shows by month", monthData, maxMonth, true));
+    // Shows by year
+    const yearData = years.map(y => ({ name: `'${y.slice(2)}`, count: yearCount.get(y) }));
+    grid.appendChild(makeVBarCard("Shows by year", yearData, true));
+
+    // Day of week
+    const dowData = dowNames.map((name, i) => ({ name, count: dowCount[i] }));
+    grid.appendChild(makeVBarCard("Shows by day of week", dowData));
+
+    // Busiest month
+    grid.appendChild(makeCard("Most shows in a month", busiestShows.length, busiestLabel, busiestHeadlines));
 
     // Festivals count
     grid.appendChild(makeCard("Festivals attended", festivalCount, ""));
