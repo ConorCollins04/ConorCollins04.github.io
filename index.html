@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f6f2;
+      --border: #e4e0d8;
+      --text: #18170f;
+      --muted: #7c7870;
+      --faint: #bbb6ad;
+      --nav-bg: #18170f;
+      --nav-text: #e8e5dc;
+      --nav-muted: rgba(232,229,220,0.4);
+      --nav-active-bg: #f7f6f2;
+      --nav-active-text: #18170f;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Floating nav ── */
+    .nav-wrap {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--nav-bg);
+      border-radius: 100px;
+      padding: 5px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .nav-btn {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--nav-muted);
+      background: none;
+      border: none;
+      border-radius: 100px;
+      padding: 6px 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+      display: block;
+    }
+
+    .nav-btn:hover { color: var(--nav-text); }
+
+    .nav-btn.active {
+      background: var(--nav-active-bg);
+      color: var(--nav-active-text);
+      font-weight: 500;
+    }
+
+    /* ── Page ── */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 10vw 80px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+      margin-bottom: 28px;
+      color: var(--text);
+    }
+
+    h1 em { font-style: italic; }
+
+    p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.85;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <span class="eyebrow">yourname.github.io</span>
+    <h1>A place for<br><em>things.</em></h1>
+    <p>Personal site. Not really for anyone in particular — just a place to keep track of things I'm thinking about.</p>
+  </div>
+
+  <div class="nav-wrap">
+    <nav class="nav-pill">
+      <a href="index.html" class="nav-btn active">Home</a>
+      <a href="survivor-all-stars.html" class="nav-btn">Survivor All-Stars Casting</a>
+    </nav>
+  </div>
+
+</body>
+</html>
