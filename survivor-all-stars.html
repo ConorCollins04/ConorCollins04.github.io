@@ -5,25 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Survivor All-Stars Casting — Your Name</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f7f6f2;
-      --surface: #ffffff;
-      --border: #e4e0d8;
-      --text: #18170f;
-      --muted: #7c7870;
-      --faint: #bbb6ad;
-      --nav-bg: #18170f;
-      --nav-text: #e8e5dc;
-      --nav-muted: rgba(232,229,220,0.4);
-      --nav-active-bg: #f7f6f2;
-      --nav-active-text: #18170f;
-      --serif: 'EB Garamond', Georgia, serif;
-      --sans: 'Inter', system-ui, sans-serif;
-      --mono: 'JetBrains Mono', monospace;
+      --bg: #f3f1f8;
+      --surface: #faf9fd;
+      --surface2: #f0eef6;
+      --border: rgba(80,60,120,0.1);
+      --border-hover: rgba(80,60,120,0.28);
+      --text: #1a1624;
+      --muted: #6b6278;
+      --faint: #b0a8be;
+      --nav-bg: #1a1624;
+      --nav-muted: rgba(243,241,248,0.38);
+      --nav-active-bg: #f3f1f8;
+      --nav-active-text: #1a1624;
+      --slab: 'Alfa Slab One', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --mono: 'DM Mono', monospace;
     }
 
     html { font-size: 16px; }
@@ -34,6 +35,322 @@
       color: var(--text);
       min-height: 100vh;
     }
+
+    /* ── Layout ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 284px;
+      min-height: 100vh;
+      padding-bottom: 100px;
+    }
+
+    /* ── Left pool ── */
+    .pool {
+      padding: 56px 40px 40px 10vw;
+      border-right: 1px solid var(--border);
+      min-width: 0;
+    }
+
+    .pool-header { margin-bottom: 28px; }
+
+    h1 {
+      font-family: var(--slab);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .pool-subtitle {
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Season tabs */
+    .season-tabs {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .season-tab {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      padding: 5px 13px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+    .season-tab:hover { border-color: var(--border-hover); color: var(--text); }
+    .season-tab.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    .season-heading { margin-bottom: 20px; }
+
+    .season-heading h2 {
+      font-family: var(--slab);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .season-heading p {
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      color: var(--faint);
+      margin-top: 3px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Tribe sections */
+    .tribe-section { margin-bottom: 26px; }
+
+    .tribe-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .tribe-swatch {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .tribe-name {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* Player grid */
+    .player-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+      gap: 6px;
+    }
+
+    .player-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 8px 10px;
+      cursor: pointer;
+      transition: border-color 0.12s, background 0.12s, box-shadow 0.12s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      text-align: center;
+      user-select: none;
+    }
+
+    .player-card:hover:not(.selected):not(.disabled) {
+      border-color: var(--border-hover);
+      background: var(--surface2);
+      box-shadow: 0 2px 8px rgba(80,60,120,0.07);
+    }
+
+    .player-card.selected {
+      background: var(--text);
+      border-color: var(--text);
+    }
+
+    .player-card.disabled {
+      opacity: 0.28;
+      cursor: not-allowed;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .avatar img, .cast-slot-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    .player-card.selected .avatar {
+      background: rgba(255,255,255,0.1) !important;
+      color: rgba(243,241,248,0.9) !important;
+    }
+
+    .player-name {
+      font-size: 0.68rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text);
+    }
+    .player-name-last { font-weight: 300; color: var(--muted); }
+    .player-card.selected .player-name { color: var(--bg); }
+    .player-card.selected .player-name-last { color: rgba(243,241,248,0.6); }
+
+    .check-mark {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      color: rgba(243,241,248,0.5);
+      opacity: 0;
+      height: 11px;
+      letter-spacing: 0.04em;
+    }
+    .player-card.selected .check-mark { opacity: 1; }
+
+    /* ── Right cast panel ── */
+    .cast-panel {
+      padding: 56px 20px 40px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cast-panel-header { margin-bottom: 18px; }
+
+    .cast-panel-header h2 {
+      font-family: var(--slab);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .cast-counts { display: flex; gap: 14px; }
+
+    .cast-count {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .cast-count span { color: var(--text); }
+    .cast-count.full span { color: #5a7a3a; }
+
+    .cast-section { margin-bottom: 14px; }
+
+    .cast-section-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--faint);
+      margin-bottom: 6px;
+    }
+
+    .cast-slots { display: flex; flex-direction: column; gap: 3px; }
+
+    .cast-slot {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      min-height: 36px;
+    }
+
+    .cast-slot.empty {
+      background: none;
+      border-style: dashed;
+    }
+
+    .cast-slot-avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .cast-slot-info { flex: 1; min-width: 0; }
+
+    .cast-slot-name {
+      font-size: 0.7rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text);
+    }
+
+    .cast-slot-sub {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      color: var(--faint);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cast-slot-empty-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--faint);
+      letter-spacing: 0.05em;
+    }
+
+    .remove-btn {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--faint);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px 3px;
+      line-height: 1;
+      transition: color 0.1s;
+      flex-shrink: 0;
+    }
+    .remove-btn:hover { color: var(--text); }
+
+    .reset-btn {
+      margin-top: auto;
+      padding-top: 16px;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--faint);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: color 0.1s;
+    }
+    .reset-btn:hover { color: var(--text); }
 
     /* ── Floating nav ── */
     .nav-wrap {
@@ -50,8 +367,8 @@
       gap: 2px;
       background: var(--nav-bg);
       border-radius: 100px;
-      padding: 5px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.1);
+      padding: 4px;
+      box-shadow: 0 4px 24px rgba(26,22,36,0.18), 0 1px 4px rgba(26,22,36,0.1);
     }
 
     .nav-btn {
@@ -62,96 +379,370 @@
       background: none;
       border: none;
       border-radius: 100px;
-      padding: 6px 16px;
+      padding: 7px 18px;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.15s, color 0.15s;
+      transition: color 0.15s;
       white-space: nowrap;
-      letter-spacing: 0.01em;
       display: block;
     }
 
-    .nav-btn:hover { color: var(--nav-text); }
+    .nav-btn:hover { color: rgba(243,241,248,0.8); }
 
     .nav-btn.active {
       background: var(--nav-active-bg);
       color: var(--nav-active-text);
       font-weight: 500;
     }
-
-    /* ── Page ── */
-    .page {
-      padding: 80px 10vw 140px;
-      max-width: 820px;
-      margin: 0 auto;
-    }
-
-    .page-header {
-      margin-bottom: 48px;
-    }
-
-    .eyebrow {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--faint);
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 400;
-      line-height: 1.1;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
-
-    h1 em { font-style: italic; }
-
-    .subtitle {
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    /* ── Placeholder ── */
-    .placeholder {
-      border: 1px dashed var(--border);
-      border-radius: 6px;
-      padding: 64px 32px;
-      text-align: center;
-    }
-
-    .placeholder p {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--faint);
-      letter-spacing: 0.06em;
-    }
   </style>
 </head>
 <body>
 
-  <div class="page">
-    <div class="page-header">
-      <div class="eyebrow">page 01</div>
-      <h1>Survivor <em>All-Stars</em><br>Casting</h1>
-      <p class="subtitle">Coming soon.</p>
+<div class="layout">
+  <div class="pool">
+    <div class="pool-header">
+      <h1>All-Stars Casting</h1>
+      <p class="pool-subtitle">Draft your ideal 18-person cast — 9 men, 9 women — from the first seven seasons.</p>
     </div>
-    <div class="placeholder">
-      <p>content to be added</p>
-    </div>
+    <div class="season-tabs" id="season-tabs"></div>
+    <div class="season-heading" id="season-heading"></div>
+    <div id="player-pool"></div>
   </div>
 
-  <div class="nav-wrap">
-    <nav class="nav-pill">
-      <a href="index.html" class="nav-btn">Home</a>
-      <a href="survivor-all-stars.html" class="nav-btn active">Survivor All-Stars Casting</a>
-    </nav>
+  <div class="cast-panel">
+    <div class="cast-panel-header">
+      <h2>Your cast</h2>
+      <div class="cast-counts">
+        <div class="cast-count" id="count-w">Women: <span>0</span>/9</div>
+        <div class="cast-count" id="count-m">Men: <span>0</span>/9</div>
+      </div>
+    </div>
+    <div class="cast-section">
+      <div class="cast-section-label">Women</div>
+      <div class="cast-slots" id="slots-w"></div>
+    </div>
+    <div class="cast-section">
+      <div class="cast-section-label">Men</div>
+      <div class="cast-slots" id="slots-m"></div>
+    </div>
+    <button class="reset-btn" id="reset-btn">↺ clear all</button>
   </div>
+</div>
 
+<div class="nav-wrap">
+  <nav class="nav-pill">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="survivor-all-stars.html" class="nav-btn active">Survivor All-Stars Casting</a>
+  </nav>
+</div>
+
+<script>
+const SEASONS = [
+  {
+    id: 1, name: "Borneo", year: 2000,
+    tribes: [
+      { name: "Tagi", color: "#e8824a", textColor: "#7a3010", players: [
+        { name: "Sonja Christopher",  gender: "f" },
+        { name: "Stacey Stillman",    gender: "f" },
+        { name: "Kelly Wiglesworth",  gender: "f" },
+        { name: "Susan Hawk",         gender: "f" },
+        { name: "Dirk Been",          gender: "m" },
+        { name: "Sean Kenniff",       gender: "m" },
+        { name: "Rudy Boesch",        gender: "m" },
+        { name: "Richard Hatch",      gender: "m" },
+      ]},
+      { name: "Pagong", color: "#d4b830", textColor: "#6a5808", players: [
+        { name: "Ramona Gray",        gender: "f" },
+        { name: "Colleen Haskell",    gender: "f" },
+        { name: "Gretchen Cordy",     gender: "f" },
+        { name: "Jenna Lewis",        gender: "f" },
+        { name: "B.B. Andersen",      gender: "m" },
+        { name: "Joel Klug",          gender: "m" },
+        { name: "Gervase Peterson",   gender: "m" },
+        { name: "Greg Buis",          gender: "m" },
+      ]}
+    ]
+  },
+  {
+    id: 2, name: "The Australian Outback", year: 2001,
+    tribes: [
+      { name: "Ogakor", color: "#4a9a60", textColor: "#1a4a28", players: [
+        { name: "Debb Eaton",         gender: "f" },
+        { name: "Maralyn Hershey",    gender: "f" },
+        { name: "Jerri Manthey",      gender: "f" },
+        { name: "Amber Brkich",       gender: "f" },
+        { name: "Tina Wesson",        gender: "f" },
+        { name: "Kel Gleason",        gender: "m" },
+        { name: "Mitchell Olson",     gender: "m" },
+        { name: "Colby Donaldson",    gender: "m" },
+        { name: "Keith Famie",        gender: "m" },
+      ]},
+      { name: "Kucha", color: "#4a78c8", textColor: "#1a3870", players: [
+        { name: "Kimmi Kappenberg",   gender: "f" },
+        { name: "Alicia Calaway",     gender: "f" },
+        { name: "Elisabeth Filarski", gender: "f" },
+        { name: "Jeff Varner",        gender: "m" },
+        { name: "Mike Skupin",        gender: "m" },
+        { name: "Nick Brown",         gender: "m" },
+        { name: "Rodger Bingham",     gender: "m" },
+      ]}
+    ]
+  },
+  {
+    id: 3, name: "Africa", year: 2001,
+    tribes: [
+      { name: "Boran", color: "#c8980a", textColor: "#6a4800", players: [
+        { name: "Diane Ogden",        gender: "f" },
+        { name: "Jessie Camacho",     gender: "f" },
+        { name: "Kim Johnson",        gender: "f" },
+        { name: "Kim Powers",         gender: "f" },
+        { name: "Clarence Black",     gender: "m" },
+        { name: "Tom Buchanan",       gender: "m" },
+        { name: "Lex van den Berghe", gender: "m" },
+        { name: "Ethan Zohn",         gender: "m" },
+      ]},
+      { name: "Samburu", color: "#c83030", textColor: "#701010", players: [
+        { name: "Linda Spencer",      gender: "f" },
+        { name: "Teresa Cooper",      gender: "f" },
+        { name: "Kelly Goldsmith",    gender: "f" },
+        { name: "Carl Bilancione",    gender: "m" },
+        { name: "Silas Gaither",      gender: "m" },
+        { name: "Brandon Quinton",    gender: "m" },
+        { name: "Frank Garrison",     gender: "m" },
+      ]}
+    ]
+  },
+  {
+    id: 4, name: "Marquesas", year: 2002,
+    tribes: [
+      { name: "Maraamu", color: "#d4b830", textColor: "#6a5808", players: [
+        { name: "Patricia Jackson",      gender: "f" },
+        { name: "Sarah Jones",           gender: "f" },
+        { name: "Gina Crews",            gender: "f" },
+        { name: "Vecepia Towery",        gender: "f" },
+        { name: "Peter Harkey",          gender: "m" },
+        { name: "Hunter Ellis",          gender: "m" },
+        { name: "Rob Mariano",           gender: "m" },
+        { name: "Sean Rector",           gender: "m" },
+      ]},
+      { name: "Rotu", color: "#6080c8", textColor: "#203080", players: [
+        { name: "Zoe Zanidakis",         gender: "f" },
+        { name: "Tammy Leitner",         gender: "f" },
+        { name: "Kathy Vavrick-O'Brien", gender: "f" },
+        { name: "Neleh Dennis",          gender: "f" },
+        { name: "Gabriel Cade",          gender: "m" },
+        { name: "John Carroll",          gender: "m" },
+        { name: "Paschal English",       gender: "m" },
+        { name: "Robert DeCanio",        gender: "m" },
+      ]}
+    ]
+  },
+  {
+    id: 5, name: "Thailand", year: 2002,
+    tribes: [
+      { name: "Chuay Gahn", color: "#e07820", textColor: "#703000", players: [
+        { name: "Tanya Vance",        gender: "f" },
+        { name: "Ghandia Johnson",    gender: "f" },
+        { name: "Jan Gentry",         gender: "f" },
+        { name: "Helen Glover",       gender: "f" },
+        { name: "John Raymond",       gender: "m" },
+        { name: "Ted Rogers Jr.",     gender: "m" },
+        { name: "Clay Jordan",        gender: "m" },
+        { name: "Brian Heidik",       gender: "m" },
+      ]},
+      { name: "Sook Jai", color: "#7848b8", textColor: "#380878", players: [
+        { name: "Stephanie Dill",     gender: "f" },
+        { name: "Shii Ann Huang",     gender: "f" },
+        { name: "Erin Collins",       gender: "f" },
+        { name: "Penny Ramsey",       gender: "f" },
+        { name: "Jed Hildebrand",     gender: "m" },
+        { name: "Robb Zbacnik",       gender: "m" },
+        { name: "Ken Stafford",       gender: "m" },
+        { name: "Jake Billingsley",   gender: "m" },
+      ]}
+    ]
+  },
+  {
+    id: 6, name: "The Amazon", year: 2003,
+    tribes: [
+      { name: "Jaburu", color: "#d86020", textColor: "#702000", players: [
+        { name: "Janet Koth",         gender: "f" },
+        { name: "Joanna Ward",        gender: "f" },
+        { name: "Jeanne Hebert",      gender: "f" },
+        { name: "Shawna Mitchell",    gender: "f" },
+        { name: "Deena Bennett",      gender: "f" },
+        { name: "Christy Smith",      gender: "f" },
+        { name: "Heidi Strobel",      gender: "f" },
+        { name: "Jenna Morasca",      gender: "f" },
+      ]},
+      { name: "Tambaqui", color: "#3878c8", textColor: "#103878", players: [
+        { name: "Ryan Aiken",           gender: "m" },
+        { name: "Daniel Lue",           gender: "m" },
+        { name: "Roger Sexton",         gender: "m" },
+        { name: "Dave Johnson",         gender: "m" },
+        { name: "Alex Bell",            gender: "m" },
+        { name: "Butch Lockley",        gender: "m" },
+        { name: "Rob Cesternino",       gender: "m" },
+        { name: "Matthew von Ertfelda", gender: "m" },
+      ]}
+    ]
+  },
+  {
+    id: 7, name: "Pearl Islands", year: 2003,
+    tribes: [
+      { name: "Drake", color: "#2888a0", textColor: "#0a4858", players: [
+        { name: "Nicole Delma",       gender: "f" },
+        { name: "Michelle Tesauro",   gender: "f" },
+        { name: "Christa Hastie",     gender: "f" },
+        { name: "Sandra Diaz-Twine",  gender: "f" },
+        { name: "Shawn Cohen",        gender: "m" },
+        { name: "Burton Roberts",     gender: "m" },
+        { name: "Rupert Boneham",     gender: "m" },
+        { name: "Jon Fairplay",       gender: "m" },
+      ]},
+      { name: "Morgan", color: "#c03828", textColor: "#601008", players: [
+        { name: "Lillian Morris",     gender: "f" },
+        { name: "Tijuana Bradley",    gender: "f" },
+        { name: "Darrah Johnson",     gender: "f" },
+        { name: "Trish Dunn",         gender: "f" },
+        { name: "Ryan Shoulders",     gender: "m" },
+        { name: "Andrew Savage",      gender: "m" },
+        { name: "Osten Taylor",       gender: "m" },
+        { name: "Ryan Opray",         gender: "m" },
+      ]}
+    ]
+  },
+];
+
+const PLAYER_INFO = {};
+SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
+  PLAYER_INFO[p.name] = { season: s, tribe: t };
+})));
+
+let currentSeason = 1;
+const castW = [], castM = [];
+const MAX = 9;
+
+function initials(name) {
+  return name.split(" ").filter(w => w.length > 1).map(w => w[0]).slice(0, 2).join("").toUpperCase();
+}
+
+function imgPath(name, seasonId) {
+  const slug = name.toLowerCase()
+    .replace(/['']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  return `images/survivor/s${seasonId}/${slug}.jpg`;
+}
+
+function avatarHtml(name, seasonId, bgColor, fgColor) {
+  const path = imgPath(name, seasonId);
+  return `<div class="avatar" style="background:${bgColor};color:${fgColor}">
+    <img src="${path}" alt="${name}" onerror="this.style.display='none'">
+    ${initials(name)}
+  </div>`;
+}
+
+function slotAvatarHtml(name, seasonId, bgColor, fgColor) {
+  const path = imgPath(name, seasonId);
+  return `<div class="cast-slot-avatar" style="background:${bgColor};color:${fgColor}">
+    <img src="${path}" alt="${name}" onerror="this.style.display='none'">
+    ${initials(name)}
+  </div>`;
+}
+function isSelected(name) { return castW.includes(name) || castM.includes(name); }
+function genderFull(g) { return g === "f" ? castW.length >= MAX : castM.length >= MAX; }
+
+function renderTabs() {
+  const el = document.getElementById("season-tabs");
+  el.innerHTML = SEASONS.map(s =>
+    `<button class="season-tab ${s.id === currentSeason ? "active" : ""}" data-season="${s.id}">S${s.id}</button>`
+  ).join("");
+  el.querySelectorAll(".season-tab").forEach(btn => {
+    btn.addEventListener("click", () => { currentSeason = +btn.dataset.season; renderTabs(); renderPool(); });
+  });
+}
+
+function renderPool() {
+  const season = SEASONS.find(s => s.id === currentSeason);
+  document.getElementById("season-heading").innerHTML = `
+    <h2>${season.name}</h2>
+    <p>${season.year} · ${season.tribes.reduce((n, t) => n + t.players.length, 0)} players</p>
+  `;
+  document.getElementById("player-pool").innerHTML = season.tribes.map(tribe => `
+    <div class="tribe-section">
+      <div class="tribe-label">
+        <div class="tribe-swatch" style="background:${tribe.color}"></div>
+        <span class="tribe-name">${tribe.name}</span>
+      </div>
+      <div class="player-grid">
+        ${tribe.players.map(p => {
+          const sel  = isSelected(p.name);
+          const full = !sel && genderFull(p.gender);
+          const parts = p.name.split(" ");
+          return `
+            <div class="player-card ${sel ? "selected" : ""} ${full ? "disabled" : ""}"
+                 data-name="${p.name}" data-gender="${p.gender}">
+              ${avatarHtml(p.name, season.id, sel ? "rgba(255,255,255,0.1)" : `${tribe.color}20`, sel ? "rgba(243,241,248,0.9)" : tribe.color)}
+              <div class="player-name">
+                ${parts[0]}<br><span class="player-name-last">${parts.slice(1).join(" ")}</span>
+              </div>
+              <div class="check-mark">✓ picked</div>
+            </div>`;
+        }).join("")}
+      </div>
+    </div>
+  `).join("");
+  document.querySelectorAll(".player-card:not(.disabled)").forEach(card => {
+    card.addEventListener("click", () => togglePlayer(card.dataset.name, card.dataset.gender));
+  });
+}
+
+function togglePlayer(name, gender) {
+  const arr = gender === "f" ? castW : castM;
+  const idx = arr.indexOf(name);
+  if (idx > -1) arr.splice(idx, 1);
+  else { if (arr.length >= MAX) return; arr.push(name); }
+  renderPool(); renderPanel();
+}
+
+function renderPanel() {
+  const wEl = document.getElementById("count-w");
+  const mEl = document.getElementById("count-m");
+  wEl.innerHTML = `Women: <span>${castW.length}</span>/9`;
+  mEl.innerHTML = `Men: <span>${castM.length}</span>/9`;
+  wEl.className = "cast-count" + (castW.length === MAX ? " full" : "");
+  mEl.className = "cast-count" + (castM.length === MAX ? " full" : "");
+
+  function slotsHtml(arr, gender) {
+    return Array.from({ length: MAX }, (_, i) => {
+      const name = arr[i];
+      if (!name) return `<div class="cast-slot empty"><span class="cast-slot-empty-label">slot ${i + 1}</span></div>`;
+      const { season, tribe } = PLAYER_INFO[name] || {};
+      return `
+        <div class="cast-slot">
+          ${slotAvatarHtml(name, season?.id, `${tribe?.color ?? "#888"}20`, tribe?.color ?? "#888")}
+          <div class="cast-slot-info">
+            <div class="cast-slot-name">${name}</div>
+            <div class="cast-slot-sub">S${season?.id} · ${season?.name ?? "?"}</div>
+          </div>
+          <button class="remove-btn" data-name="${name}" data-gender="${gender}">✕</button>
+        </div>`;
+    }).join("");
+  }
+
+  document.getElementById("slots-w").innerHTML = slotsHtml(castW, "f");
+  document.getElementById("slots-m").innerHTML = slotsHtml(castM, "m");
+  document.querySelectorAll(".remove-btn").forEach(btn => {
+    btn.addEventListener("click", () => togglePlayer(btn.dataset.name, btn.dataset.gender));
+  });
+}
+
+document.getElementById("reset-btn").addEventListener("click", () => {
+  castW.length = 0; castM.length = 0; renderPool(); renderPanel();
+});
+
+renderTabs(); renderPool(); renderPanel();
+</script>
 </body>
 </html>
