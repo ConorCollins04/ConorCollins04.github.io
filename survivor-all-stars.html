@@ -627,27 +627,39 @@ function initials(name) {
   return name.split(" ").filter(w => w.length > 1).map(w => w[0]).slice(0, 2).join("").toUpperCase();
 }
 
-function imgPath(name, seasonId) {
-  const slug = name.toLowerCase()
+function imgSlug(name) {
+  return name.toLowerCase()
     .replace(/['']/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
-  return `images/survivor/s${seasonId}/${slug}.jpg`;
+}
+
+function tryImage(img, name, seasonId) {
+  const slug = imgSlug(name);
+  const base = `images/survivor/s${seasonId}/${slug}`;
+  img.src = `${base}.webp`;
+  img.onerror = () => {
+    img.onerror = () => { img.style.display = "none"; };
+    img.src = `${base}.jpg`;
+  };
+  img.onload = () => {
+    if (img.nextElementSibling) img.nextElementSibling.style.display = "none";
+  };
 }
 
 function avatarHtml(name, seasonId, bgColor, fgColor) {
-  const path = imgPath(name, seasonId);
-  return `<div class="avatar" style="background:${bgColor};color:${fgColor}">
-    <img src="${path}" alt="${name}" onerror="this.style.display='none'">
-    ${initials(name)}
+  const id = initials(name);
+  return `<div class="avatar" style="background:${bgColor};color:${fgColor}" data-name="${name}" data-season="${seasonId}">
+    <img alt="${name}">
+    <span>${id}</span>
   </div>`;
 }
 
 function slotAvatarHtml(name, seasonId, bgColor, fgColor) {
-  const path = imgPath(name, seasonId);
-  return `<div class="cast-slot-avatar" style="background:${bgColor};color:${fgColor}">
-    <img src="${path}" alt="${name}" onerror="this.style.display='none'">
-    ${initials(name)}
+  const id = initials(name);
+  return `<div class="cast-slot-avatar" style="background:${bgColor};color:${fgColor}" data-name="${name}" data-season="${seasonId}">
+    <img alt="${name}">
+    <span>${id}</span>
   </div>`;
 }
 function isSelected(name) { return castW.includes(name) || castM.includes(name); }
@@ -696,6 +708,9 @@ function renderPool() {
   document.querySelectorAll(".player-card:not(.disabled)").forEach(card => {
     card.addEventListener("click", () => togglePlayer(card.dataset.name, card.dataset.gender));
   });
+  document.querySelectorAll(".avatar[data-name]").forEach(el => {
+    tryImage(el.querySelector("img"), el.dataset.name, el.dataset.season);
+  });
 }
 
 function togglePlayer(name, gender) {
@@ -733,6 +748,9 @@ function renderPanel() {
 
   document.getElementById("slots-w").innerHTML = slotsHtml(castW, "f");
   document.getElementById("slots-m").innerHTML = slotsHtml(castM, "m");
+  document.querySelectorAll(".cast-slot-avatar[data-name]").forEach(el => {
+    tryImage(el.querySelector("img"), el.dataset.name, el.dataset.season);
+  });
   document.querySelectorAll(".remove-btn").forEach(btn => {
     btn.addEventListener("click", () => togglePlayer(btn.dataset.name, btn.dataset.gender));
   });
