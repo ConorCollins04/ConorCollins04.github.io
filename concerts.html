@@ -547,12 +547,27 @@
 
   function updateSubtitle() {
     const total = CONCERTS ? CONCERTS.length : 0;
-    const artists = CONCERTS ? new Set(CONCERTS.map(s => s.artist)).size : 0;
-    const venues  = CONCERTS ? new Set(CONCERTS.map(s => s.venue)).size : 0;
+    if (total === 0) {
+      document.getElementById("subtitle").textContent = "Add your shows to concerts-data.js";
+      return;
+    }
+
+    const headliners = new Set();
+    const everyone   = new Set();
+    for (const s of CONCERTS) {
+      if (s.artist) {
+        headliners.add(s.artist);
+        everyone.add(s.artist);
+      }
+      for (const a of (s.headliners || [])) { headliners.add(a); everyone.add(a); }
+      for (const a of [...(s.openers || []), ...(s.support || []), ...(s.artists || []), ...(s.guests || [])]) {
+        everyone.add(a);
+      }
+    }
+    const venues = new Set(CONCERTS.map(s => s.venue));
+
     document.getElementById("subtitle").textContent =
-      total === 0
-        ? "Add your shows to concerts-data.js"
-        : `${total} show${total !== 1 ? "s" : ""} · ${artists} artist${artists !== 1 ? "s" : ""} · ${venues} venue${venues !== 1 ? "s" : ""}`;
+      `${total} show${total !== 1 ? "s" : ""} · ${headliners.size} headliner${headliners.size !== 1 ? "s" : ""} · ${everyone.size} artist${everyone.size !== 1 ? "s" : ""} · ${venues.size} venue${venues.size !== 1 ? "s" : ""}`;
   }
 
   // ── View toggle ───────────────────────────────────────────────────────────
