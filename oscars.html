@@ -495,13 +495,18 @@
     for (const year of years) {
       const data = OSCARS[year];
 
-      let totalSeen = 0, totalAll = 0;
+      // Count unique films (a film nominated in multiple categories is one film)
+      const filmSeen = new Map();
       for (const cat of CATEGORIES) {
         const nominees = data[cat];
         if (!nominees) continue;
-        totalAll  += nominees.length;
-        totalSeen += nominees.filter(n => !n.notSeen).length;
+        for (const n of nominees) {
+          if (!filmSeen.has(n.film)) filmSeen.set(n.film, !n.notSeen);
+          else if (!n.notSeen) filmSeen.set(n.film, true);
+        }
       }
+      const totalAll  = filmSeen.size;
+      const totalSeen = [...filmSeen.values()].filter(Boolean).length;
 
       const yearBlock = document.createElement("div");
       yearBlock.className = "progress-year";
