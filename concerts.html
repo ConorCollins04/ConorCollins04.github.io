@@ -651,16 +651,18 @@
     const people = [...countMap.keys()].sort((a, b) => countMap.get(b) - countMap.get(a));
     const select = document.getElementById("person-filter-select");
     select.innerHTML = `<option value="">went with…</option>`;
-    const aloneOpt = document.createElement("option");
-    aloneOpt.value = "__alone__";
-    aloneOpt.textContent = `alone (${aloneCount})`;
-    if (personFilter === "__alone__") aloneOpt.selected = true;
-    select.appendChild(aloneOpt);
-    for (const person of people) {
+
+    // Merge "Nobody" into the sorted list by count
+    const allOptions = [
+      { value: "__alone__", label: `Nobody (${aloneCount})`, count: aloneCount },
+      ...people.map(p => ({ value: p, label: `${p} (${countMap.get(p)})`, count: countMap.get(p) }))
+    ].sort((a, b) => b.count - a.count);
+
+    for (const { value, label } of allOptions) {
       const opt = document.createElement("option");
-      opt.value = person;
-      opt.textContent = `${person} (${countMap.get(person)})`;
-      if (person === personFilter) opt.selected = true;
+      opt.value = value;
+      opt.textContent = label;
+      if (value === personFilter) opt.selected = true;
       select.appendChild(opt);
     }
     select.classList.toggle("filtered", personFilter !== null);
