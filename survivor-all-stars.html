@@ -1205,7 +1205,7 @@ function renderShareView(assignments) {
         </div>
         <div class="share-player-info">
           <div class="share-player-name">${parts[0]} <span class="share-player-name-last">${parts.slice(1).join(" ")}</span></div>
-          <div class="share-player-season">S${season?.id} · ${season?.name ?? "?"}</div>
+          <div class="share-player-season">${season?.name ?? "?"}</div>
         </div>`;
       tryImage(card.querySelector("img"), name, season?.id);
       grid.appendChild(card);
