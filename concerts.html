@@ -264,6 +264,12 @@
     </div>
   </div>
 
+  <div id="artist-filter-toggle" style="display:none; margin-bottom: 8px;">
+    <div class="view-toggle">
+      <button class="view-btn active" data-filter="all">All</button>
+      <button class="view-btn" data-filter="headlining">Headlining</button>
+    </div>
+  </div>
   <div id="secondary-sort-toggle" style="display:none; margin-bottom: 20px;">
     <div class="view-toggle">
       <button class="view-btn active" data-sort="alpha">A–Z</button>
@@ -287,6 +293,7 @@
 <script>
   let currentView = "year";
   let secondarySort = "alpha";
+  let artistFilter = "all";
 
   // ── Helpers ──────────────────────────────────────────────────────────────
 
@@ -524,9 +531,14 @@
       const openerOnly   = allArtists.filter(a => byArtist.get(a).every(e => e.role === "opener"));
 
       for (const artist of headliners) {
-        const entries = byArtist.get(artist).sort((a, b) => b.show.date.localeCompare(a.show.date));
+        let entries = byArtist.get(artist).sort((a, b) => b.show.date.localeCompare(a.show.date));
+        if (artistFilter === "headlining") {
+          entries = entries.filter(e => e.role === "headliner" || e.role === "member");
+        }
         container.appendChild(buildSection(artist, entries.length, entries));
       }
+
+      if (artistFilter === "headlining") return;
 
       if (openerOnly.length > 0) {
         // Collapsible opener-only block
@@ -594,6 +606,14 @@
 
   // ── View toggle ───────────────────────────────────────────────────────────
 
+  document.querySelectorAll("#artist-filter-toggle .view-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      artistFilter = btn.dataset.filter;
+      document.querySelectorAll("#artist-filter-toggle .view-btn").forEach(b => b.classList.toggle("active", b === btn));
+      render();
+    });
+  });
+
   document.querySelectorAll("#secondary-sort-toggle .view-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       secondarySort = btn.dataset.sort;
@@ -606,10 +626,13 @@
     btn.addEventListener("click", () => {
       currentView = btn.dataset.view;
       document.querySelectorAll(".page-header .view-btn").forEach(b => b.classList.toggle("active", b === btn));
-      // Reset secondary sort when switching views
+      // Reset secondary sort and filter when switching views
       secondarySort = "alpha";
       document.querySelectorAll("#secondary-sort-toggle .view-btn").forEach(b => b.classList.toggle("active", b.dataset.sort === "alpha"));
       document.getElementById("secondary-sort-toggle").style.display = (currentView === "venue" || currentView === "artist") ? "" : "none";
+      artistFilter = "all";
+      document.querySelectorAll("#artist-filter-toggle .view-btn").forEach(b => b.classList.toggle("active", b.dataset.filter === "all"));
+      document.getElementById("artist-filter-toggle").style.display = currentView === "artist" ? "" : "none";
       render();
     });
   });
