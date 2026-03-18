@@ -178,6 +178,11 @@
       margin-right: 4px;
     }
 
+    .guest-label {
+      letter-spacing: 0.03em;
+      margin-right: 4px;
+    }
+
     .opener-toggle {
       font-family: var(--mono);
       font-size: 0.62rem;
@@ -354,7 +359,7 @@
       if ((show.guests || []).length > 0) {
         const g = document.createElement("div");
         g.className = "concert-openers";
-        g.innerHTML = `<span class="opener-label">guest:</span>${show.guests.join(", ")}`;
+        g.innerHTML = `<span class="guest-label">Guest:</span>${show.guests.join(", ")}`;
         main.appendChild(g);
       }
 
@@ -405,7 +410,7 @@
       if ((show.guests || []).length > 0) {
         const g = document.createElement("div");
         g.className = "concert-openers";
-        g.innerHTML = `<span class="opener-label">guest:</span>${show.guests.join(", ")}`;
+        g.innerHTML = `<span class="guest-label">Guest:</span>${show.guests.join(", ")}`;
         main.appendChild(g);
       }
     }
