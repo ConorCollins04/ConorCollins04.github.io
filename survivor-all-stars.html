@@ -394,11 +394,120 @@
       color: var(--nav-active-text);
       font-weight: 500;
     }
+  /* ── Continue button ── */
+  .continue-btn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 10px 16px;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: opacity 0.15s;
+  }
+  .continue-btn:disabled { opacity: 0.22; cursor: not-allowed; }
+  .continue-btn:not(:disabled):hover { opacity: 0.82; }
+
+  /* ── Tribes phase ── */
+  #tribes-phase { background: var(--bg); min-height: 100vh; }
+  .tribes-layout { padding: 56px 8vw 100px; }
+
+  .tribes-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .tribes-header-left { flex: 1; }
+  .tribes-header-left h1 { margin-bottom: 8px; }
+  .tribes-header-actions { display: flex; gap: 8px; padding-top: 8px; flex-shrink: 0; }
+
+  .action-btn {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: border-color 0.12s, color 0.12s;
+  }
+  .action-btn:hover { border-color: var(--border-hover); color: var(--text); }
+
+  .tribe-pool-section { margin-bottom: 28px; }
+  .tribe-pool-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .tribe-pool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 6px;
+    min-height: 64px;
+    padding: 8px;
+    border: 1.5px dashed var(--border);
+    border-radius: 8px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .tribe-pool-grid.drag-over { border-color: var(--border-hover); background: var(--surface2); }
+  .tribe-pool-empty {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--faint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    letter-spacing: 0.04em;
+  }
+
+  .tribe-columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .tribe-col {
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .tribe-col.drag-over { border-color: var(--border-hover); }
+
+  .tribe-col-header {
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .tribe-col-swatch { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .tribe-col-name { font-family: var(--slab); font-size: 0.88rem; font-weight: 400; color: var(--text); flex: 1; }
+  .tribe-col-count { font-family: var(--mono); font-size: 0.58rem; color: var(--muted); letter-spacing: 0.04em; }
+  .tribe-col-count.full { color: #5a7a3a; }
+
+  .tribe-col-body { padding: 8px; display: flex; flex-direction: column; gap: 3px; }
+
+  /* Draggable state */
+  .draggable { cursor: grab; }
+  .draggable:active { cursor: grabbing; }
+  .draggable.dragging { opacity: 0.28; }
   </style>
 </head>
 <body>
 
-<div class="layout">
+<div class="layout" id="casting-layout">
   <div class="pool">
     <div class="pool-header">
       <h1>All-Stars Casting</h1>
@@ -426,6 +535,27 @@
       <div class="cast-slots" id="slots-m"></div>
     </div>
     <button class="reset-btn" id="reset-btn">↺ clear all</button>
+    <button class="continue-btn" id="continue-btn" disabled>Draft Tribes →</button>
+  </div>
+</div>
+
+<div id="tribes-phase" style="display:none">
+  <div class="tribes-layout">
+    <div class="tribes-header">
+      <div class="tribes-header-left">
+        <h1>Tribe Draft</h1>
+        <p class="pool-subtitle" id="tribes-subtitle">Drag castaways into their tribes — or randomize</p>
+      </div>
+      <div class="tribes-header-actions">
+        <button class="action-btn" id="randomize-btn">↺ randomize</button>
+        <button class="action-btn" id="back-cast-btn">← back to cast</button>
+      </div>
+    </div>
+    <div class="tribe-pool-section">
+      <div class="tribe-pool-label">Unassigned <span id="unassigned-count">18</span></div>
+      <div class="tribe-pool-grid" id="tribe-pool-grid"></div>
+    </div>
+    <div class="tribe-columns" id="tribe-columns"></div>
   </div>
 </div>
 
@@ -755,11 +885,165 @@ function renderPanel() {
   document.querySelectorAll(".remove-btn").forEach(btn => {
     btn.addEventListener("click", () => togglePlayer(btn.dataset.name, btn.dataset.gender));
   });
+  const castFull = castW.length === MAX && castM.length === MAX;
+  document.getElementById("continue-btn").disabled = !castFull;
 }
 
 document.getElementById("reset-btn").addEventListener("click", () => {
   castW.length = 0; castM.length = 0; renderPool(); renderPanel();
 });
+
+// ─── Tribe draft ────────────────────────────────────────────────────────────
+const ALLSTAR_TRIBES = [
+  { id: "chapera",  name: "Chapera",   color: "#C8102E" },
+  { id: "mogoMogo", name: "Mogo Mogo", color: "#005EB8" },
+  { id: "saboga",   name: "Saboga",    color: "#C9A84C" },
+];
+const TRIBE_SIZE = 6;
+const tribeAssignments = { chapera: [], mogoMogo: [], saboga: [] };
+let draggedPlayer = null;
+let tribeDropInitialized = false;
+
+function getUnassigned() {
+  const assigned = new Set(Object.values(tribeAssignments).flat());
+  return [...castW, ...castM].filter(n => !assigned.has(n));
+}
+
+function movePlayer(name, destId) {
+  if (destId && tribeAssignments[destId].length >= TRIBE_SIZE) return;
+  ALLSTAR_TRIBES.forEach(t => {
+    const i = tribeAssignments[t.id].indexOf(name);
+    if (i > -1) tribeAssignments[t.id].splice(i, 1);
+  });
+  if (destId) tribeAssignments[destId].push(name);
+}
+
+function setupDropZone(el, destId) {
+  el.addEventListener("dragover", e => { e.preventDefault(); el.classList.add("drag-over"); });
+  el.addEventListener("dragleave", e => { if (!el.contains(e.relatedTarget)) el.classList.remove("drag-over"); });
+  el.addEventListener("drop", e => {
+    e.preventDefault();
+    el.classList.remove("drag-over");
+    if (!draggedPlayer) return;
+    movePlayer(draggedPlayer, destId);
+    draggedPlayer = null;
+    renderTribeDraft();
+  });
+}
+
+function makeDraggable(el, name) {
+  el.draggable = true;
+  el.classList.add("draggable");
+  el.addEventListener("dragstart", e => {
+    draggedPlayer = name;
+    e.dataTransfer.effectAllowed = "move";
+    requestAnimationFrame(() => el.classList.add("dragging"));
+  });
+  el.addEventListener("dragend", () => {
+    el.classList.remove("dragging");
+    draggedPlayer = null;
+  });
+}
+
+function renderTribeDraft() {
+  const unassigned = getUnassigned();
+  document.getElementById("unassigned-count").textContent = unassigned.length;
+  document.getElementById("tribes-subtitle").textContent = unassigned.length === 0
+    ? "All 18 castaways assigned to tribes"
+    : "Drag castaways into their tribes — or randomize";
+
+  // Pool
+  const poolGrid = document.getElementById("tribe-pool-grid");
+  poolGrid.innerHTML = unassigned.length === 0
+    ? '<span class="tribe-pool-empty">All players assigned ✓</span>'
+    : "";
+  unassigned.forEach(name => {
+    const { season, tribe } = PLAYER_INFO[name] || {};
+    const card = document.createElement("div");
+    card.className = "player-card";
+    const parts = name.split(" ");
+    card.innerHTML = `
+      ${avatarHtml(name, season?.id, `${tribe?.color ?? "#888"}20`, tribe?.color ?? "#888")}
+      <div class="player-name">${parts[0]}<br><span class="player-name-last">${parts.slice(1).join(" ")}</span></div>`;
+    card.querySelectorAll(".avatar[data-name]").forEach(a => tryImage(a.querySelector("img"), a.dataset.name, a.dataset.season));
+    makeDraggable(card, name);
+    poolGrid.appendChild(card);
+  });
+
+  // Tribe columns
+  const colsEl = document.getElementById("tribe-columns");
+  colsEl.innerHTML = "";
+  ALLSTAR_TRIBES.forEach(t => {
+    const members = tribeAssignments[t.id];
+    const isFull = members.length === TRIBE_SIZE;
+    const col = document.createElement("div");
+    col.className = "tribe-col";
+    col.innerHTML = `
+      <div class="tribe-col-header">
+        <div class="tribe-col-swatch" style="background:${t.color}"></div>
+        <span class="tribe-col-name">${t.name}</span>
+        <span class="tribe-col-count${isFull ? " full" : ""}">${members.length}/6</span>
+      </div>
+      <div class="tribe-col-body"></div>`;
+    const body = col.querySelector(".tribe-col-body");
+    for (let i = 0; i < TRIBE_SIZE; i++) {
+      const name = members[i];
+      if (name) {
+        const { season, tribe } = PLAYER_INFO[name] || {};
+        const row = document.createElement("div");
+        row.className = "cast-slot";
+        row.innerHTML = `
+          ${slotAvatarHtml(name, season?.id, `${tribe?.color ?? "#888"}20`, tribe?.color ?? "#888")}
+          <div class="cast-slot-info">
+            <div class="cast-slot-name">${name}</div>
+            <div class="cast-slot-sub">S${season?.id} · ${tribe?.name ?? "?"}</div>
+          </div>`;
+        row.querySelectorAll(".cast-slot-avatar[data-name]").forEach(a => tryImage(a.querySelector("img"), a.dataset.name, a.dataset.season));
+        makeDraggable(row, name);
+        body.appendChild(row);
+      } else {
+        const slot = document.createElement("div");
+        slot.className = "cast-slot empty";
+        slot.innerHTML = `<span class="cast-slot-empty-label">slot ${i + 1}</span>`;
+        body.appendChild(slot);
+      }
+    }
+    setupDropZone(col, t.id);
+    colsEl.appendChild(col);
+  });
+}
+
+function enterTribePhase() {
+  const castSet = new Set([...castW, ...castM]);
+  ALLSTAR_TRIBES.forEach(t => { tribeAssignments[t.id] = tribeAssignments[t.id].filter(n => castSet.has(n)); });
+  document.getElementById("casting-layout").style.display = "none";
+  document.getElementById("tribes-phase").style.display = "";
+  if (!tribeDropInitialized) {
+    setupDropZone(document.getElementById("tribe-pool-grid"), null);
+    tribeDropInitialized = true;
+  }
+  renderTribeDraft();
+}
+
+function exitTribePhase() {
+  document.getElementById("tribes-phase").style.display = "none";
+  document.getElementById("casting-layout").style.display = "";
+}
+
+function randomizeTribes() {
+  ALLSTAR_TRIBES.forEach(t => { tribeAssignments[t.id] = []; });
+  const all = [...castW, ...castM];
+  for (let i = all.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [all[i], all[j]] = [all[j], all[i]];
+  }
+  ALLSTAR_TRIBES.forEach((t, i) => { tribeAssignments[t.id] = all.slice(i * 6, i * 6 + 6); });
+  renderTribeDraft();
+}
+
+document.getElementById("continue-btn").addEventListener("click", enterTribePhase);
+document.getElementById("back-cast-btn").addEventListener("click", exitTribePhase);
+document.getElementById("randomize-btn").addEventListener("click", randomizeTribes);
 
 renderTabs(); renderPool(); renderPanel();
 </script>
