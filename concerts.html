@@ -178,6 +178,20 @@
       margin-right: 4px;
     }
 
+    .opener-toggle {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
+      color: var(--faint);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0 0 48px;
+      display: block;
+      transition: color 0.12s;
+    }
+    .opener-toggle:hover { color: var(--muted); }
+
     .concert-role {
       font-family: var(--mono);
       font-size: 0.56rem;
@@ -429,10 +443,39 @@
           addEntry(opener, { show, role: "opener", headliner: show.artist });
         }
       }
-      const artists = [...byArtist.keys()].sort((a, b) => a.localeCompare(b));
-      for (const artist of artists) {
+
+      const allArtists = [...byArtist.keys()].sort((a, b) => a.localeCompare(b));
+      const headliners   = allArtists.filter(a => byArtist.get(a).some(e => e.role === "headliner"));
+      const openerOnly   = allArtists.filter(a => byArtist.get(a).every(e => e.role === "opener"));
+
+      for (const artist of headliners) {
         const entries = byArtist.get(artist).sort((a, b) => b.show.date.localeCompare(a.show.date));
         container.appendChild(buildSection(artist, entries.length, entries));
+      }
+
+      if (openerOnly.length > 0) {
+        // Collapsible opener-only block
+        const openerWrap = document.createElement("div");
+        openerWrap.id = "opener-only-sections";
+        openerWrap.style.display = "none";
+        for (const artist of openerOnly) {
+          const entries = byArtist.get(artist).sort((a, b) => b.show.date.localeCompare(a.show.date));
+          openerWrap.appendChild(buildSection(artist, entries.length, entries));
+        }
+        container.appendChild(openerWrap);
+
+        const toggleBtn = document.createElement("button");
+        toggleBtn.className = "opener-toggle";
+        toggleBtn.dataset.count = openerOnly.length;
+        toggleBtn.textContent = `show ${openerOnly.length} opener-only artist${openerOnly.length !== 1 ? "s" : ""}`;
+        toggleBtn.addEventListener("click", () => {
+          const open = openerWrap.style.display === "none";
+          openerWrap.style.display = open ? "" : "none";
+          toggleBtn.textContent = open
+            ? `hide opener-only artist${openerOnly.length !== 1 ? "s" : ""}`
+            : `show ${openerOnly.length} opener-only artist${openerOnly.length !== 1 ? "s" : ""}`;
+        });
+        container.appendChild(toggleBtn);
       }
 
     } else {
