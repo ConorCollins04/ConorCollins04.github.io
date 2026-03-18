@@ -548,7 +548,9 @@
       const venues = [...byVenue.keys()].sort((a, b) => a.localeCompare(b));
       for (const venue of venues) {
         const shows = sortedByDate(byVenue.get(venue), true);
-        container.appendChild(buildSection(venue, shows.length, shows));
+        const city = shows[0].city;
+        const title = city ? `${venue} · ${city}` : venue;
+        container.appendChild(buildSection(title, shows.length, shows));
       }
     }
   }
