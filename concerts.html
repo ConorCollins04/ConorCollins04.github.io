@@ -198,6 +198,24 @@
     .opener-toggle:hover { color: var(--muted); }
     .opener-toggle.filtered { color: var(--text); }
 
+    .person-filter-select {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
+      color: var(--faint);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+      transition: color 0.12s;
+    }
+    .person-filter-select:hover { color: var(--muted); }
+    .person-filter-select.filtered { color: var(--text); }
+    .person-filter-select option { color: var(--text); background: var(--surface); }
+
     .concert-role {
       font-family: var(--mono);
       font-size: 0.56rem;
@@ -272,10 +290,9 @@
     </div>
   </div>
   <div id="person-filter-wrap" style="display:none; margin-bottom: 20px;">
-    <button id="person-filter-btn" class="opener-toggle" style="padding-bottom: 0;">filter by person</button>
-    <div id="person-filter-pills" style="display:none; margin-top: 10px;">
-      <div class="year-tabs" id="person-pills"></div>
-    </div>
+    <select id="person-filter-select" class="person-filter-select">
+      <option value="">filter by person</option>
+    </select>
   </div>
 
   <div id="secondary-sort-toggle" style="display:none; margin-bottom: 20px;">
@@ -619,43 +636,30 @@
 
   // ── View toggle ───────────────────────────────────────────────────────────
 
-  function buildPersonPills() {
-    const people = [...new Set(CONCERTS.flatMap(s => s.with || []))].sort();
-    const container = document.getElementById("person-pills");
-    container.innerHTML = "";
+  function buildPersonSelect() {
+    const countMap = new Map();
+    for (const s of CONCERTS) {
+      for (const p of (s.with || [])) {
+        countMap.set(p, (countMap.get(p) || 0) + 1);
+      }
+    }
+    const people = [...countMap.keys()].sort((a, b) => countMap.get(b) - countMap.get(a));
+    const select = document.getElementById("person-filter-select");
+    select.innerHTML = `<option value="">filter by person</option>`;
     for (const person of people) {
-      const btn = document.createElement("button");
-      btn.className = "year-tab" + (personFilter === person ? " active" : "");
-      btn.textContent = person;
-      btn.addEventListener("click", () => {
-        personFilter = personFilter === person ? null : person;
-        updatePersonFilterBtn();
-        buildPersonPills();
-        render();
-      });
-      container.appendChild(btn);
+      const opt = document.createElement("option");
+      opt.value = person;
+      opt.textContent = `${person} (${countMap.get(person)})`;
+      if (person === personFilter) opt.selected = true;
+      select.appendChild(opt);
     }
+    select.classList.toggle("filtered", personFilter !== null);
   }
 
-  function updatePersonFilterBtn() {
-    const btn = document.getElementById("person-filter-btn");
-    btn.classList.toggle("filtered", personFilter !== null);
-    btn.textContent = personFilter ? `${personFilter} ×` : "filter by person";
-  }
-
-  document.getElementById("person-filter-btn").addEventListener("click", (e) => {
-    // If clicking the × to clear, just clear without toggling pills
-    if (personFilter !== null) {
-      personFilter = null;
-      updatePersonFilterBtn();
-      buildPersonPills();
-      render();
-      return;
-    }
-    const pills = document.getElementById("person-filter-pills");
-    const open = pills.style.display === "none";
-    pills.style.display = open ? "" : "none";
-    if (open) buildPersonPills();
+  document.getElementById("person-filter-select").addEventListener("change", (e) => {
+    personFilter = e.target.value || null;
+    e.target.classList.toggle("filtered", personFilter !== null);
+    render();
   });
 
   document.querySelectorAll("#artist-filter-toggle .view-btn").forEach(btn => {
@@ -686,14 +690,17 @@
       document.querySelectorAll("#artist-filter-toggle .view-btn").forEach(b => b.classList.toggle("active", b.dataset.filter === "all"));
       document.getElementById("artist-filter-toggle").style.display = currentView === "artist" ? "" : "none";
       personFilter = null;
-      document.getElementById("person-filter-pills").style.display = "none";
-      updatePersonFilterBtn();
-      document.getElementById("person-filter-wrap").style.display = currentView === "year" ? "" : "none";
+      document.getElementById("person-filter-select").value = "";
+      document.getElementById("person-filter-select").classList.remove("filtered");
+      const wrap = document.getElementById("person-filter-wrap");
+      wrap.style.display = currentView === "year" ? "" : "none";
+      if (currentView === "year") buildPersonSelect();
       render();
     });
   });
 
   updateSubtitle();
+  buildPersonSelect();
   render();
 </script>
 </body>
