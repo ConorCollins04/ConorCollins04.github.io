@@ -316,7 +316,7 @@
   // show is either a concert { artist, venue, city, date, openers }
   //                 or a festival { festival, venue, city, date, headliners, support }
   function buildRow(entry) {
-    const { show, role = "headliner", headliner } = entry;
+    const { show, role = "headliner", headliner, flat = false } = entry;
     const isFestival = !!show.festival;
 
     const row = document.createElement("div");
@@ -370,7 +370,7 @@
       if (role === "opener") {
         const roleEl = document.createElement("div");
         roleEl.className = "concert-role";
-        roleEl.textContent = isFestival ? `support at ${show.festival}` : `opened for ${headliner}`;
+        roleEl.textContent = flat ? `performed at ${show.festival}` : isFestival ? `support at ${show.festival}` : `opened for ${headliner}`;
         main.appendChild(roleEl);
       }
 
@@ -460,8 +460,11 @@
           for (const artist of (show.headliners || [])) {
             addEntry(artist, { show, role: "headliner" });
           }
-          for (const artist of [...(show.support || []), ...(show.artists || [])]) {
+          for (const artist of (show.support || [])) {
             addEntry(artist, { show, role: "opener" });
+          }
+          for (const artist of (show.artists || [])) {
+            addEntry(artist, { show, role: "opener", flat: true });
           }
         } else {
           addEntry(show.artist, { show, role: "headliner" });
