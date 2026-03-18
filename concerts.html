@@ -655,10 +655,10 @@
 
     // 7. Shows by day of week
     const dowCount = new Array(7).fill(0);
-    const dowNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    const dowNames = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
     for (const show of CONCERTS) {
       const [y, m, d] = show.date.split("-").map(Number);
-      dowCount[new Date(y, m - 1, d).getDay()]++;
+      dowCount[(new Date(y, m - 1, d).getDay() + 6) % 7]++;
     }
 
     // 8. Busiest specific month
