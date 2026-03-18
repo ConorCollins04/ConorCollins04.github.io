@@ -646,18 +646,16 @@
       return card;
     }
 
-    grid.appendChild(makeCard(
-      "Most seen artist", maxSeen, topSeen.join(", "),
-      topSeen.length > 1 ? `${topSeen.length}-way tie` : null
-    ));
-    grid.appendChild(makeCard(
-      "Most seen headliner", maxHL, topHL.join(", "),
-      topHL.length > 1 ? `${topHL.length}-way tie` : null
-    ));
-    grid.appendChild(makeCard(
-      "Most visited venue", maxVenue, topVenues.join(", "),
-      topVenues.length > 1 ? `${topVenues.length}-way tie` : null
-    ));
+    grid.appendChild(makeCard("Most seen artist", maxSeen, topSeen.join(", ")));
+    grid.appendChild(makeCard("Most seen headliner", maxHL, topHL.join(", ")));
+
+    // Most visited venue — with chronological headliners as subtext
+    const venueHeadliners = topVenues.map(v => {
+      const shows = CONCERTS.filter(s => s.venue === v).sort((a, b) => a.date.localeCompare(b.date));
+      const names = shows.map(s => s.artist || (s.headliners || []).join(" & ") || s.festival);
+      return topVenues.length > 1 ? `${v}: ${names.join(", ")}` : names.join(", ");
+    }).join(" · ");
+    grid.appendChild(makeCard("Most visited venue", maxVenue, topVenues.join(", "), venueHeadliners));
 
     // Shows by city card
     const cityCard = document.createElement("div");
