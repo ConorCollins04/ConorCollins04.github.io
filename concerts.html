@@ -224,6 +224,76 @@
       margin-top: 3px;
     }
 
+    /* ── Stats view ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 24px;
+    }
+
+    .stat-card.full-width { grid-column: 1 / -1; }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 10px;
+    }
+
+    .stat-number {
+      font-family: var(--slab);
+      font-size: 2.4rem;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-names {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .stat-sub {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.04em;
+      color: var(--faint);
+      margin-top: 5px;
+    }
+
+    .stat-city-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+    .stat-city-row:last-child { border-bottom: none; }
+    .stat-city-name { font-weight: 400; color: var(--text); }
+    .stat-city-count { font-family: var(--mono); font-size: 0.62rem; color: var(--faint); }
+
+    .stat-seated-row {
+      display: flex;
+      gap: 48px;
+      margin-top: 4px;
+    }
+
     /* ── Floating nav ── */
     .nav-wrap {
       position: fixed;
@@ -280,6 +350,7 @@
       <button class="view-btn active" data-view="year">Diary</button>
       <button class="view-btn" data-view="artist">Artists</button>
       <button class="view-btn" data-view="venue">Venues</button>
+      <button class="view-btn" data-view="stats">Stats</button>
     </div>
   </div>
 
@@ -493,9 +564,155 @@
     return section;
   }
 
+  function renderStats() {
+    const container = document.getElementById("concerts-view");
+    container.innerHTML = "";
+
+    // 1. Most seen artist (all roles)
+    const artistCount = new Map();
+    const addArtist = (name) => artistCount.set(name, (artistCount.get(name) || 0) + 1);
+    for (const show of CONCERTS) {
+      if (show.artist) addArtist(show.artist);
+      for (const a of (show.headliners || [])) addArtist(a);
+      for (const a of (show.support   || [])) addArtist(a);
+      for (const a of (show.artists   || [])) addArtist(a);
+      for (const a of (show.openers   || [])) addArtist(a);
+      for (const a of (show.guests    || [])) addArtist(a);
+      for (const a of (show.members   || [])) addArtist(a);
+    }
+    const maxSeen = Math.max(...artistCount.values());
+    const topSeen = [...artistCount.entries()].filter(([,c]) => c === maxSeen).map(([n]) => n).sort();
+
+    // 2. Most seen as headliner
+    const headlinerCount = new Map();
+    const addH = (name) => headlinerCount.set(name, (headlinerCount.get(name) || 0) + 1);
+    for (const show of CONCERTS) {
+      if (show.artist) addH(show.artist);
+      for (const a of (show.headliners || [])) addH(a);
+    }
+    const maxHL = Math.max(...headlinerCount.values());
+    const topHL = [...headlinerCount.entries()].filter(([,c]) => c === maxHL).map(([n]) => n).sort();
+
+    // 3. Most visited venue
+    const venueCount = new Map();
+    for (const show of CONCERTS) {
+      venueCount.set(show.venue, (venueCount.get(show.venue) || 0) + 1);
+    }
+    const maxVenue = Math.max(...venueCount.values());
+    const topVenues = [...venueCount.entries()].filter(([,c]) => c === maxVenue).map(([n]) => n).sort();
+
+    // 4. Shows by city
+    const cityCount = new Map();
+    for (const show of CONCERTS) {
+      const city = show.city || "Unknown";
+      cityCount.set(city, (cityCount.get(city) || 0) + 1);
+    }
+    const cities = [...cityCount.entries()].sort((a, b) => b[1] - a[1]);
+
+    // 5. Seated vs standing
+    const seatedCount   = CONCERTS.filter(s => s.seated).length;
+    const standingCount = CONCERTS.length - seatedCount;
+
+    // Build grid
+    const grid = document.createElement("div");
+    grid.className = "stats-grid";
+
+    function makeCard(label, number, names, sub, fullWidth = false) {
+      const card = document.createElement("div");
+      card.className = "stat-card" + (fullWidth ? " full-width" : "");
+
+      const labelEl = document.createElement("div");
+      labelEl.className = "stat-label";
+      labelEl.textContent = label;
+
+      const numEl = document.createElement("div");
+      numEl.className = "stat-number";
+      numEl.textContent = number;
+
+      const namesEl = document.createElement("div");
+      namesEl.className = "stat-names";
+      namesEl.textContent = names;
+
+      card.appendChild(labelEl);
+      card.appendChild(numEl);
+      card.appendChild(namesEl);
+
+      if (sub) {
+        const subEl = document.createElement("div");
+        subEl.className = "stat-sub";
+        subEl.textContent = sub;
+        card.appendChild(subEl);
+      }
+      return card;
+    }
+
+    grid.appendChild(makeCard(
+      "Most seen artist", maxSeen, topSeen.join(", "),
+      topSeen.length > 1 ? `${topSeen.length}-way tie` : null
+    ));
+    grid.appendChild(makeCard(
+      "Most seen headliner", maxHL, topHL.join(", "),
+      topHL.length > 1 ? `${topHL.length}-way tie` : null
+    ));
+    grid.appendChild(makeCard(
+      "Most visited venue", maxVenue, topVenues.join(", "),
+      topVenues.length > 1 ? `${topVenues.length}-way tie` : null
+    ));
+
+    // Shows by city card
+    const cityCard = document.createElement("div");
+    cityCard.className = "stat-card";
+    const cityLabel = document.createElement("div");
+    cityLabel.className = "stat-label";
+    cityLabel.textContent = "Shows by city";
+    cityCard.appendChild(cityLabel);
+    for (const [city, count] of cities) {
+      const row = document.createElement("div");
+      row.className = "stat-city-row";
+      const nameEl = document.createElement("span");
+      nameEl.className = "stat-city-name";
+      nameEl.textContent = city;
+      const countEl = document.createElement("span");
+      countEl.className = "stat-city-count";
+      countEl.textContent = count;
+      row.appendChild(nameEl);
+      row.appendChild(countEl);
+      cityCard.appendChild(row);
+    }
+    grid.appendChild(cityCard);
+
+    // Seated vs standing card
+    const seatedCard = document.createElement("div");
+    seatedCard.className = "stat-card full-width";
+    const seatedLabel = document.createElement("div");
+    seatedLabel.className = "stat-label";
+    seatedLabel.textContent = "Seated vs standing";
+    seatedCard.appendChild(seatedLabel);
+    const seatedRow = document.createElement("div");
+    seatedRow.className = "stat-seated-row";
+    for (const [n, lbl] of [[seatedCount, "seated"], [standingCount, "standing"]]) {
+      const item = document.createElement("div");
+      const numEl = document.createElement("div");
+      numEl.className = "stat-number";
+      numEl.textContent = n;
+      const subEl = document.createElement("div");
+      subEl.className = "stat-sub";
+      subEl.textContent = lbl;
+      item.appendChild(numEl);
+      item.appendChild(subEl);
+      seatedRow.appendChild(item);
+    }
+    seatedCard.appendChild(seatedRow);
+    grid.appendChild(seatedCard);
+
+    container.appendChild(grid);
+  }
+
   function render() {
     const container = document.getElementById("concerts-view");
     container.innerHTML = "";
+
+    if (currentView === "stats") { renderStats(); return; }
 
     if (!CONCERTS || CONCERTS.length === 0) {
       const empty = document.createElement("div");
@@ -706,6 +923,10 @@
       document.getElementById("person-filter-select").classList.remove("filtered");
       const wrap = document.getElementById("person-filter-wrap");
       wrap.style.display = currentView === "year" ? "" : "none";
+      if (currentView === "stats") {
+        document.getElementById("secondary-sort-toggle").style.display = "none";
+        document.getElementById("artist-filter-toggle").style.display = "none";
+      }
       if (currentView === "year") buildPersonSelect();
       render();
     });
