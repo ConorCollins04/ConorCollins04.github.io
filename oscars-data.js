@@ -25,7 +25,7 @@ const OSCARS = {
     ],
     "Best Actress": [
       { name: "Emma Stone",        film: "Bugonia",                    rank: 1 },
-      { name: "Rose Byrne",        film: "If I Had Legs I'd Kick You", rank: 2 },
+      { name: "Rose Byrne",        film: "If I Had Legs I'd Kick You", notSeen: true },
       { name: "Jessie Buckley",    film: "Hamnet",       winner: true, rank: 3 },
       { name: "Kate Hudson",       film: "Song Sung Blue",             rank: 4 },
       { name: "Renate Reinsve",    film: "Sentimental Value",          rank: 5 },
@@ -38,7 +38,7 @@ const OSCARS = {
       { name: "Wagner Moura",       film: "The Secret Agent",         rank: 5 },
     ],
     "Best Supporting Actress": [
-      { name: "Amy Madigan",            film: "Weapons",           winner: true, rank: 1 },
+      { name: "Amy Madigan",            film: "Weapons",           winner: true, notSeen: true },
       { name: "Teyana Taylor",          film: "One Battle After Another", rank: 2 },
       { name: "Wunmi Mosaku",           film: "Sinners",           rank: 3 },
       { name: "Inga Ibsdotter Lilleaas", film: "Sentimental Value", rank: 4 },
@@ -64,16 +64,16 @@ const OSCARS = {
       { film: "Nickel Boys",                         rank: 5 },
       { film: "A Complete Unknown",                  rank: 6 },
       { film: "I'm Still Here",                      rank: 7 },
-      { film: "Dune: Part Two",      notSeen: true },
+      { film: "Dune: Part Two",                     rank: 8 },
       { film: "The Substance",       notSeen: true },
-      { film: "Wicked",              notSeen: true },
+      { film: "Wicked",                             rank: 9 },
     ],
     "Best Actress": [
       { name: "Mikey Madison",       film: "Anora",              rank: 1 },
       { name: "Fernanda Torres",     film: "I'm Still Here",     rank: 2 },
       { name: "Karla Sofía Gascón", film: "Emilia Pérez",       rank: 3 },
       { name: "Demi Moore",          film: "The Substance",      winner: true, notSeen: true },
-      { name: "Cynthia Erivo",       film: "Wicked",             notSeen: true },
+      { name: "Cynthia Erivo",       film: "Wicked",             rank: 4 },
     ],
     "Best Actor": [
       { name: "Adrien Brody",        film: "The Brutalist",      winner: true, rank: 1 },
@@ -87,14 +87,14 @@ const OSCARS = {
       { name: "Felicity Jones",      film: "The Brutalist",      rank: 2 },
       { name: "Monica Barbaro",      film: "A Complete Unknown", rank: 3 },
       { name: "Zoe Saldana",         film: "Emilia Pérez",       winner: true, rank: 4 },
-      { name: "Ariana Grande",       film: "Wicked",             notSeen: true },
+      { name: "Ariana Grande",       film: "Wicked",             rank: 5 },
     ],
     "Best Supporting Actor": [
       { name: "Kieran Culkin",       film: "A Real Pain",        winner: true, rank: 1 },
       { name: "Yura Borisov",        film: "Anora",              rank: 2 },
       { name: "Edward Norton",       film: "A Complete Unknown", rank: 3 },
       { name: "Jeremy Strong",       film: "The Apprentice",     rank: 4 },
-      { name: "Zach Galifianakis",   film: "A Real Pain",        rank: 5 },
+      { name: "Guy Pearce",           film: "The Brutalist",      rank: 5 },
     ],
   },
 
@@ -110,7 +110,7 @@ const OSCARS = {
       { film: "Killers of the Flower Moon",         rank: 6 },
       { film: "American Fiction",                   rank: 7 },
       { film: "Maestro",                            rank: 8 },
-      { film: "Zone of Interest",                   rank: 9 },
+      { film: "The Zone of Interest",                rank: 9 },
       { film: "Barbie",                             rank: 10 },
     ],
     "Best Actress": [
