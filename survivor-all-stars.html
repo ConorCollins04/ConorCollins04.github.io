@@ -747,7 +747,7 @@ const SEASONS = [
 
 const PLAYER_INFO = {};
 SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
-  PLAYER_INFO[p.name] = { season: s, tribe: t };
+  PLAYER_INFO[p.name] = { season: s, tribe: t, gender: p.gender };
 })));
 
 let currentSeason = 1;
@@ -910,7 +910,13 @@ function getUnassigned() {
 }
 
 function movePlayer(name, destId) {
-  if (destId && tribeAssignments[destId].length >= TRIBE_SIZE) return;
+  if (destId) {
+    const members = tribeAssignments[destId];
+    if (members.length >= TRIBE_SIZE) return;
+    const gender = PLAYER_INFO[name]?.gender;
+    const genderCount = members.filter(n => PLAYER_INFO[n]?.gender === gender).length;
+    if (genderCount >= 3) return;
+  }
   ALLSTAR_TRIBES.forEach(t => {
     const i = tribeAssignments[t.id].indexOf(name);
     if (i > -1) tribeAssignments[t.id].splice(i, 1);
@@ -950,7 +956,7 @@ function renderTribeDraft() {
   document.getElementById("unassigned-count").textContent = unassigned.length;
   document.getElementById("tribes-subtitle").textContent = unassigned.length === 0
     ? "All 18 castaways assigned to tribes"
-    : "Drag castaways into their tribes — or randomize";
+    : "Drag castaways into their tribes (or randomise)";
 
   // Pool
   const poolGrid = document.getElementById("tribe-pool-grid");
@@ -975,14 +981,16 @@ function renderTribeDraft() {
   colsEl.innerHTML = "";
   ALLSTAR_TRIBES.forEach(t => {
     const members = tribeAssignments[t.id];
-    const isFull = members.length === TRIBE_SIZE;
+    const wCount = members.filter(n => PLAYER_INFO[n]?.gender === "f").length;
+    const mCount = members.filter(n => PLAYER_INFO[n]?.gender === "m").length;
+    const isFull = wCount === 3 && mCount === 3;
     const col = document.createElement("div");
     col.className = "tribe-col";
     col.innerHTML = `
       <div class="tribe-col-header">
         <div class="tribe-col-swatch" style="background:${t.color}"></div>
         <span class="tribe-col-name">${t.name}</span>
-        <span class="tribe-col-count${isFull ? " full" : ""}">${members.length}/6</span>
+        <span class="tribe-col-count${isFull ? " full" : ""}">${wCount}/3 ♀ · ${mCount}/3 ♂</span>
       </div>
       <div class="tribe-col-body"></div>`;
     const body = col.querySelector(".tribe-col-body");
@@ -1032,12 +1040,18 @@ function exitTribePhase() {
 
 function randomizeTribes() {
   ALLSTAR_TRIBES.forEach(t => { tribeAssignments[t.id] = []; });
-  const all = [...castW, ...castM];
-  for (let i = all.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [all[i], all[j]] = [all[j], all[i]];
-  }
-  ALLSTAR_TRIBES.forEach((t, i) => { tribeAssignments[t.id] = all.slice(i * 6, i * 6 + 6); });
+  const shuffle = arr => {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
+  const women = shuffle([...castW]);
+  const men = shuffle([...castM]);
+  ALLSTAR_TRIBES.forEach((t, i) => {
+    tribeAssignments[t.id] = [...women.slice(i * 3, i * 3 + 3), ...men.slice(i * 3, i * 3 + 3)];
+  });
   renderTribeDraft();
 }
 
