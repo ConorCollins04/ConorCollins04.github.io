@@ -507,6 +507,8 @@
   .draggable { cursor: grab; }
   .draggable:active { cursor: grabbing; }
   .draggable.dragging { opacity: 0.28; }
+
+  .action-btn:disabled { opacity: 0.32; cursor: not-allowed; pointer-events: none; }
   </style>
 </head>
 <body>
@@ -554,8 +556,9 @@
         <p class="pool-subtitle" id="tribes-subtitle">Drag castaways into their tribes (or randomise)</p>
       </div>
       <div class="tribes-header-actions">
-        <button class="action-btn" id="randomize-btn">⚂ randomise</button>
         <button class="action-btn" id="back-cast-btn">← back to cast</button>
+        <button class="action-btn" id="randomize-btn">⚂ randomise</button>
+        <button class="action-btn" id="share-btn" disabled>Share →</button>
       </div>
     </div>
     <div class="tribe-pool-section">
@@ -563,6 +566,25 @@
       <div class="tribe-pool-grid" id="tribe-pool-grid"></div>
     </div>
     <div class="tribe-columns" id="tribe-columns"></div>
+  </div>
+</div>
+
+<div id="share-phase" style="display:none">
+  <div class="tribes-layout">
+    <div class="tribes-header">
+      <div class="tribes-header-left">
+        <h1>Survivor: All-Stars</h1>
+        <p class="pool-subtitle">Season 8 · Fan cast</p>
+      </div>
+      <div class="tribes-header-actions">
+        <button class="action-btn" id="back-tribes-btn">← edit tribes</button>
+        <button class="action-btn" id="copy-link-btn">⎘ copy link</button>
+      </div>
+    </div>
+    <div class="tribe-columns" id="share-tribe-columns"></div>
+    <div style="margin-top: 20px;">
+      <button class="reset-btn" id="build-own-btn">Build your own →</button>
+    </div>
   </div>
 </div>
 
@@ -979,9 +1001,11 @@ function makeDraggable(el, name) {
 function renderTribeDraft() {
   const unassigned = getUnassigned();
   document.getElementById("unassigned-count").textContent = unassigned.length;
-  document.getElementById("tribes-subtitle").textContent = unassigned.length === 0
+  const allAssigned = unassigned.length === 0;
+  document.getElementById("tribes-subtitle").textContent = allAssigned
     ? "All 18 castaways assigned to tribes"
     : "Drag castaways into their tribes (or randomise)";
+  document.getElementById("share-btn").disabled = !allAssigned;
 
   // Pool
   const poolGrid = document.getElementById("tribe-pool-grid");
@@ -1080,11 +1104,120 @@ function randomizeTribes() {
   renderTribeDraft();
 }
 
+// ─── Share view ─────────────────────────────────────────────────────────────
+const ALL_PLAYERS = [];
+SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => ALL_PLAYERS.push(p.name))));
+
+function encodeShare() {
+  const idx = n => ALL_PLAYERS.indexOf(n);
+  return "#t=" + ALLSTAR_TRIBES.map(t => tribeAssignments[t.id].map(idx).join(",")).join(".");
+}
+
+function decodeShare(hash) {
+  if (!hash || !hash.startsWith("#t=")) return null;
+  const parts = hash.slice(3).split(".");
+  if (parts.length !== 3) return null;
+  const used = new Set();
+  const result = {};
+  for (let i = 0; i < 3; i++) {
+    const indices = parts[i].split(",").map(Number);
+    if (indices.length !== 6 || indices.some(n => isNaN(n) || n < 0 || n >= ALL_PLAYERS.length || used.has(n))) return null;
+    indices.forEach(n => used.add(n));
+    result[ALLSTAR_TRIBES[i].id] = indices.map(n => ALL_PLAYERS[n]);
+  }
+  return result;
+}
+
+function renderShareView(assignments) {
+  const colsEl = document.getElementById("share-tribe-columns");
+  colsEl.innerHTML = "";
+  ALLSTAR_TRIBES.forEach(t => {
+    const members = assignments[t.id] || [];
+    const col = document.createElement("div");
+    col.className = "tribe-col";
+    col.innerHTML = `
+      <div class="tribe-col-header">
+        <div class="tribe-col-swatch" style="background:${t.color}"></div>
+        <span class="tribe-col-name">${t.name}</span>
+      </div>
+      <div class="tribe-col-body"></div>`;
+    const body = col.querySelector(".tribe-col-body");
+    members.forEach(name => {
+      const { season, tribe } = PLAYER_INFO[name] || {};
+      const row = document.createElement("div");
+      row.className = "cast-slot";
+      row.innerHTML = `
+        ${slotAvatarHtml(name, season?.id, `${tribe?.color ?? "#888"}20`, tribe?.color ?? "#888")}
+        <div class="cast-slot-info">
+          <div class="cast-slot-name">${name}</div>
+          <div class="cast-slot-sub">S${season?.id} · ${tribe?.name ?? "?"}</div>
+        </div>`;
+      row.querySelectorAll(".cast-slot-avatar[data-name]").forEach(a => tryImage(a.querySelector("img"), a.dataset.name, a.dataset.season));
+      body.appendChild(row);
+    });
+    colsEl.appendChild(col);
+  });
+}
+
+function showTribePhase() {
+  document.getElementById("share-phase").style.display = "none";
+  document.getElementById("tribes-phase").style.display = "";
+  if (!tribeDropInitialized) {
+    setupDropZone(document.getElementById("tribe-pool-grid"), null);
+    tribeDropInitialized = true;
+  }
+  renderTribeDraft();
+}
+
+function enterSharePhase() {
+  const hash = encodeShare();
+  history.replaceState(null, "", hash);
+  document.getElementById("tribes-phase").style.display = "none";
+  document.getElementById("share-phase").style.display = "";
+  renderShareView(tribeAssignments);
+}
+
+document.getElementById("share-btn").addEventListener("click", enterSharePhase);
+document.getElementById("back-tribes-btn").addEventListener("click", showTribePhase);
+document.getElementById("copy-link-btn").addEventListener("click", () => {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const btn = document.getElementById("copy-link-btn");
+    const orig = btn.textContent;
+    btn.textContent = "✓ copied!";
+    setTimeout(() => { btn.textContent = orig; }, 2000);
+  });
+});
+document.getElementById("build-own-btn").addEventListener("click", () => {
+  history.replaceState(null, "", location.pathname);
+  document.getElementById("share-phase").style.display = "none";
+  document.getElementById("casting-layout").style.display = "";
+  castW.length = 0; castM.length = 0;
+  ALLSTAR_TRIBES.forEach(t => { tribeAssignments[t.id] = []; });
+  tribeDropInitialized = false;
+  renderPool(); renderPanel();
+});
+
 document.getElementById("continue-btn").addEventListener("click", enterTribePhase);
 document.getElementById("back-cast-btn").addEventListener("click", exitTribePhase);
 document.getElementById("randomize-btn").addEventListener("click", randomizeTribes);
 
-renderTabs(); renderPool(); renderPanel();
+// On load: check for share hash
+const _decoded = decodeShare(location.hash);
+if (_decoded) {
+  // Populate state so "← edit tribes" works
+  ALLSTAR_TRIBES.forEach(t => {
+    tribeAssignments[t.id] = _decoded[t.id];
+    _decoded[t.id].forEach(name => {
+      const g = PLAYER_INFO[name]?.gender;
+      (g === "f" ? castW : castM).push(name);
+    });
+  });
+  document.getElementById("casting-layout").style.display = "none";
+  document.getElementById("share-phase").style.display = "";
+  renderShareView(_decoded);
+} else {
+  renderTabs(); renderPool(); renderPanel();
+}
 </script>
 </body>
 </html>
