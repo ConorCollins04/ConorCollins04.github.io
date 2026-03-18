@@ -343,7 +343,7 @@
 
       // w/ line
       const allArtists = isFestival
-        ? [...(show.headliners || []), ...(show.support || [])]
+        ? [...(show.headliners || []), ...(show.support || []), ...(show.artists || [])]
         : (show.openers || []);
       if (allArtists.length > 0) {
         const op = document.createElement("div");
@@ -384,7 +384,7 @@
       main.appendChild(primaryEl);
 
       const allArtists = isFestival
-        ? [...(show.headliners || []), ...(show.support || [])]
+        ? [...(show.headliners || []), ...(show.support || []), ...(show.artists || [])]
         : (show.openers || []);
       if (allArtists.length > 0) {
         const op = document.createElement("div");
@@ -460,7 +460,7 @@
           for (const artist of (show.headliners || [])) {
             addEntry(artist, { show, role: "headliner" });
           }
-          for (const artist of (show.support || [])) {
+          for (const artist of [...(show.support || []), ...(show.artists || [])]) {
             addEntry(artist, { show, role: "opener" });
           }
         } else {
@@ -494,13 +494,13 @@
         const toggleBtn = document.createElement("button");
         toggleBtn.className = "opener-toggle";
         toggleBtn.dataset.count = openerOnly.length;
-        toggleBtn.textContent = `show ${openerOnly.length} opener-only artist${openerOnly.length !== 1 ? "s" : ""}`;
+        toggleBtn.textContent = `show ${openerOnly.length} support act${openerOnly.length !== 1 ? "s" : ""}`;
         toggleBtn.addEventListener("click", () => {
           const open = openerWrap.style.display === "none";
           openerWrap.style.display = open ? "" : "none";
           toggleBtn.textContent = open
-            ? `hide opener-only artist${openerOnly.length !== 1 ? "s" : ""}`
-            : `show ${openerOnly.length} opener-only artist${openerOnly.length !== 1 ? "s" : ""}`;
+            ? `hide support act${openerOnly.length !== 1 ? "s" : ""}`
+            : `show ${openerOnly.length} support act${openerOnly.length !== 1 ? "s" : ""}`;
         });
         container.appendChild(toggleBtn);
       }
