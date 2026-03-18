@@ -178,6 +178,14 @@
       margin-right: 4px;
     }
 
+    .concert-role {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.06em;
+      color: var(--faint);
+      margin-top: 3px;
+    }
+
     /* ── Floating nav ── */
     .nav-wrap {
       position: fixed;
@@ -290,7 +298,10 @@
 
   // ── Render ────────────────────────────────────────────────────────────────
 
-  function buildRow(show, { hidePrimary = false, hideSecondary = false } = {}) {
+  // entry: { show, role: "headliner"|"opener", headliner?: string }
+  function buildRow(entry) {
+    const { show, role = "headliner", headliner } = entry;
+
     const row = document.createElement("div");
     row.className = "concert-row";
 
@@ -301,7 +312,6 @@
     main.className = "concert-main";
 
     if (currentView === "year") {
-      // date col = short date, primary = artist, secondary = venue
       dateEl.textContent = formatShortDate(show.date);
 
       const artist = document.createElement("div");
@@ -315,7 +325,6 @@
       main.appendChild(venue);
 
     } else if (currentView === "artist") {
-      // date col = full date, primary = venue + city
       dateEl.textContent = formatDate(show.date);
 
       const venue = document.createElement("div");
@@ -330,8 +339,14 @@
         main.appendChild(city);
       }
 
+      if (role === "opener") {
+        const roleEl = document.createElement("div");
+        roleEl.className = "concert-role";
+        roleEl.textContent = `opened for ${headliner}`;
+        main.appendChild(roleEl);
+      }
+
     } else {
-      // venue view: date col = full date, primary = artist
       dateEl.textContent = formatDate(show.date);
 
       const artist = document.createElement("div");
@@ -340,7 +355,7 @@
       main.appendChild(artist);
     }
 
-    if (show.openers && show.openers.length > 0) {
+    if (role === "headliner" && show.openers && show.openers.length > 0) {
       const op = document.createElement("div");
       op.className = "concert-openers";
       op.innerHTML = `<span class="opener-label">w/</span>${show.openers.join(", ")}`;
@@ -352,7 +367,7 @@
     return row;
   }
 
-  function buildSection(title, count, shows) {
+  function buildSection(title, count, entries) {
     const section = document.createElement("div");
     section.className = "group-section";
 
@@ -371,8 +386,9 @@
     header.appendChild(countEl);
     section.appendChild(header);
 
-    for (const show of shows) {
-      section.appendChild(buildRow(show));
+    for (const entry of entries) {
+      // Accept both plain show objects (year/venue views) and { show, role } entries (artist view)
+      section.appendChild(buildRow(entry.show ? entry : { show: entry }));
     }
 
     return section;
@@ -401,11 +417,22 @@
       }
 
     } else if (currentView === "artist") {
-      const byArtist = groupBy(sortedByDate(CONCERTS), s => s.artist);
+      // Build map including opener appearances
+      const byArtist = new Map();
+      const addEntry = (name, entry) => {
+        if (!byArtist.has(name)) byArtist.set(name, []);
+        byArtist.get(name).push(entry);
+      };
+      for (const show of CONCERTS) {
+        addEntry(show.artist, { show, role: "headliner" });
+        for (const opener of (show.openers || [])) {
+          addEntry(opener, { show, role: "opener", headliner: show.artist });
+        }
+      }
       const artists = [...byArtist.keys()].sort((a, b) => a.localeCompare(b));
       for (const artist of artists) {
-        const shows = sortedByDate(byArtist.get(artist), true);
-        container.appendChild(buildSection(artist, shows.length, shows));
+        const entries = byArtist.get(artist).sort((a, b) => b.show.date.localeCompare(a.show.date));
+        container.appendChild(buildSection(artist, entries.length, entries));
       }
 
     } else {
