@@ -1053,7 +1053,7 @@ function renderTribeDraft() {
           ${slotAvatarHtml(name, season?.id, `${tribe?.color ?? "#888"}20`, tribe?.color ?? "#888")}
           <div class="cast-slot-info">
             <div class="cast-slot-name">${name}</div>
-            <div class="cast-slot-sub">S${season?.id} · ${tribe?.name ?? "?"}</div>
+            <div class="cast-slot-sub">S${season?.id} · ${season?.name ?? "?"}</div>
           </div>`;
         row.querySelectorAll(".cast-slot-avatar[data-name]").forEach(a => tryImage(a.querySelector("img"), a.dataset.name, a.dataset.season));
         makeDraggable(row, name);
