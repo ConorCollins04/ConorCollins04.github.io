@@ -196,6 +196,7 @@
       transition: color 0.12s;
     }
     .opener-toggle:hover { color: var(--muted); }
+    .opener-toggle.filtered { color: var(--text); }
 
     .concert-role {
       font-family: var(--mono);
@@ -270,6 +271,13 @@
       <button class="view-btn" data-filter="headlining">Headlining</button>
     </div>
   </div>
+  <div id="person-filter-wrap" style="display:none; margin-bottom: 20px;">
+    <button id="person-filter-btn" class="opener-toggle" style="padding-bottom: 0;">filter by person</button>
+    <div id="person-filter-pills" style="display:none; margin-top: 10px;">
+      <div class="year-tabs" id="person-pills"></div>
+    </div>
+  </div>
+
   <div id="secondary-sort-toggle" style="display:none; margin-bottom: 20px;">
     <div class="view-toggle">
       <button class="view-btn active" data-sort="alpha">A–Z</button>
@@ -294,6 +302,7 @@
   let currentView = "year";
   let secondarySort = "alpha";
   let artistFilter = "all";
+  let personFilter = null;
 
   // ── Helpers ──────────────────────────────────────────────────────────────
 
@@ -482,7 +491,8 @@
     const sorted = sortedByDate(CONCERTS, true); // newest first by default
 
     if (currentView === "year") {
-      const byYear = groupBy(sorted, s => getYear(s.date));
+      const filtered = personFilter ? sorted.filter(s => (s.with || []).includes(personFilter)) : sorted;
+      const byYear = groupBy(filtered, s => getYear(s.date));
       const years = [...byYear.keys()].sort((a, b) => b - a);
       for (const year of years) {
         const shows = byYear.get(year); // already newest-first within year
@@ -609,6 +619,45 @@
 
   // ── View toggle ───────────────────────────────────────────────────────────
 
+  function buildPersonPills() {
+    const people = [...new Set(CONCERTS.flatMap(s => s.with || []))].sort();
+    const container = document.getElementById("person-pills");
+    container.innerHTML = "";
+    for (const person of people) {
+      const btn = document.createElement("button");
+      btn.className = "year-tab" + (personFilter === person ? " active" : "");
+      btn.textContent = person;
+      btn.addEventListener("click", () => {
+        personFilter = personFilter === person ? null : person;
+        updatePersonFilterBtn();
+        buildPersonPills();
+        render();
+      });
+      container.appendChild(btn);
+    }
+  }
+
+  function updatePersonFilterBtn() {
+    const btn = document.getElementById("person-filter-btn");
+    btn.classList.toggle("filtered", personFilter !== null);
+    btn.textContent = personFilter ? `${personFilter} ×` : "filter by person";
+  }
+
+  document.getElementById("person-filter-btn").addEventListener("click", (e) => {
+    // If clicking the × to clear, just clear without toggling pills
+    if (personFilter !== null) {
+      personFilter = null;
+      updatePersonFilterBtn();
+      buildPersonPills();
+      render();
+      return;
+    }
+    const pills = document.getElementById("person-filter-pills");
+    const open = pills.style.display === "none";
+    pills.style.display = open ? "" : "none";
+    if (open) buildPersonPills();
+  });
+
   document.querySelectorAll("#artist-filter-toggle .view-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       artistFilter = btn.dataset.filter;
@@ -636,6 +685,10 @@
       artistFilter = "all";
       document.querySelectorAll("#artist-filter-toggle .view-btn").forEach(b => b.classList.toggle("active", b.dataset.filter === "all"));
       document.getElementById("artist-filter-toggle").style.display = currentView === "artist" ? "" : "none";
+      personFilter = null;
+      document.getElementById("person-filter-pills").style.display = "none";
+      updatePersonFilterBtn();
+      document.getElementById("person-filter-wrap").style.display = currentView === "year" ? "" : "none";
       render();
     });
   });
