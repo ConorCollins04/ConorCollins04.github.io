@@ -1,5 +1,28 @@
 const DRAG_SHOWS = [
   {
+    date: "2021-09-22",
+    venue: "Clapham Grand",
+    city: "London",
+    event: "Utica & Denali Tour",
+    headliners: ["Utica", "Denali"],
+    support: ["Sminty Drop", "Ellie Diamond", "Gothy Kendoll", "Krystal Versace", "Scarlett Harlett", "Miss Leigh Ding", "Bay Ken", "Rehab Kendoll"],
+  },
+  {
+    date: "2023-11-13",
+    venue: "London Palladium",
+    city: "London",
+    event: "The Jinkx and Dela Holiday Special",
+    headliners: ["Jinkx Monsoon", "BenDeLaCreme"],
+  },
+  {
+    date: "2024-03-08",
+    venue: "London Palladium",
+    city: "London",
+    event: "The Big Reveal",
+    headliners: ["Sasha Velour"],
+    support: ["Chiyo"],
+  },
+  {
     date: "2024-11-23",
     venue: "Clapham Grand",
     city: "London",
