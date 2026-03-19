@@ -38,32 +38,6 @@
       padding: 64px 10vw 120px;
     }
 
-    .page-label {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--faint);
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      font-family: var(--slab);
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
-      font-weight: 400;
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .page-sub {
-      font-size: 0.88rem;
-      font-weight: 300;
-      color: var(--muted);
-      margin-bottom: 44px;
-    }
-
     /* ── Cards grid ── */
     .cards {
       display: grid;
@@ -100,15 +74,6 @@
     .card-hero {
       grid-column: 1 / -1;
       padding: 30px 30px 26px;
-    }
-
-    .card-label {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--faint);
-      margin-bottom: 4px;
     }
 
     .card-title {
@@ -158,14 +123,10 @@
 <body>
 
 <div class="page">
-  <p class="page-label">Conor Collins</p>
-  <h1>Personal logs.</h1>
-  <p class="page-sub">A record of things I love.</p>
-
   <div class="cards">
 
     <a href="concerts.html" class="card card-hero">
-      <div class="card-label">Live Music</div>
+
       <div class="card-title">Concerts</div>
       <div class="card-desc">Every gig, festival, and live show — with openers, companions, and a few favourites marked.</div>
       <div class="card-footer">
@@ -175,7 +136,7 @@
     </a>
 
     <a href="drag-shows.html" class="card">
-      <div class="card-label">Live Drag</div>
+
       <div class="card-title">Drag Shows</div>
       <div class="card-desc">Live drag performances and club nights.</div>
       <div class="card-footer">
@@ -185,7 +146,7 @@
     </a>
 
     <a href="drag-race.html" class="card">
-      <div class="card-label">Reality TV</div>
+
       <div class="card-title">Drag Race</div>
       <div class="card-desc">RuPaul's Drag Race rankings and episode stats by season.</div>
       <div class="card-footer">
@@ -195,9 +156,9 @@
     </a>
 
     <a href="oscars.html" class="card">
-      <div class="card-label">Film</div>
+
       <div class="card-title">Oscars</div>
-      <div class="card-desc">My annual predictions and rankings across five categories.</div>
+      <div class="card-desc">My personal rankings across five categories each year.</div>
       <div class="card-footer">
         <div class="card-stat" id="oscars-stat">—</div>
         <div class="card-arrow">→</div>
@@ -205,7 +166,7 @@
     </a>
 
     <a href="survivor-all-stars.html" class="card">
-      <div class="card-label">Reality TV</div>
+
       <div class="card-title">Survivor</div>
       <div class="card-desc">Casting breakdowns and memorable moments from All-Stars seasons.</div>
       <div class="card-footer">
