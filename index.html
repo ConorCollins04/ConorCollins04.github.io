@@ -3,20 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conor Collins</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="nav.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f3f1f8;
-      --surface: #faf9fd;
-      --border: rgba(80,60,120,0.1);
-      --border-hover: rgba(80,60,120,0.25);
-      --text: #1a1624;
-      --muted: #6b6278;
-      --faint: #b0a8be;
+      --bg:           #f3f1f8;
+      --surface:      #faf9fd;
+      --border:       rgba(80,60,120,0.1);
+      --border-hover: rgba(80,60,120,0.28);
+      --text:         #1a1624;
+      --muted:        #6b6278;
+      --faint:        #b0a8be;
+      --slab: 'Alfa Slab One', Georgia, serif;
       --sans: 'DM Sans', system-ui, sans-serif;
       --mono: 'DM Mono', monospace;
     }
@@ -30,73 +32,237 @@
       min-height: 100vh;
     }
 
-    .home {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 10vw 120px;
-      max-width: 820px;
+    .page {
+      max-width: 900px;
       margin: 0 auto;
+      padding: 64px 10vw 120px;
     }
 
-    .home-label {
+    .page-label {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--faint);
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
 
     h1 {
-      font-size: clamp(2.8rem, 6vw, 5rem);
-      font-weight: 300;
-      line-height: 1.08;
-      letter-spacing: -0.03em;
+      font-family: var(--slab);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
       color: var(--text);
-      margin-bottom: 28px;
+      margin-bottom: 8px;
     }
 
-    h1 strong { font-weight: 500; }
-
-    .home-desc {
+    .page-sub {
       font-size: 0.88rem;
       font-weight: 300;
       color: var(--muted);
-      line-height: 1.85;
-      max-width: 380px;
+      margin-bottom: 44px;
+    }
+
+    /* ── Cards grid ── */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 560px) {
+      .cards { grid-template-columns: 1fr; }
+      .card-hero { grid-column: 1; }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px 26px 22px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 4px 20px rgba(26,22,36,0.06);
+    }
+
+    .card:hover .card-arrow { transform: translateX(3px); }
+
+    .card-hero {
+      grid-column: 1 / -1;
+      padding: 30px 30px 26px;
+    }
+
+    .card-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 4px;
+    }
+
+    .card-title {
+      font-family: var(--slab);
+      font-size: 1.55rem;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    .card-hero .card-title {
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 2px;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 18px;
+    }
+
+    .card-stat {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--faint);
+      line-height: 1.6;
+    }
+
+    .card-arrow {
+      font-size: 1rem;
+      color: var(--faint);
+      transition: transform 0.15s;
+      line-height: 1;
     }
   </style>
 </head>
 <body>
 
-  <div class="home">
-    <h1>Hi<br>
-  </div>
+<div class="page">
+  <p class="page-label">Conor Collins</p>
+  <h1>Personal logs.</h1>
+  <p class="page-sub">A record of things I love.</p>
 
-  <div class="nav-wrap">
-    <nav class="nav-pill">
-      <a href="index.html" class="nav-btn active">Home</a>
-      <div class="nav-group" id="survivor-group">
-        <button class="nav-btn" id="survivor-trigger">Survivor</button>
-        <div class="nav-flyout" id="survivor-flyout">
-          <a href="survivor-all-stars.html" class="nav-sub-btn">All-Stars Casting</a>
-          <a href="survivor-moments.html" class="nav-sub-btn">Moments</a>
-        </div>
-      </div>
-      <a href="oscars.html" class="nav-btn">Oscars</a>
-      <a href="concerts.html" class="nav-btn">Concerts</a>
-      <div class="nav-group" id="drag-group">
-        <button class="nav-btn" id="drag-trigger">Drag</button>
-        <div class="nav-flyout" id="drag-flyout">
-          <a href="drag-race.html" class="nav-sub-btn">Drag Race</a>
-          <a href="drag-shows.html" class="nav-sub-btn">Live Shows</a>
-        </div>
-      </div>
-    </nav>
-  </div>
+  <div class="cards">
 
+    <a href="concerts.html" class="card card-hero">
+      <div class="card-label">Live Music</div>
+      <div class="card-title">Concerts</div>
+      <div class="card-desc">Every gig, festival, and live show — with openers, companions, and a few favourites marked.</div>
+      <div class="card-footer">
+        <div class="card-stat" id="concerts-stat">—</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="drag-shows.html" class="card">
+      <div class="card-label">Live Drag</div>
+      <div class="card-title">Drag Shows</div>
+      <div class="card-desc">Live drag performances and club nights.</div>
+      <div class="card-footer">
+        <div class="card-stat" id="drag-shows-stat">—</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="drag-race.html" class="card">
+      <div class="card-label">Reality TV</div>
+      <div class="card-title">Drag Race</div>
+      <div class="card-desc">RuPaul's Drag Race rankings and episode stats by season.</div>
+      <div class="card-footer">
+        <div class="card-stat">2 seasons</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="oscars.html" class="card">
+      <div class="card-label">Film</div>
+      <div class="card-title">Oscars</div>
+      <div class="card-desc">My annual predictions and rankings across five categories.</div>
+      <div class="card-footer">
+        <div class="card-stat" id="oscars-stat">—</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="survivor-all-stars.html" class="card">
+      <div class="card-label">Reality TV</div>
+      <div class="card-title">Survivor</div>
+      <div class="card-desc">Casting breakdowns and memorable moments from All-Stars seasons.</div>
+      <div class="card-footer">
+        <div class="card-stat"></div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<div class="nav-wrap">
+  <nav class="nav-pill">
+    <a href="index.html" class="nav-btn active">Home</a>
+    <div class="nav-group" id="survivor-group">
+      <button class="nav-btn" id="survivor-trigger">Survivor</button>
+      <div class="nav-flyout" id="survivor-flyout">
+        <a href="survivor-all-stars.html" class="nav-sub-btn">All-Stars Casting</a>
+        <a href="survivor-moments.html" class="nav-sub-btn">Moments</a>
+      </div>
+    </div>
+    <a href="oscars.html" class="nav-btn">Oscars</a>
+    <a href="concerts.html" class="nav-btn">Concerts</a>
+    <div class="nav-group" id="drag-group">
+      <button class="nav-btn" id="drag-trigger">Drag</button>
+      <div class="nav-flyout" id="drag-flyout">
+        <a href="drag-race.html" class="nav-sub-btn">Drag Race</a>
+        <a href="drag-shows.html" class="nav-sub-btn">Live Shows</a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<script src="concerts-data.js"></script>
+<script src="drag-shows-data.js"></script>
+<script src="oscars-data.js"></script>
+<script>
+  // Concerts stat
+  if (typeof CONCERTS !== "undefined") {
+    const venues = new Set(CONCERTS.map(s => s.venue)).size;
+    document.getElementById("concerts-stat").textContent =
+      `${CONCERTS.length} shows · ${venues} venues`;
+  }
+
+  // Drag shows stat
+  if (typeof DRAG_SHOWS !== "undefined") {
+    document.getElementById("drag-shows-stat").textContent =
+      `${DRAG_SHOWS.length} shows`;
+  }
+
+  // Oscars stat
+  if (typeof OSCARS !== "undefined") {
+    const years = Object.keys(OSCARS).length;
+    document.getElementById("oscars-stat").textContent =
+      `${years} ${years === 1 ? "ceremony" : "ceremonies"}`;
+  }
+</script>
 <script>
   (function() {
     var g = document.getElementById('survivor-group');
