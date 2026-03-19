@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="nav.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -225,6 +226,40 @@
       margin-top: 3px;
     }
 
+    /* ── Map view ── */
+    #map-container {
+      height: 560px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .leaflet-popup-content-wrapper {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--text);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(26,22,36,0.12);
+    }
+    .leaflet-popup-content { margin: 12px 14px; }
+    .leaflet-popup-tip { display: none; }
+    .map-popup-venue {
+      font-family: var(--slab);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+    .map-popup-show {
+      padding: 4px 0;
+      border-top: 1px solid var(--border);
+      line-height: 1.4;
+    }
+    .map-popup-date {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+
     .concert-heart {
       display: block;
       margin-top: 5px;
@@ -352,6 +387,7 @@
       <button class="view-btn active" data-view="year">Diary</button>
       <button class="view-btn" data-view="artist">Artists</button>
       <button class="view-btn" data-view="venue">Venues</button>
+      <button class="view-btn" data-view="map">Map</button>
       <button class="view-btn" data-view="stats">Stats</button>
     </div>
   </div>
@@ -400,6 +436,7 @@
   </nav>
 </div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="concerts-data.js"></script>
 <script>
   let currentView = "year";
@@ -821,11 +858,102 @@
     container.appendChild(grid);
   }
 
+  const VENUE_COORDS = {
+    "Roundhouse":                [51.5423, -0.1528],
+    "The O2":                    [51.5030,  0.0030],
+    "Village Underground":       [51.5251, -0.0772],
+    "The Garage":                [51.5617, -0.1058],
+    "Wembley Stadium":           [51.5560, -0.2796],
+    "Eventim Apollo":            [51.4924, -0.2237],
+    "Tottenham Hotspur Stadium": [51.6044, -0.0665],
+    "Hyde Park":                 [51.5073, -0.1657],
+    "O2 Academy Islington":      [51.5362, -0.1021],
+    "OVO Arena Wembley":         [51.5558, -0.2791],
+    "HERE at Outernet":          [51.5138, -0.1303],
+    "Royal Vauxhall Tavern":     [51.4861, -0.1233],
+    "Rough Trade East":          [51.5218, -0.0718],
+    "O2 Shepherd's Bush Empire": [51.5042, -0.2262],
+    "Heaven":                    [51.5073, -0.1239],
+    "Lafayette":                 [51.5293, -0.1152],
+    "O2 Academy Brixton":        [51.4627, -0.1145],
+    "PRYZM":                     [51.4115, -0.3033],
+    "Electric Ballroom":         [51.5423, -0.1469],
+    "O2 Forum Kentish Town":     [51.5510, -0.1432],
+    "Electric Brixton":          [51.4631, -0.1141],
+    "Alexandra Palace":          [51.5956, -0.1289],
+    "KOKO":                      [51.5358, -0.1393],
+    "Somerset House":            [51.5113, -0.1167],
+    "Omeara":                    [51.5045, -0.0937],
+    "Melkweg":                   [52.3647,  4.8825],
+    "AFAS Live":                 [52.3123,  4.9392],
+    "Lush":                      [53.4084, -2.9916],
+    "M&S Bank Arena":            [53.4039, -2.9813],
+    "Christchurch":              [51.7499, -1.2566],
+    "Malmö Arena":               [55.5787, 12.9765],
+    "Globen":                    [59.2934, 18.0832],
+  };
+
+  function renderMap() {
+    const container = document.getElementById("concerts-view");
+    container.innerHTML = '<div id="map-container"></div>';
+
+    const map = L.map("map-container", { zoomControl: true });
+
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>',
+      maxZoom: 19,
+    }).addTo(map);
+
+    const byVenue = new Map();
+    for (const show of CONCERTS) {
+      if (!byVenue.has(show.venue)) byVenue.set(show.venue, []);
+      byVenue.get(show.venue).push(show);
+    }
+
+    const markers = [];
+    for (const [venue, shows] of byVenue) {
+      const coords = VENUE_COORDS[venue];
+      if (!coords) continue;
+
+      const count = shows.length;
+      const radius = count === 1 ? 7 : count <= 3 ? 9 : 11;
+
+      const marker = L.circleMarker(coords, {
+        radius,
+        fillColor: "#1a1624",
+        color: "#f3f1f8",
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.9,
+      });
+
+      const showsSorted = [...shows].sort((a, b) => b.date.localeCompare(a.date));
+      const rows = showsSorted.map(s => {
+        const name = s.festival ? s.festival : s.artist;
+        return `<div class="map-popup-show"><div class="map-popup-date">${formatDate(s.date)}</div>${name}</div>`;
+      }).join("");
+
+      marker.bindPopup(
+        `<div class="map-popup-venue">${venue}</div>${rows}`,
+        { maxWidth: 240 }
+      );
+
+      marker.addTo(map);
+      markers.push(marker);
+    }
+
+    if (markers.length > 0) {
+      const group = L.featureGroup(markers);
+      map.fitBounds(group.getBounds().pad(0.2));
+    }
+  }
+
   function render() {
     const container = document.getElementById("concerts-view");
     container.innerHTML = "";
 
     if (currentView === "stats") { renderStats(); return; }
+    if (currentView === "map")   { renderMap();   return; }
 
     if (!CONCERTS || CONCERTS.length === 0) {
       const empty = document.createElement("div");
@@ -1035,8 +1163,8 @@
       document.getElementById("person-filter-select").value = "";
       document.getElementById("person-filter-select").classList.remove("filtered");
       const wrap = document.getElementById("person-filter-wrap");
-      wrap.style.display = currentView === "year" ? "" : "none";
-      if (currentView === "stats") {
+      wrap.style.display = (currentView === "year") ? "" : "none";
+      if (currentView === "stats" || currentView === "map") {
         document.getElementById("secondary-sort-toggle").style.display = "none";
         document.getElementById("artist-filter-toggle").style.display = "none";
       }
