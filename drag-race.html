@@ -241,7 +241,7 @@
     .r-high       { background: var(--c-high); }
     .r-high-team  { background: var(--c-high); }
     .r-safe       { background: var(--c-safe); color: #5a7a7a; }
-    .r-run        { background: var(--c-run);  color: #7a7090; }
+    .r-bye        { background: var(--c-run);  color: #7a7090; }
     .r-low        { background: var(--c-low);  color: #8a3040; }
     .r-btm        { background: var(--c-btm); }
     .r-btm2       { background: var(--c-btm2); }
@@ -350,7 +350,7 @@
     <div class="legend-item"><div class="legend-swatch" style="background:var(--c-top2)"></div>Top 2</div>
     <div class="legend-item"><div class="legend-swatch" style="background:var(--c-high)"></div>High</div>
     <div class="legend-item"><div class="legend-swatch" style="background:var(--c-safe)"></div>Safe</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-run)"></div>Run (not in ep)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-run)"></div>Bye (not in ep)</div>
     <div class="legend-item"><div class="legend-swatch" style="background:var(--c-low)"></div>Low</div>
     <div class="legend-item"><div class="legend-swatch" style="background:var(--c-btm)"></div>Bottom (deferred)</div>
     <div class="legend-item"><div class="legend-swatch" style="background:var(--c-btm2)"></div>Bottom 2</div>
@@ -382,7 +382,7 @@
 //
 // Valid result values (case-insensitive):
 //   WIN | HIGH | HIGH TEAM | SAFE | LOW | BTM2 | ELIM
-//   WINNER | BYENER-UP | ELIM FINAL | MISS C
+//   WINNER | RUNNER-UP | ELIM FINAL
 //   (empty cell = not yet aired / not applicable)
 // ─────────────────────────────────────────────
 
@@ -392,13 +392,13 @@ const RESULT_MAP = {
   "HIGH":       { cls: "r-high",       label: "HIGH" },
   "HIGH TEAM":  { cls: "r-high-team",  label: "HIGH TEAM" },
   "SAFE":       { cls: "r-safe",       label: "SAFE" },
-  "BYE":        { cls: "r-run",        label: "BYE" },    // not in episode, still in running
+  "BYE":        { cls: "r-bye",        label: "BYE" },    // not in episode, still in running
   "LOW":        { cls: "r-low",        label: "LOW" },
   "BTM":        { cls: "r-btm",        label: "BTM" },    // bottom, lip sync deferred to next ep
   "BTM2":       { cls: "r-btm2",       label: "BTM2" },
   "ELIM":       { cls: "r-elim",       label: "ELIM" },
   "WINNER":     { cls: "r-winner",     label: "Winner" },
-  "BYENER-UP":  { cls: "r-runnerup",   label: "Runner-up" },
+  "RUNNER-UP":  { cls: "r-runnerup",   label: "Runner-up" },
   "ELIM FINAL": { cls: "r-elim-final", label: "Eliminated" },
 };
 
