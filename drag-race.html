@@ -285,6 +285,14 @@
       flex-shrink: 0;
     }
 
+    /* ── Sortable headers ── */
+    .sort-th {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .sort-th:hover { color: var(--text); }
+
     /* ── Scoring info ── */
     .scoring-info {
       margin-top: 20px;
@@ -567,22 +575,49 @@ function renderLegend(season) {
     }).join("");
 }
 
+// ── Sort state ───────────────────────────────
+let sortCol = "place";   // "place" | "score"
+let sortDir = 1;         // 1 = asc, -1 = desc
+
+function parsePlaceNum(place) {
+  if (place.toUpperCase() === "TBA") return 0;
+  const m = place.match(/\d+/);
+  return m ? parseInt(m[0]) : 999;
+}
+
+function sortedQueens(queens) {
+  return [...queens].sort((a, b) => {
+    if (sortCol === "score") {
+      const sa = a.score ?? -1, sb = b.score ?? -1;
+      return sortDir * (sb - sa); // higher score = better, so default desc
+    }
+    return sortDir * (parsePlaceNum(a.place) - parsePlaceNum(b.place));
+  });
+}
+
 // ── Render ───────────────────────────────────
+let currentSeason_ = null;
+
 function renderTable(season) {
+  currentSeason_ = season;
+
   const epNumCells  = season.episodes.map(ep => `<th>${ep.num}</th>`).join("");
   const epNameCells = season.episodes.map(ep => `<th>${ep.name}</th>`).join("");
+
+  const placeArrow = sortCol === "place" ? (sortDir === 1 ? " ↑" : " ↓") : "";
+  const scoreArrow = sortCol === "score" ? (sortDir === -1 ? " ↑" : " ↓") : "";
 
   const thead = `<thead>
     <tr>
       <th class="col-queen" rowspan="2" style="text-align:left;padding:10px 10px 10px 14px">Queen</th>
-      <th class="col-place" rowspan="2">Place</th>
-      <th class="col-score" rowspan="2">Score</th>
+      <th class="col-place sort-th" rowspan="2" data-sort="place">Place${placeArrow}</th>
+      <th class="col-score sort-th" rowspan="2" data-sort="score">Score${scoreArrow}</th>
       ${epNumCells}
     </tr>
     <tr>${epNameCells}</tr>
   </thead>`;
 
-  const rows = season.queens.map(queen => {
+  const rows = sortedQueens(season.queens).map(queen => {
     const epCells = season.episodes.map((_, i) => {
       const raw = (queen.results[i] ?? "").toUpperCase();
       const r = RESULT_MAP[raw];
@@ -601,6 +636,19 @@ function renderTable(season) {
 
   document.getElementById("trackRecord").innerHTML = thead + `<tbody>${rows}</tbody>`;
   renderLegend(season);
+
+  document.querySelectorAll(".sort-th").forEach(th => {
+    th.addEventListener("click", () => {
+      const col = th.dataset.sort;
+      if (sortCol === col) {
+        sortDir *= -1;
+      } else {
+        sortCol = col;
+        sortDir = col === "score" ? -1 : 1; // score defaults desc, place defaults asc
+      }
+      renderTable(currentSeason_);
+    });
+  });
 }
 
 function setLoading() {
