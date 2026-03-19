@@ -9,6 +9,13 @@ const DRAG_SHOWS = [
     with: ["Oliver"],
   },
   {
+    date: "2023-04-09",
+    venue: "Heaven",
+    city: "London",
+    performers: ["Loosey LaDuca"],
+    with: ["Oliver"],
+  },
+  {
     date: "2023-11-13",
     venue: "London Palladium",
     city: "London",
