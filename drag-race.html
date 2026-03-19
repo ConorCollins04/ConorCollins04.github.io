@@ -285,6 +285,58 @@
       flex-shrink: 0;
     }
 
+    /* ── Scoring info ── */
+    .scoring-info {
+      margin-top: 20px;
+      padding: 0 2px;
+    }
+
+    .scoring-info summary {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--faint);
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+    }
+
+    .scoring-info summary::-webkit-details-marker { display: none; }
+
+    .scoring-info summary::before {
+      content: '▸ ';
+    }
+
+    .scoring-info[open] summary::before {
+      content: '▾ ';
+    }
+
+    .scoring-grid {
+      display: grid;
+      grid-template-columns: max-content max-content;
+      gap: 4px 20px;
+      margin-top: 12px;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+    }
+
+    .scoring-grid span:nth-child(even) {
+      color: var(--faint);
+    }
+
+    .scoring-note {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.02em;
+      color: var(--faint);
+      margin-top: 10px;
+      max-width: 420px;
+      line-height: 1.6;
+    }
+
     /* ── Nav pill ── */
     .nav-wrap {
       position: fixed;
@@ -346,6 +398,20 @@
   </div>
 
   <div class="legend" id="legend"></div>
+
+  <details class="scoring-info">
+    <summary>How scores are calculated</summary>
+    <div class="scoring-grid">
+      <span>Win</span><span>10 pts</span>
+      <span>Top 2</span><span>9 pts</span>
+      <span>High</span><span>8 pts</span>
+      <span>Safe</span><span>6 pts</span>
+      <span>Low</span><span>4 pts</span>
+      <span>Bottom 2</span><span>2 pts</span>
+      <span>Eliminated</span><span>0 pts</span>
+    </div>
+    <p class="scoring-note">Averaged across competitive episodes. Bye rounds and deferred bottom placements are excluded from the count.</p>
+  </details>
 </div>
 
 <div class="nav-wrap">
