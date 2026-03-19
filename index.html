@@ -47,7 +47,6 @@
 
     @media (max-width: 560px) {
       .cards { grid-template-columns: 1fr; }
-      .card-hero { grid-column: 1; }
     }
 
     .card {
@@ -71,21 +70,12 @@
 
     .card:hover .card-arrow { transform: translateX(3px); }
 
-    .card-hero {
-      grid-column: 1 / -1;
-      padding: 30px 30px 26px;
-    }
-
     .card-title {
       font-family: var(--slab);
       font-size: 1.55rem;
       font-weight: 400;
       line-height: 1.1;
       color: var(--text);
-    }
-
-    .card-hero .card-title {
-      font-size: clamp(1.6rem, 3vw, 2.1rem);
     }
 
     .card-desc {
@@ -125,7 +115,7 @@
 <div class="page">
   <div class="cards">
 
-    <a href="concerts.html" class="card card-hero">
+    <a href="concerts.html" class="card">
 
       <div class="card-title">Concerts</div>
       <div class="card-desc">Every gig, festival, and live show — with openers, companions, and a few favourites marked.</div>
@@ -167,8 +157,18 @@
 
     <a href="survivor-all-stars.html" class="card">
 
-      <div class="card-title">Survivor</div>
-      <div class="card-desc">Casting breakdowns and memorable moments from All-Stars seasons.</div>
+      <div class="card-title">Survivor: All-Stars</div>
+      <div class="card-desc">Casting breakdowns for All-Stars seasons.</div>
+      <div class="card-footer">
+        <div class="card-stat"></div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="survivor-moments.html" class="card">
+
+      <div class="card-title">Survivor: Moments</div>
+      <div class="card-desc">Memorable moments from across the series.</div>
       <div class="card-footer">
         <div class="card-stat"></div>
         <div class="card-arrow">→</div>
