@@ -3,25 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Drag Race — Conor Collins</title>
+  <title>Drag Race</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="nav.css" />
+  <link rel="stylesheet" href="global.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:           #f3f1f8;
-      --surface:      #faf9fd;
-      --surface2:     #f0eef6;
-      --border:       rgba(80,60,120,0.1);
-      --text:         #1a1624;
-      --muted:        #6b6278;
-      --faint:        #b0a8be;
-      --slab: 'Alfa Slab One', Georgia, serif;
-      --sans: 'DM Sans', system-ui, sans-serif;
-      --mono: 'DM Mono', monospace;
-
       /* result colours */
       --c-win:        #3b5fc0;
       --c-high:       #6ea4c5;
@@ -748,23 +738,6 @@ fetch("drag-race/manifest.json")
       </td></tr></tbody>`;
   });
 </script>
-<script>
-  (function() {
-    var g = document.getElementById('survivor-group');
-    var t = document.getElementById('survivor-trigger');
-    var f = document.getElementById('survivor-flyout');
-    if (f.querySelector('.active')) { f.classList.add('open'); t.classList.add('active'); }
-    t.addEventListener('click', function(e) { e.stopPropagation(); f.classList.toggle('open'); });
-    document.addEventListener('click', function(e) { if (!g.contains(e.target)) f.classList.remove('open'); });
-  })();
-  (function() {
-    var g = document.getElementById('drag-group');
-    var t = document.getElementById('drag-trigger');
-    var f = document.getElementById('drag-flyout');
-    if (f.querySelector('.active')) { f.classList.add('open'); t.classList.add('active'); }
-    t.addEventListener('click', function(e) { e.stopPropagation(); f.classList.toggle('open'); });
-    document.addEventListener('click', function(e) { if (!g.contains(e.target)) f.classList.remove('open'); });
-  })();
-</script>
+<script src="nav.js"></script>
 </body>
 </html>

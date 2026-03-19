@@ -3,28 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Oscars — Conor Collins</title>
+  <title>Oscars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="nav.css" />
+  <link rel="stylesheet" href="global.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:            #f3f1f8;
-      --surface:       #faf9fd;
-      --surface2:      #f0eef6;
-      --border:        rgba(80,60,120,0.1);
-      --border-hover:  rgba(80,60,120,0.28);
-      --text:          #1a1624;
-      --muted:         #6b6278;
-      --faint:         #b0a8be;
       --gold:          #b8860b;
       --gold-bg:       #fdf8ed;
       --gold-border:   rgba(184,134,11,0.3);
-      --slab:  'Alfa Slab One', Georgia, serif;
-      --sans:  'DM Sans', system-ui, sans-serif;
-      --mono:  'DM Mono', monospace;
     }
 
     html { font-size: 16px; }
@@ -591,23 +581,6 @@
   renderTabs();
   renderYear();
 </script>
-<script>
-  (function() {
-    var g = document.getElementById('survivor-group');
-    var t = document.getElementById('survivor-trigger');
-    var f = document.getElementById('survivor-flyout');
-    if (f.querySelector('.active')) { f.classList.add('open'); t.classList.add('active'); }
-    t.addEventListener('click', function(e) { e.stopPropagation(); f.classList.toggle('open'); });
-    document.addEventListener('click', function(e) { if (!g.contains(e.target)) f.classList.remove('open'); });
-  })();
-  (function() {
-    var g = document.getElementById('drag-group');
-    var t = document.getElementById('drag-trigger');
-    var f = document.getElementById('drag-flyout');
-    if (f.querySelector('.active')) { f.classList.add('open'); t.classList.add('active'); }
-    t.addEventListener('click', function(e) { e.stopPropagation(); f.classList.toggle('open'); });
-    document.addEventListener('click', function(e) { if (!g.contains(e.target)) f.classList.remove('open'); });
-  })();
-</script>
+<script src="nav.js"></script>
 </body>
 </html>

@@ -1,0 +1,15 @@
+/* ── Shared design tokens ── */
+
+:root {
+  --bg:           #f3f1f8;
+  --surface:      #faf9fd;
+  --surface2:     #f0eef6;
+  --border:       rgba(80,60,120,0.1);
+  --border-hover: rgba(80,60,120,0.28);
+  --text:         #1a1624;
+  --muted:        #6b6278;
+  --faint:        #b0a8be;
+  --slab: 'Alfa Slab One', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --mono: 'DM Mono', monospace;
+}
