@@ -143,6 +143,11 @@
       margin-right: 4px;
     }
 
+    .ood-label {
+      letter-spacing: 0.03em;
+      margin-right: 4px;
+    }
+
     /* ── Floating nav ── */
     .nav-wrap {
       position: fixed;
@@ -323,7 +328,7 @@
     if ((show.outOfDrag || []).length > 0) {
       const ood = document.createElement("div");
       ood.className = "show-detail";
-      ood.innerHTML = `<span class="tag">Out of drag:</span>${show.outOfDrag.join(", ")}`;
+      ood.innerHTML = `<span class="ood-label">Out of drag:</span>${show.outOfDrag.join(", ")}`;
       main.appendChild(ood);
     }
 
