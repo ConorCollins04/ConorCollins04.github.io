@@ -323,7 +323,7 @@
     if ((show.outOfDrag || []).length > 0) {
       const ood = document.createElement("div");
       ood.className = "show-detail";
-      ood.innerHTML = `<span class="tag">pulled up</span>${show.outOfDrag.join(", ")}`;
+      ood.innerHTML = `<span class="tag">Out of drag:</span>${show.outOfDrag.join(", ")}`;
       main.appendChild(ood);
     }
 
