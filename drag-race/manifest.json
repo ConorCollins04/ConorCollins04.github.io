@@ -1,6 +1,6 @@
 {
   "seasons": [
-    { "id": "rpdr-us-s18",      "label": "US S18",           "path": "drag-race/us/s18.csv" },
-    { "id": "rpdr-ukvw-s3",     "label": "UK vs the World S3", "path": "drag-race/uk-vs-world/s3.csv" }
+    { "id": "rpdr-us-s18",  "label": "US S18",             "path": "drag-race/us/s18.csv",           "imageDir": "" },
+    { "id": "rpdr-ukvw-s3", "label": "UK vs the World S3", "path": "drag-race/uk-vs-world/s3.csv",   "imageDir": "images/drag race/uk-vs-world/s3" }
   ]
 }

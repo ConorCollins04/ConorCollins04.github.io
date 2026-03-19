@@ -432,12 +432,27 @@ function initials(name) {
   return name.split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase();
 }
 
-function avatarHTML(queen) {
-  if (queen.photo) {
-    return `<img class="queen-avatar" src="${queen.photo}" alt="${queen.name}" loading="lazy">`;
-  }
-  const hue = Math.abs(queen.name.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % 360);
-  return `<div class="queen-initials" style="background:hsl(${hue},38%,60%)">${initials(queen.name)}</div>`;
+function slugify(name) {
+  return name.toLowerCase()
+    .replace(/['']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function initialsAvatar(name) {
+  const hue = Math.abs(name.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % 360);
+  return `<div class="queen-initials" style="background:hsl(${hue},38%,60%)">${initials(name)}</div>`;
+}
+
+function avatarHTML(name, imageDir) {
+  if (!imageDir) return initialsAvatar(name);
+  const base = `${imageDir}/${slugify(name)}`;
+  // img + sibling initials fallback; onload hides initials, onerror hides img
+  return `<img class="queen-avatar" alt="${name}" loading="lazy"
+    src="${base}.webp"
+    onerror="this.onerror=null;this.src='${base}.jpg';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'}"
+    onload="if(this.nextElementSibling)this.nextElementSibling.style.display='none'"
+  >${initialsAvatar(name).replace('<div ', '<div style="display:none" ')}`;
 }
 
 // ── Legend ───────────────────────────────────
@@ -493,7 +508,7 @@ function renderTable(season) {
 
     const scoreDisplay = queen.score === 0 ? "—" : queen.score.toFixed(2);
     return `<tr>
-      <td class="col-queen"><div class="queen-cell">${avatarHTML(queen)}<span class="queen-name">${queen.name}</span></div></td>
+      <td class="col-queen"><div class="queen-cell">${avatarHTML(queen.name, season.imageDir)}<span class="queen-name">${queen.name}</span></div></td>
       <td class="col-place"><div class="place-cell">${queen.place}</div></td>
       <td class="col-score"><div class="score-cell">${scoreDisplay}</div></td>
       ${epCells}
@@ -532,7 +547,7 @@ async function loadSeason(id, path) {
   const res = await fetch(path);
   const text = await res.text();
   const meta = seasons.find(s => s.id === id);
-  const season = csvToSeason(text, { id: meta.id, label: meta.label });
+  const season = csvToSeason(text, { id: meta.id, label: meta.label, imageDir: meta.imageDir || "" });
   cache.set(id, season);
   renderTable(season);
 }
