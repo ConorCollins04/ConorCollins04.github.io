@@ -225,6 +225,14 @@
       margin-top: 3px;
     }
 
+    .concert-heart {
+      display: block;
+      margin-top: 5px;
+      font-size: 0.7rem;
+      color: #c0607a;
+      line-height: 1;
+    }
+
     /* ── Stats view ── */
     .stats-grid {
       display: grid;
@@ -454,6 +462,12 @@
 
     if (currentView === "year") {
       dateEl.textContent = formatShortDate(show.date);
+      if (show.fav) {
+        const heart = document.createElement("span");
+        heart.className = "concert-heart";
+        heart.textContent = "♥";
+        dateEl.appendChild(heart);
+      }
 
       const primaryEl = document.createElement("div");
       primaryEl.className = "concert-artist";
