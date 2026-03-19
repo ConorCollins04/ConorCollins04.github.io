@@ -383,7 +383,7 @@
       for (const q of [...(s.headliners||[]), ...(s.support||[]), ...(s.performers||[])]) queens.add(q);
     }
     document.getElementById("subtitle").textContent =
-      `${total} show${total !== 1 ? "s" : ""} · ${queens.size} queen${queens.size !== 1 ? "s" : ""}`;
+      `${total} show${total !== 1 ? "s" : ""} · ${queens.size} drag artist${queens.size !== 1 ? "s" : ""}`;
   }
 
   updateSubtitle();
