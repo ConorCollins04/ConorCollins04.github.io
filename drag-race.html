@@ -412,18 +412,36 @@ function parseCSV(text) {
   return rows;
 }
 
+const EPISODE_SCORES = {
+  "WIN": 10, "TOP2": 9, "HIGH": 8, "HIGH TEAM": 8,
+  "SAFE": 6, "LOW": 4, "BTM2": 2, "ELIM": 0,
+  "WINNER": 10, "RUNNER-UP": 9, "ELIM FINAL": 0,
+  // BYE and BTM are skipped (not counted)
+};
+
+function calcScore(results) {
+  let total = 0, count = 0;
+  for (const r of results) {
+    const key = r.toUpperCase().trim();
+    if (key in EPISODE_SCORES) { total += EPISODE_SCORES[key]; count++; }
+  }
+  return count > 0 ? +(total / count).toFixed(2) : null;
+}
+
 function csvToSeason(text, meta) {
   const rows = parseCSV(text);
   // Row 0: Place, Name, <episode name>, <episode name>, ...
   const headers = rows[0];
   const episodes = headers.slice(2).map((name, i) => ({ num: i + 1, name: name.trim() }));
-  const queens = rows.slice(1).filter(row => row.some(c => c.trim())).map(row => ({
-    place:   row[0]?.trim() ?? "",
-    name:    row[1]?.trim() ?? "",
-    photo:   "",
-    score:   0,
-    results: row.slice(2).map(r => r?.trim() ?? ""),
-  }));
+  const queens = rows.slice(1).filter(row => row.some(c => c.trim())).map(row => {
+    const results = row.slice(2).map(r => r?.trim() ?? "");
+    return {
+      place:   row[0]?.trim() ?? "",
+      name:    row[1]?.trim() ?? "",
+      score:   calcScore(results),
+      results,
+    };
+  });
   return { ...meta, episodes, queens };
 }
 
@@ -506,7 +524,7 @@ function renderTable(season) {
       return `<td class="ep-cell"><span class="result-badge ${r.cls}">${r.label}</span></td>`;
     }).join("");
 
-    const scoreDisplay = queen.score === 0 ? "—" : queen.score.toFixed(2);
+    const scoreDisplay = queen.score !== null ? queen.score.toFixed(2) : "—";
     return `<tr>
       <td class="col-queen"><div class="queen-cell">${avatarHTML(queen.name, season.imageDir)}<span class="queen-name">${queen.name}</span></div></td>
       <td class="col-place"><div class="place-cell">${queen.place}</div></td>
