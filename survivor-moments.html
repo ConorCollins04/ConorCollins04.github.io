@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Survivor Moments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f3f1f8;
+      --surface: #faf9fd;
+      --surface2: #f0eef6;
+      --border: rgba(80,60,120,0.1);
+      --border-hover: rgba(80,60,120,0.28);
+      --text: #1a1624;
+      --muted: #6b6278;
+      --faint: #b0a8be;
+      --nav-bg: #1a1624;
+      --nav-muted: rgba(243,241,248,0.38);
+      --nav-active-bg: #f3f1f8;
+      --nav-active-text: #1a1624;
+      --slab: 'Alfa Slab One', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --mono: 'DM Mono', monospace;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 120px;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      padding: 56px 10vw 40px;
+      border-bottom: 1px solid var(--border);
+      max-width: 1100px;
+    }
+
+    .page-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: var(--slab);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .page-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* ── Accordion ── */
+    .seasons {
+      max-width: 1100px;
+      padding: 0 10vw;
+      margin-top: 8px;
+    }
+
+    .season {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .season-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      color: var(--text);
+    }
+
+    .season-trigger:hover .season-name { color: var(--text); }
+
+    .season-arrow {
+      font-size: 0.6rem;
+      color: var(--faint);
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .season.open .season-arrow {
+      transform: rotate(90deg);
+    }
+
+    .season-num {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      color: var(--faint);
+      flex-shrink: 0;
+      width: 28px;
+    }
+
+    .season-name {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .season-count {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--faint);
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    /* ── Moments grid ── */
+    .moments {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      padding-bottom: 28px;
+    }
+
+    .season.open .moments {
+      display: grid;
+    }
+
+    /* ── Moment card ── */
+    .moment-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+
+    .moment-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    .moment-text {
+      padding: 16px 18px 14px;
+    }
+
+    .moment-quote {
+      font-size: 0.88rem;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .moment-attr {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
+      color: var(--faint);
+    }
+
+    .moment-video {
+      width: 100%;
+      display: block;
+      background: #000;
+      max-height: 220px;
+      object-fit: cover;
+    }
+
+    /* ── Nav pill ── */
+    .nav-wrap {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--nav-bg);
+      border-radius: 100px;
+      padding: 4px;
+      box-shadow: 0 4px 24px rgba(26,22,36,0.18), 0 1px 4px rgba(26,22,36,0.1);
+    }
+
+    .nav-btn {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--nav-muted);
+      background: none;
+      border: none;
+      border-radius: 100px;
+      padding: 7px 18px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.15s;
+      white-space: nowrap;
+      display: block;
+    }
+
+    .nav-btn:hover { color: rgba(243,241,248,0.8); }
+
+    .nav-btn.active {
+      background: var(--nav-active-bg);
+      color: var(--nav-active-text);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="page-label">Survivor</div>
+    <h1>Memorable Moments</h1>
+  </div>
+
+  <div class="seasons">
+
+    <!-- Season 7 -->
+    <div class="season" id="s07">
+      <button class="season-trigger" onclick="toggle('s07')">
+        <span class="season-arrow">▶</span>
+        <span class="season-num">S07</span>
+        <span class="season-name">Pearl Islands</span>
+        <span class="season-count">1 moment</span>
+      </button>
+      <div class="moments">
+
+        <div class="moment-card">
+          <div class="moment-text">
+            <p class="moment-quote">"I can get loud too, what the f***!"</p>
+            <p class="moment-attr">Sandra Diaz-Twine — Ep. 3</p>
+          </div>
+          <video class="moment-video" controls preload="none">
+            <source src="videos/season-07/i-can-get-loud-too.mp4" type="video/mp4">
+          </video>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-wrap">
+    <nav class="nav-pill">
+      <a href="index.html" class="nav-btn">Home</a>
+      <a href="survivor-all-stars.html" class="nav-btn">Survivor All-Stars Casting</a>
+      <a href="survivor-moments.html" class="nav-btn active">Survivor Moments</a>
+      <a href="oscars.html" class="nav-btn">Oscars</a>
+      <a href="concerts.html" class="nav-btn">Concerts</a>
+      <a href="drag-race.html" class="nav-btn">Drag Race</a>
+    </nav>
+  </div>
+
+  <script>
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
