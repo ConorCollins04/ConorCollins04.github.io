@@ -12,9 +12,7 @@
     :root {
       --bg:            #f3f1f8;
       --surface:       #faf9fd;
-      --surface2:      #f0eef6;
       --border:        rgba(80,60,120,0.1);
-      --border-hover:  rgba(80,60,120,0.28);
       --text:          #1a1624;
       --muted:         #6b6278;
       --faint:         #b0a8be;
@@ -36,19 +34,13 @@
       min-height: 100vh;
     }
 
-    /* ── Page layout ── */
     .page {
       max-width: 1100px;
       margin: 0 auto;
       padding: 56px 10vw 100px;
     }
 
-    /* ── Header ── */
     .page-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 20px;
       margin-bottom: 36px;
     }
 
@@ -67,37 +59,7 @@
       letter-spacing: 0.03em;
       color: var(--muted);
       line-height: 1.6;
-    }
-
-    /* ── View toggle ── */
-    .view-toggle {
-      display: flex;
-      gap: 4px;
-      flex-shrink: 0;
-    }
-
-    .view-btn {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.05em;
-      padding: 5px 13px;
-      border-radius: 100px;
-      border: 1px solid var(--border);
-      background: none;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.12s;
-    }
-    .view-btn:hover { border-color: var(--border-hover); color: var(--text); }
-    .view-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
-
-    /* ── Empty state ── */
-    .empty-state {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--faint);
-      letter-spacing: 0.04em;
-      padding: 48px 0;
+      margin-top: 4px;
     }
 
     /* ── Group section ── */
@@ -166,7 +128,7 @@
       margin-top: 1px;
     }
 
-    .show-queens {
+    .show-detail {
       font-family: var(--mono);
       font-size: 0.58rem;
       letter-spacing: 0.03em;
@@ -175,138 +137,10 @@
       line-height: 1.5;
     }
 
-    .show-role {
-      font-family: var(--mono);
-      font-size: 0.56rem;
-      letter-spacing: 0.06em;
-      color: var(--faint);
-      margin-top: 3px;
-    }
-
     .tag {
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-right: 4px;
-    }
-
-    /* ── Secondary sort ── */
-    .secondary-sort-toggle {
-      margin-bottom: 20px;
-    }
-
-    /* ── Support toggle ── */
-    .support-toggle {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.04em;
-      color: var(--faint);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0 0 48px;
-      display: block;
-      transition: color 0.12s;
-    }
-    .support-toggle:hover { color: var(--muted); }
-
-    /* ── Stats view ── */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 16px;
-    }
-
-    @media (max-width: 700px) {
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 480px) {
-      .stats-grid { grid-template-columns: 1fr; }
-    }
-
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 22px 24px;
-    }
-
-    .stat-card.full-width  { grid-column: span 4; }
-    .stat-card.half-width  { grid-column: span 2; }
-
-    .stat-label {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--faint);
-      margin-bottom: 10px;
-    }
-
-    .stat-number {
-      font-family: var(--slab);
-      font-size: 2.4rem;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .stat-names {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text);
-      line-height: 1.4;
-    }
-
-    .stat-sub {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.04em;
-      color: var(--faint);
-      margin-top: 5px;
-    }
-
-    .stat-city-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 7px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.82rem;
-    }
-    .stat-city-row:last-child { border-bottom: none; }
-    .stat-city-name { font-weight: 400; color: var(--text); }
-    .stat-city-count { font-family: var(--mono); font-size: 0.62rem; color: var(--faint); }
-
-    .stat-vbar-chart {
-      display: flex;
-      align-items: flex-end;
-      gap: 5px;
-      margin-top: 4px;
-    }
-    .stat-vbar-col {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-    .stat-vbar-bar {
-      width: 100%;
-      background: var(--text);
-      border-radius: 2px 2px 0 0;
-      min-height: 2px;
-    }
-    .stat-vbar-count {
-      font-family: var(--mono);
-      font-size: 0.52rem;
-      color: var(--faint);
-      min-height: 0.8rem;
-    }
-    .stat-vbar-label {
-      font-family: var(--mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.02em;
-      color: var(--muted);
     }
 
     /* ── Floating nav ── */
@@ -407,22 +241,8 @@
 
 <div class="page">
   <div class="page-header">
-    <div>
-      <h1>Drag Shows</h1>
-      <p class="page-subtitle" id="subtitle">Loading…</p>
-    </div>
-    <div class="view-toggle">
-      <button class="view-btn active" data-view="diary">Diary</button>
-      <button class="view-btn" data-view="queens">Queens</button>
-      <button class="view-btn" data-view="stats">Stats</button>
-    </div>
-  </div>
-
-  <div id="secondary-sort-wrap" style="display:none; margin-bottom: 20px;">
-    <div class="view-toggle">
-      <button class="view-btn active" data-sort="alpha">A–Z</button>
-      <button class="view-btn" data-sort="count">Most shows</button>
-    </div>
+    <h1>Drag Shows</h1>
+    <p class="page-subtitle" id="subtitle">Loading…</p>
   </div>
 
   <div id="shows-view"></div>
@@ -452,60 +272,15 @@
 
 <script src="drag-shows-data.js"></script>
 <script>
-  let currentView = "diary";
-  let secondarySort = "alpha";
-
-  // ── Helpers ──────────────────────────────────────────────────────────────
-
   function formatShortDate(dateStr) {
     const [, m, d] = dateStr.split("-").map(Number);
     const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     return `${months[m - 1]} ${d}`;
   }
 
-  function formatDate(dateStr) {
-    const [y, m, d] = dateStr.split("-").map(Number);
-    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    return `${months[m - 1]} ${d}, ${y}`;
-  }
-
   function getYear(dateStr) { return dateStr.split("-")[0]; }
 
-  function groupBy(arr, keyFn) {
-    const map = new Map();
-    for (const item of arr) {
-      const k = keyFn(item);
-      if (!map.has(k)) map.set(k, []);
-      map.get(k).push(item);
-    }
-    return map;
-  }
-
-  function sortedByDate(arr, desc = false) {
-    return [...arr].sort((a, b) => desc
-      ? b.date.localeCompare(a.date)
-      : a.date.localeCompare(b.date));
-  }
-
-  // All queens in a show (excl. outOfDrag)
-  function showQueens(show) {
-    return [
-      ...(show.headliners || []),
-      ...(show.support    || []),
-      ...(show.performers || []),
-    ];
-  }
-
-  // Display name for a show's primary line in diary view
-  function showPrimary(show) {
-    if (show.event) return show.event;
-    const qs = showQueens(show);
-    return qs.length > 0 ? qs.join(", ") : show.venue;
-  }
-
-  // ── Row builders ──────────────────────────────────────────────────────────
-
-  function buildDiaryRow(show) {
+  function buildRow(show) {
     const row = document.createElement("div");
     row.className = "show-row";
 
@@ -516,28 +291,38 @@
     const main = document.createElement("div");
     main.className = "show-main";
 
+    // Primary: the queens (headliners or flat performers)
+    const headliners = show.headliners || [];
+    const performers = show.performers || [];
+    const primaryQueens = headliners.length > 0 ? headliners : performers;
+
     const primary = document.createElement("div");
     primary.className = "show-primary";
-    primary.textContent = showPrimary(show);
+    primary.textContent = primaryQueens.length > 0 ? primaryQueens.join(", ") : show.venue;
     main.appendChild(primary);
+
+    // Secondary: event name (if any) + venue + city
+    const secondaryParts = [];
+    if (show.event) secondaryParts.push(show.event);
+    secondaryParts.push(show.venue + (show.city ? ` · ${show.city}` : ""));
 
     const secondary = document.createElement("div");
     secondary.className = "show-secondary";
-    secondary.textContent = show.venue + (show.city ? ` · ${show.city}` : "");
+    secondary.textContent = secondaryParts.join(" · ");
     main.appendChild(secondary);
 
-    // Support line (only if show has both headliners and support)
-    if ((show.headliners || []).length > 0 && (show.support || []).length > 0) {
+    // Support queens
+    if ((show.support || []).length > 0) {
       const sup = document.createElement("div");
-      sup.className = "show-queens";
+      sup.className = "show-detail";
       sup.innerHTML = `<span class="tag">w/</span>${show.support.join(", ")}`;
       main.appendChild(sup);
     }
 
-    // Out of drag
+    // Friends pulled on stage out of drag
     if ((show.outOfDrag || []).length > 0) {
       const ood = document.createElement("div");
-      ood.className = "show-queens";
+      ood.className = "show-detail";
       ood.innerHTML = `<span class="tag">pulled up</span>${show.outOfDrag.join(", ")}`;
       main.appendChild(ood);
     }
@@ -547,351 +332,64 @@
     return row;
   }
 
-  function buildQueenRow(show, role) {
-    // role: "headliner" | "support" | "performer"
-    const row = document.createElement("div");
-    row.className = "show-row";
-
-    const dateEl = document.createElement("div");
-    dateEl.className = "show-date";
-    dateEl.textContent = formatDate(show.date);
-
-    const main = document.createElement("div");
-    main.className = "show-main";
-
-    const primary = document.createElement("div");
-    primary.className = "show-primary";
-    primary.textContent = show.event || show.venue;
-    main.appendChild(primary);
-
-    if (show.city) {
-      const city = document.createElement("div");
-      city.className = "show-secondary";
-      city.textContent = show.city;
-      main.appendChild(city);
-    }
-
-    if (role === "support") {
-      const roleEl = document.createElement("div");
-      roleEl.className = "show-role";
-      const headliners = show.headliners || [];
-      roleEl.textContent = headliners.length > 0
-        ? `support for ${headliners.join(", ")}`
-        : `support`;
-      main.appendChild(roleEl);
-    }
-
-    row.appendChild(dateEl);
-    row.appendChild(main);
-    return row;
-  }
-
-  // ── Section builder ───────────────────────────────────────────────────────
-
-  function buildSection(title, entries, rowBuilder) {
-    const section = document.createElement("div");
-    section.className = "group-section";
-
-    const header = document.createElement("div");
-    header.className = "group-header";
-
-    const titleEl = document.createElement("div");
-    titleEl.className = "group-title";
-    titleEl.textContent = title;
-
-    const countEl = document.createElement("div");
-    countEl.className = "group-count";
-    countEl.textContent = entries.length === 1 ? "1 show" : `${entries.length} shows`;
-
-    header.appendChild(titleEl);
-    header.appendChild(countEl);
-    section.appendChild(header);
-
-    for (const entry of entries) {
-      section.appendChild(rowBuilder(entry));
-    }
-
-    return section;
-  }
-
-  // ── Stats ─────────────────────────────────────────────────────────────────
-
-  function renderStats() {
-    const container = document.getElementById("shows-view");
-    container.innerHTML = "";
-
-    // Queen counts
-    const allQueenCount = new Map();
-    const headlinerCount = new Map();
-    const add = (map, name) => map.set(name, (map.get(name) || 0) + 1);
-
-    for (const show of DRAG_SHOWS) {
-      for (const q of (show.headliners || [])) { add(allQueenCount, q); add(headlinerCount, q); }
-      for (const q of (show.support    || [])) { add(allQueenCount, q); }
-      for (const q of (show.performers || [])) { add(allQueenCount, q); add(headlinerCount, q); }
-    }
-
-    const maxSeen = allQueenCount.size ? Math.max(...allQueenCount.values()) : 0;
-    const topSeen = [...allQueenCount.entries()].filter(([,c]) => c === maxSeen).map(([n]) => n).sort();
-
-    const maxHL = headlinerCount.size ? Math.max(...headlinerCount.values()) : 0;
-    const topHL = [...headlinerCount.entries()].filter(([,c]) => c === maxHL).map(([n]) => n).sort();
-
-    // Venue counts
-    const venueCount = new Map();
-    for (const show of DRAG_SHOWS) {
-      add(venueCount, show.venue);
-    }
-    const maxVenue = venueCount.size ? Math.max(...venueCount.values()) : 0;
-    const topVenues = [...venueCount.entries()].filter(([,c]) => c === maxVenue).map(([n]) => n).sort();
-
-    // City counts
-    const cityCount = new Map();
-    for (const show of DRAG_SHOWS) {
-      if (show.city) add(cityCount, show.city);
-    }
-    const cities = [...cityCount.entries()].sort((a, b) => b[1] - a[1]);
-
-    // Shows by year
-    const yearCount = new Map();
-    for (const show of DRAG_SHOWS) {
-      add(yearCount, getYear(show.date));
-    }
-    const years = [...yearCount.keys()].sort();
-
-    // Unique queens seen
-    const allQueens = allQueenCount.size;
-
-    // Build grid
-    const grid = document.createElement("div");
-    grid.className = "stats-grid";
-
-    function makeCard(label, number, names, sub, spanClass = "") {
-      const card = document.createElement("div");
-      card.className = "stat-card" + (spanClass ? " " + spanClass : "");
-      const lEl = document.createElement("div");
-      lEl.className = "stat-label";
-      lEl.textContent = label;
-      const nEl = document.createElement("div");
-      nEl.className = "stat-number";
-      nEl.textContent = number;
-      card.appendChild(lEl);
-      card.appendChild(nEl);
-      if (names) {
-        const namesEl = document.createElement("div");
-        namesEl.className = "stat-names";
-        namesEl.textContent = names;
-        card.appendChild(namesEl);
-      }
-      if (sub) {
-        const subEl = document.createElement("div");
-        subEl.className = "stat-sub";
-        subEl.textContent = sub;
-        card.appendChild(subEl);
-      }
-      return card;
-    }
-
-    function makeVBarCard(label, data, spanClass = "") {
-      const card = document.createElement("div");
-      card.className = "stat-card" + (spanClass ? " " + spanClass : "");
-      const lEl = document.createElement("div");
-      lEl.className = "stat-label";
-      lEl.textContent = label;
-      card.appendChild(lEl);
-      const maxVal = Math.max(...data.map(d => d.count), 1);
-      const BAR_MAX_PX = 64;
-      const chart = document.createElement("div");
-      chart.className = "stat-vbar-chart";
-      for (const { name, count } of data) {
-        const col = document.createElement("div");
-        col.className = "stat-vbar-col";
-        const countEl = document.createElement("div");
-        countEl.className = "stat-vbar-count";
-        countEl.textContent = count > 0 ? count : "";
-        const bar = document.createElement("div");
-        bar.className = "stat-vbar-bar";
-        bar.style.height = `${Math.max(2, Math.round((count / maxVal) * BAR_MAX_PX))}px`;
-        if (count === 0) bar.style.opacity = "0.15";
-        const lbl = document.createElement("div");
-        lbl.className = "stat-vbar-label";
-        lbl.textContent = name;
-        col.appendChild(countEl);
-        col.appendChild(bar);
-        col.appendChild(lbl);
-        chart.appendChild(col);
-      }
-      card.appendChild(chart);
-      return card;
-    }
-
-    grid.appendChild(makeCard("Queens seen", allQueens, null, null, "half-width"));
-    grid.appendChild(makeCard("Shows attended", DRAG_SHOWS.length, null, null, "half-width"));
-    grid.appendChild(makeCard("Most seen queen", maxSeen, topSeen.join(", "), null, "half-width"));
-    grid.appendChild(makeCard("Most seen headliner", maxHL, topHL.join(", "), null, "half-width"));
-    grid.appendChild(makeCard("Most visited venue", maxVenue, topVenues.join(", "), null, "half-width"));
-
-    if (cities.length > 0) {
-      const cityCard = document.createElement("div");
-      cityCard.className = "stat-card half-width";
-      const cLabel = document.createElement("div");
-      cLabel.className = "stat-label";
-      cLabel.textContent = "Shows by city";
-      cityCard.appendChild(cLabel);
-      for (const [city, count] of cities) {
-        const r = document.createElement("div");
-        r.className = "stat-city-row";
-        const n = document.createElement("span");
-        n.className = "stat-city-name";
-        n.textContent = city;
-        const c = document.createElement("span");
-        c.className = "stat-city-count";
-        c.textContent = count;
-        r.appendChild(n);
-        r.appendChild(c);
-        cityCard.appendChild(r);
-      }
-      grid.appendChild(cityCard);
-    }
-
-    if (years.length > 1) {
-      const yearData = years.map(y => ({ name: `'${y.slice(2)}`, count: yearCount.get(y) }));
-      grid.appendChild(makeVBarCard("Shows by year", yearData, "full-width"));
-    }
-
-    container.appendChild(grid);
-  }
-
-  // ── Render ────────────────────────────────────────────────────────────────
-
   function render() {
     const container = document.getElementById("shows-view");
-    container.innerHTML = "";
-
-    if (currentView === "stats") { renderStats(); return; }
 
     if (!DRAG_SHOWS || DRAG_SHOWS.length === 0) {
-      const empty = document.createElement("div");
-      empty.className = "empty-state";
-      empty.textContent = "No shows yet — add entries to drag-shows-data.js";
-      container.appendChild(empty);
+      container.innerHTML = '<div style="font-family:var(--mono);font-size:0.7rem;color:var(--faint);letter-spacing:0.04em;padding:48px 0">No shows yet — add entries to drag-shows-data.js</div>';
       return;
     }
 
-    const sorted = sortedByDate(DRAG_SHOWS, true);
+    const sorted = [...DRAG_SHOWS].sort((a, b) => b.date.localeCompare(a.date));
 
-    if (currentView === "diary") {
-      const byYear = groupBy(sorted, s => getYear(s.date));
-      const years = [...byYear.keys()].sort((a, b) => b - a);
-      for (const year of years) {
-        const shows = byYear.get(year);
-        container.appendChild(buildSection(year, shows, buildDiaryRow));
-      }
+    // Group by year
+    const byYear = new Map();
+    for (const show of sorted) {
+      const y = getYear(show.date);
+      if (!byYear.has(y)) byYear.set(y, []);
+      byYear.get(y).push(show);
+    }
 
-    } else {
-      // Queens view
-      const byQueen = new Map();
-      const addEntry = (name, entry) => {
-        if (!byQueen.has(name)) byQueen.set(name, []);
-        byQueen.get(name).push(entry);
-      };
+    for (const [year, shows] of [...byYear.entries()].sort((a, b) => b[0] - a[0])) {
+      const section = document.createElement("div");
+      section.className = "group-section";
 
-      for (const show of DRAG_SHOWS) {
-        for (const q of (show.headliners || [])) addEntry(q, { show, role: "headliner" });
-        for (const q of (show.support    || [])) addEntry(q, { show, role: "support"   });
-        for (const q of (show.performers || [])) addEntry(q, { show, role: "performer" });
-      }
+      const header = document.createElement("div");
+      header.className = "group-header";
 
-      const countFor = (queen) => byQueen.get(queen).length;
+      const titleEl = document.createElement("div");
+      titleEl.className = "group-title";
+      titleEl.textContent = year;
 
-      const allQueens = [...byQueen.keys()].sort((a, b) => secondarySort === "count"
-        ? countFor(b) - countFor(a) || a.localeCompare(b)
-        : a.localeCompare(b));
+      const countEl = document.createElement("div");
+      countEl.className = "group-count";
+      countEl.textContent = shows.length === 1 ? "1 show" : `${shows.length} shows`;
 
-      // Queens who have headlined or performed (flat) at least once
-      const featured  = allQueens.filter(q => byQueen.get(q).some(e => e.role !== "support"));
-      // Queens who only ever appeared as support
-      const supportOnly = allQueens.filter(q => byQueen.get(q).every(e => e.role === "support"));
+      header.appendChild(titleEl);
+      header.appendChild(countEl);
+      section.appendChild(header);
 
-      for (const queen of featured) {
-        const entries = byQueen.get(queen).sort((a, b) => b.show.date.localeCompare(a.show.date));
-        container.appendChild(buildSection(
-          queen,
-          entries,
-          ({ show, role }) => buildQueenRow(show, role)
-        ));
-      }
+      for (const show of shows) section.appendChild(buildRow(show));
 
-      if (supportOnly.length > 0) {
-        const supportWrap = document.createElement("div");
-        supportWrap.style.display = "none";
-        for (const queen of supportOnly) {
-          const entries = byQueen.get(queen).sort((a, b) => b.show.date.localeCompare(a.show.date));
-          supportWrap.appendChild(buildSection(
-            queen,
-            entries,
-            ({ show, role }) => buildQueenRow(show, role)
-          ));
-        }
-        container.appendChild(supportWrap);
-
-        const toggleBtn = document.createElement("button");
-        toggleBtn.className = "support-toggle";
-        toggleBtn.textContent = `show ${supportOnly.length} support-only queen${supportOnly.length !== 1 ? "s" : ""}`;
-        toggleBtn.addEventListener("click", () => {
-          const open = supportWrap.style.display === "none";
-          supportWrap.style.display = open ? "" : "none";
-          toggleBtn.textContent = open
-            ? `hide support-only queen${supportOnly.length !== 1 ? "s" : ""}`
-            : `show ${supportOnly.length} support-only queen${supportOnly.length !== 1 ? "s" : ""}`;
-        });
-        container.appendChild(toggleBtn);
-      }
+      container.appendChild(section);
     }
   }
 
   function updateSubtitle() {
     const total = DRAG_SHOWS ? DRAG_SHOWS.length : 0;
-    if (total === 0) {
-      document.getElementById("subtitle").textContent = "Add your shows to drag-shows-data.js";
-      return;
-    }
+    if (total === 0) { document.getElementById("subtitle").textContent = ""; return; }
     const queens = new Set();
     for (const s of DRAG_SHOWS) {
-      for (const q of [...(s.headliners||[]), ...(s.support||[]), ...(s.performers||[])]) {
-        queens.add(q);
-      }
+      for (const q of [...(s.headliners||[]), ...(s.support||[]), ...(s.performers||[])]) queens.add(q);
     }
     document.getElementById("subtitle").textContent =
       `${total} show${total !== 1 ? "s" : ""} · ${queens.size} queen${queens.size !== 1 ? "s" : ""}`;
   }
 
-  // ── Controls ──────────────────────────────────────────────────────────────
-
-  document.querySelectorAll(".page-header .view-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      currentView = btn.dataset.view;
-      document.querySelectorAll(".page-header .view-btn").forEach(b => b.classList.toggle("active", b === btn));
-      secondarySort = "alpha";
-      document.querySelectorAll("#secondary-sort-wrap .view-btn").forEach(b => b.classList.toggle("active", b.dataset.sort === "alpha"));
-      document.getElementById("secondary-sort-wrap").style.display = currentView === "queens" ? "" : "none";
-      render();
-    });
-  });
-
-  document.querySelectorAll("#secondary-sort-wrap .view-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      secondarySort = btn.dataset.sort;
-      document.querySelectorAll("#secondary-sort-wrap .view-btn").forEach(b => b.classList.toggle("active", b === btn));
-      render();
-    });
-  });
-
   updateSubtitle();
   render();
 </script>
 <script>
-  // Survivor flyout
   (function() {
     var g = document.getElementById('survivor-group');
     var t = document.getElementById('survivor-trigger');
@@ -899,8 +397,6 @@
     t.addEventListener('click', function(e) { e.stopPropagation(); f.classList.toggle('open'); document.getElementById('drag-flyout').classList.remove('open'); });
     document.addEventListener('click', function(e) { if (!g.contains(e.target)) f.classList.remove('open'); });
   })();
-
-  // Drag flyout (open by default since current page is in it)
   (function() {
     var g = document.getElementById('drag-group');
     var t = document.getElementById('drag-trigger');
