@@ -385,6 +385,7 @@
     </div>
     <div class="view-toggle">
       <button class="view-btn active" data-view="year">Diary</button>
+      <button class="view-btn" data-view="upcoming">Upcoming</button>
       <button class="view-btn" data-view="artist">Artists</button>
       <button class="view-btn" data-view="venue">Venues</button>
       <button class="view-btn" data-view="map">Map</button>
@@ -913,12 +914,77 @@
     }
   }
 
+  function daysUntil(dateStr) {
+    const [y, m, d] = dateStr.split("-").map(Number);
+    const show = new Date(y, m - 1, d);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return Math.round((show - today) / 86400000);
+  }
+
+  function renderUpcoming() {
+    const container = document.getElementById("concerts-view");
+    container.innerHTML = "";
+
+    if (!UPCOMING || UPCOMING.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "empty-state";
+      empty.textContent = "No upcoming shows — add entries to UPCOMING in concerts-data.js";
+      container.appendChild(empty);
+      return;
+    }
+
+    const sorted = sortedByDate(UPCOMING); // ascending — soonest first
+    for (const show of sorted) {
+      const isFestival = !!show.festival;
+      const row = document.createElement("div");
+      row.className = "concert-row";
+
+      const dateEl = document.createElement("div");
+      dateEl.className = "concert-date";
+      dateEl.textContent = formatShortDate(show.date);
+      const days = daysUntil(show.date);
+      const countdown = document.createElement("span");
+      countdown.style.cssText = "display:block; margin-top:3px; font-size:0.55rem; letter-spacing:0.04em; color:var(--faint);";
+      countdown.textContent = days === 0 ? "today" : days === 1 ? "tomorrow" : `${days}d`;
+      dateEl.appendChild(countdown);
+
+      const main = document.createElement("div");
+      main.className = "concert-main";
+
+      const primaryEl = document.createElement("div");
+      primaryEl.className = "concert-artist";
+      primaryEl.textContent = isFestival ? show.festival : show.artist;
+      main.appendChild(primaryEl);
+
+      const venue = document.createElement("div");
+      venue.className = "concert-secondary";
+      venue.textContent = show.venue + (show.city ? ` · ${show.city}` : "");
+      main.appendChild(venue);
+
+      const allArtists = isFestival
+        ? [...(show.headliners || []), ...(show.support || []), ...(show.artists || [])]
+        : (show.openers || []);
+      if (allArtists.length > 0) {
+        const op = document.createElement("div");
+        op.className = "concert-openers";
+        op.innerHTML = `<span class="opener-label">w/</span>${allArtists.join(", ")}`;
+        main.appendChild(op);
+      }
+
+      row.appendChild(dateEl);
+      row.appendChild(main);
+      container.appendChild(row);
+    }
+  }
+
   function render() {
     const container = document.getElementById("concerts-view");
     container.innerHTML = "";
 
-    if (currentView === "stats") { renderStats(); return; }
-    if (currentView === "map")   { renderMap();   return; }
+    if (currentView === "stats")    { renderStats();    return; }
+    if (currentView === "map")      { renderMap();      return; }
+    if (currentView === "upcoming") { renderUpcoming(); return; }
 
     if (!CONCERTS || CONCERTS.length === 0) {
       const empty = document.createElement("div");
@@ -1129,7 +1195,7 @@
       document.getElementById("person-filter-select").classList.remove("filtered");
       const wrap = document.getElementById("person-filter-wrap");
       wrap.style.display = (currentView === "year") ? "" : "none";
-      if (currentView === "stats" || currentView === "map") {
+      if (currentView === "stats" || currentView === "map" || currentView === "upcoming") {
         document.getElementById("secondary-sort-toggle").style.display = "none";
         document.getElementById("artist-filter-toggle").style.display = "none";
       }

@@ -1,3 +1,8 @@
+const UPCOMING = [
+  { artist: "Leigh-Anne", venue: "O2 Forum Kentish Town", city: "London", date: "2026-04-11", openers: [], seated: true },
+  { festival: "All Points East", venue: "Victoria Park", city: "London", date: "2026-08-22", headliners: ["Lorde"], support: ["PinkPantheress", "Zara Larsson", "oklou", "Audrey Hobert", "Rose Gray"], with: ["Oliver"] },
+];
+
 const CONCERTS = [
   { artist: "Sigrid",          venue: "Roundhouse",           city: "London", date: "2026-03-13", openers: [], with: ["Oliver"] },
   { artist: "Lorde",           venue: "The O2",               city: "London", date: "2025-11-17", openers: ["The Japanese House"], with: ["Oliver", "Devangini"], seated: true, fav: true },
@@ -127,4 +132,5 @@ const VENUE_COORDS = {
   "Christchurch":              [51.7499, -1.2566],
   "Malmö Arena":               [55.5787, 12.9765],
   "Globen":                    [59.2934, 18.0832],
+  "Victoria Park":             [51.5362, -0.0366],
 };
