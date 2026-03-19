@@ -18,6 +18,10 @@
       --text:          #1a1624;
       --muted:         #6b6278;
       --faint:         #b0a8be;
+      --nav-bg:        #1a1624;
+      --nav-muted:     rgba(243,241,248,0.38);
+      --nav-active-bg:   #f3f1f8;
+      --nav-active-text: #1a1624;
       --slab:  'Alfa Slab One', Georgia, serif;
       --sans:  'DM Sans', system-ui, sans-serif;
       --mono:  'DM Mono', monospace;
@@ -343,7 +347,7 @@
       display: flex;
       align-items: center;
       gap: 2px;
-      background: #1a1624;
+      background: var(--nav-bg);
       border-radius: 100px;
       padding: 4px;
       box-shadow: 0 4px 24px rgba(26,22,36,0.18), 0 1px 4px rgba(26,22,36,0.1);
@@ -353,7 +357,7 @@
       font-family: var(--sans);
       font-size: 0.75rem;
       font-weight: 400;
-      color: rgba(243,241,248,0.38);
+      color: var(--nav-muted);
       background: none;
       border: none;
       border-radius: 100px;
@@ -368,8 +372,8 @@
     .nav-btn:hover { color: rgba(243,241,248,0.8); }
 
     .nav-btn.active {
-      background: var(--bg);
-      color: var(--text);
+      background: var(--nav-active-bg);
+      color: var(--nav-active-text);
       font-weight: 500;
     }
 
