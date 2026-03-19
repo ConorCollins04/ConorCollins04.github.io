@@ -1,6 +1,12 @@
 const UPCOMING = [
   { artist: "Leigh-Anne", venue: "O2 Forum Kentish Town", city: "London", date: "2026-04-11", openers: [], seated: true },
+  { artist: "Rose Gray", venue: "KOKO", city: "London", date: "2026-05-14", openers: [], with: ["Oliver"] },
+  { artist: "PinkPantheress", venue: "Alexandra Palace", city: "London", date: "2026-05-29", openers: ["iKeda"], with: ["Oliver"] },
+  { artist: "Madison Beer", venue: "The O2", city: "London", date: "2026-05-30", openers: ["Isabel LaRosa", "Lulu Simon"], with: ["Oliver"] },
+  { artist: "Robyn", venue: "The O2", city: "London", date: "2026-07-03", openers: ["Saya Gray"], with: ["Oliver"] },
   { festival: "All Points East", venue: "Victoria Park", city: "London", date: "2026-08-22", headliners: ["Lorde"], support: ["PinkPantheress", "Zara Larsson", "oklou", "Audrey Hobert", "Rose Gray"], with: ["Oliver"] },
+  { artist: "Loreen", venue: "O2 Academy Brixton", city: "London", date: "2026-09-26", openers: [], with: ["Oliver"] },
+  { artist: "Slayyyter", venue: "Roundhouse", city: "London", date: "2026-11-05", openers: ["Pearly Drops"], with: ["Oliver"] },
 ];
 
 const CONCERTS = [
