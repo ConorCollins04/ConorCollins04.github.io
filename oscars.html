@@ -6,6 +6,7 @@
   <title>Oscars — Conor Collins</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="nav.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -21,10 +22,6 @@
       --gold:          #b8860b;
       --gold-bg:       #fdf8ed;
       --gold-border:   rgba(184,134,11,0.3);
-      --nav-bg:        #1a1624;
-      --nav-muted:     rgba(243,241,248,0.38);
-      --nav-active-bg:   #f3f1f8;
-      --nav-active-text: #1a1624;
       --slab:  'Alfa Slab One', Georgia, serif;
       --sans:  'DM Sans', system-ui, sans-serif;
       --mono:  'DM Mono', monospace;
@@ -339,99 +336,6 @@
     }
     .progress-film-chip.unseen {
       opacity: 0.4;
-    }
-
-    /* ── Floating nav ── */
-    .nav-wrap {
-      position: fixed;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
-    }
-
-    .nav-pill {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      background: var(--nav-bg);
-      border-radius: 100px;
-      padding: 4px;
-      box-shadow: 0 4px 24px rgba(26,22,36,0.18), 0 1px 4px rgba(26,22,36,0.1);
-    }
-
-    .nav-btn {
-      font-family: var(--sans);
-      font-size: 0.75rem;
-      font-weight: 400;
-      color: var(--nav-muted);
-      background: none;
-      border: none;
-      border-radius: 100px;
-      padding: 7px 18px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: color 0.15s;
-      white-space: nowrap;
-      display: block;
-    }
-
-    .nav-btn:hover { color: rgba(243,241,248,0.8); }
-
-    .nav-btn.active {
-      background: var(--nav-active-bg);
-      color: var(--nav-active-text);
-      font-weight: 500;
-    }
-
-    .nav-group { position: relative; }
-
-    .nav-flyout {
-      position: absolute;
-      bottom: calc(100% + 10px);
-      left: 50%;
-      transform: translateX(-50%) translateY(4px);
-      background: var(--nav-bg);
-      border-radius: 12px;
-      padding: 4px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      box-shadow: 0 4px 24px rgba(26,22,36,0.18), 0 1px 4px rgba(26,22,36,0.1);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.15s, transform 0.15s;
-      white-space: nowrap;
-      min-width: max-content;
-    }
-
-    .nav-flyout.open {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    .nav-sub-btn {
-      font-family: var(--sans);
-      font-size: 0.75rem;
-      font-weight: 400;
-      color: var(--nav-muted);
-      background: none;
-      border: none;
-      border-radius: 8px;
-      padding: 7px 18px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: color 0.15s;
-      display: block;
-    }
-
-    .nav-sub-btn:hover { color: rgba(243,241,248,0.8); }
-
-    .nav-sub-btn.active {
-      background: var(--nav-active-bg);
-      color: var(--nav-active-text);
-      font-weight: 500;
     }
   </style>
 </head>
