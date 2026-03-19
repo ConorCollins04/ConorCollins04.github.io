@@ -304,7 +304,7 @@
     // Secondary: event name (if any) + venue + city
     const secondaryParts = [];
     if (show.event) secondaryParts.push(show.event);
-    secondaryParts.push(show.venue + (show.city ? ` · ${show.city}` : ""));
+    secondaryParts.push(show.venue);
 
     const secondary = document.createElement("div");
     secondary.className = "show-secondary";
