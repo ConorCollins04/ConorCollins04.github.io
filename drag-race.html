@@ -345,20 +345,7 @@
     <table class="track-record" id="trackRecord"></table>
   </div>
 
-  <div class="legend">
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-win)"></div>Win</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-top2)"></div>Top 2</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-high)"></div>High</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-safe)"></div>Safe</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-run)"></div>Bye (not in ep)</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-low)"></div>Low</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-btm)"></div>Bottom (deferred)</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-btm2)"></div>Bottom 2</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-elim)"></div>Eliminated</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-winner)"></div>Winner</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-runnerup)"></div>Runner-up</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-elim-final)"></div>Elim (Finale)</div>
-  </div>
+  <div class="legend" id="legend"></div>
 </div>
 
 <div class="nav-wrap">
@@ -453,6 +440,34 @@ function avatarHTML(queen) {
   return `<div class="queen-initials" style="background:hsl(${hue},38%,60%)">${initials(queen.name)}</div>`;
 }
 
+// ── Legend ───────────────────────────────────
+const LEGEND_META = {
+  "WIN":        { color: "var(--c-win)",        text: "Win" },
+  "TOP2":       { color: "var(--c-top2)",       text: "Top 2" },
+  "HIGH":       { color: "var(--c-high)",       text: "High" },
+  "HIGH TEAM":  { color: "var(--c-high)",       text: "High (Team)" },
+  "SAFE":       { color: "var(--c-safe)",       text: "Safe" },
+  "BYE":        { color: "var(--c-run)",        text: "Bye (not in ep)" },
+  "LOW":        { color: "var(--c-low)",        text: "Low" },
+  "BTM":        { color: "var(--c-btm)",        text: "Bottom (deferred)" },
+  "BTM2":       { color: "var(--c-btm2)",       text: "Bottom 2" },
+  "ELIM":       { color: "var(--c-elim)",       text: "Eliminated" },
+  "WINNER":     { color: "var(--c-winner)",     text: "Winner" },
+  "RUNNER-UP":  { color: "var(--c-runnerup)",   text: "Runner-up" },
+  "ELIM FINAL": { color: "var(--c-elim-final)", text: "Elim (Finale)" },
+};
+
+function renderLegend(season) {
+  const used = new Set(season.queens.flatMap(q => q.results.map(r => r.toUpperCase())));
+  const order = Object.keys(LEGEND_META);
+  document.getElementById("legend").innerHTML = order
+    .filter(key => used.has(key))
+    .map(key => {
+      const { color, text } = LEGEND_META[key];
+      return `<div class="legend-item"><div class="legend-swatch" style="background:${color}"></div>${text}</div>`;
+    }).join("");
+}
+
 // ── Render ───────────────────────────────────
 function renderTable(season) {
   const epNumCells  = season.episodes.map(ep => `<th>${ep.num}</th>`).join("");
@@ -486,6 +501,7 @@ function renderTable(season) {
   }).join("");
 
   document.getElementById("trackRecord").innerHTML = thead + `<tbody>${rows}</tbody>`;
+  renderLegend(season);
 }
 
 function setLoading() {
