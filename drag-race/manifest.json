@@ -1,0 +1,5 @@
+{
+  "seasons": [
+    { "id": "rpdr-us-s18", "label": "RPDR S18", "path": "drag-race/us/s18.csv" }
+  ]
+}

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drag Race — Conor Collins</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #f3f1f8;
+      --surface:      #faf9fd;
+      --surface2:     #f0eef6;
+      --border:       rgba(80,60,120,0.1);
+      --text:         #1a1624;
+      --muted:        #6b6278;
+      --faint:        #b0a8be;
+      --nav-bg:       #1a1624;
+      --nav-muted:    rgba(243,241,248,0.38);
+      --nav-active-bg:   #f3f1f8;
+      --nav-active-text: #1a1624;
+      --slab: 'Alfa Slab One', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --mono: 'DM Mono', monospace;
+
+      /* result colours */
+      --c-win:        #3b5fc0;
+      --c-high:       #6ea4c5;
+      --c-safe:       #cde0e0;
+      --c-low:        #f4b8c1;
+      --c-btm2:       #e07060;
+      --c-elim:       #cc3333;
+      --c-winner:     #c9a840;
+      --c-runnerup:   #8a8a8a;
+      --c-elim-final: #7a4a30;
+      --c-miss-c:     #00c8d0;
+      --c-top2:       #5a8fd4;
+      --c-run:        #d6d2e0;
+      --c-btm:        #d97060;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 56px 4vw 120px;
+    }
+
+    /* ── Header ── */
+    .page-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-family: var(--slab);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .page-subtitle {
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 6px;
+    }
+
+    /* ── Season tabs ── */
+    .season-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .season-tab {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .season-tab:hover { border-color: rgba(80,60,120,0.25); color: var(--text); }
+
+    .season-tab.active {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+
+    /* ── Track record table ── */
+    .track-record-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .track-record {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .track-record th,
+    .track-record td {
+      border: 1px solid rgba(80,60,120,0.07);
+    }
+
+    /* header */
+    .track-record thead tr:first-child th {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--faint);
+      background: var(--surface2);
+      padding: 12px 8px 2px;
+      text-align: center;
+      vertical-align: bottom;
+      white-space: nowrap;
+    }
+
+    .track-record thead tr:last-child th {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--surface2);
+      padding: 4px 8px 10px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* sticky identity columns */
+    .col-queen { position: sticky; left: 0; min-width: 170px; background: var(--surface); z-index: 2; }
+    .col-place { position: sticky; left: 170px; min-width: 68px; background: var(--surface); z-index: 2; }
+    .col-score { position: sticky; left: 238px; min-width: 60px; background: var(--surface); z-index: 2; }
+
+    thead .col-queen,
+    thead .col-place,
+    thead .col-score { background: var(--surface2); z-index: 3; }
+
+    /* queen cell */
+    .queen-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 10px 5px 12px;
+    }
+
+    .queen-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      object-fit: cover;
+      background: var(--surface2);
+    }
+
+    .queen-initials {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.52rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+
+    .queen-name {
+      font-size: 0.77rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .place-cell,
+    .score-cell {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-align: center;
+      padding: 5px 8px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* episode cells */
+    .ep-cell {
+      text-align: center;
+      vertical-align: middle;
+      min-width: 62px;
+      padding: 5px 3px;
+    }
+
+    .result-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 7px;
+      border-radius: 6px;
+      white-space: nowrap;
+      color: #fff;
+    }
+
+    .r-win        { background: var(--c-win); }
+    .r-top2       { background: var(--c-top2); }
+    .r-high       { background: var(--c-high); }
+    .r-high-team  { background: var(--c-high); }
+    .r-safe       { background: var(--c-safe); color: #5a7a7a; }
+    .r-run        { background: var(--c-run);  color: #7a7090; }
+    .r-low        { background: var(--c-low);  color: #8a3040; }
+    .r-btm        { background: var(--c-btm); }
+    .r-btm2       { background: var(--c-btm2); }
+    .r-elim       { background: var(--c-elim); }
+    .r-winner     { background: var(--c-winner); }
+    .r-runnerup   { background: var(--c-runnerup); }
+    .r-elim-final { background: var(--c-elim-final); }
+    .r-miss-c     { background: var(--c-miss-c); }
+
+    /* even-row tint on sticky cols */
+    tbody tr:nth-child(even) .col-queen,
+    tbody tr:nth-child(even) .col-place,
+    tbody tr:nth-child(even) .col-score { background: #f6f4fc; }
+
+    tbody tr:hover td { background: rgba(80,60,120,0.03); }
+
+    /* legend */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 22px;
+      margin-top: 18px;
+      padding: 0 2px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    /* ── Nav pill ── */
+    .nav-wrap {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--nav-bg);
+      border-radius: 100px;
+      padding: 4px;
+      box-shadow: 0 4px 24px rgba(26,22,36,0.18), 0 1px 4px rgba(26,22,36,0.1);
+    }
+
+    .nav-btn {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--nav-muted);
+      background: none;
+      border: none;
+      border-radius: 100px;
+      padding: 7px 18px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.15s;
+      white-space: nowrap;
+      display: block;
+    }
+
+    .nav-btn:hover { color: rgba(243,241,248,0.8); }
+
+    .nav-btn.active {
+      background: var(--nav-active-bg);
+      color: var(--nav-active-text);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>Drag Race</h1>
+      <p class="page-subtitle">My personal judging · results reflect my own scores, not the show's</p>
+    </div>
+  </div>
+
+  <div class="season-tabs" id="seasonTabs"></div>
+
+  <div class="track-record-wrap">
+    <table class="track-record" id="trackRecord"></table>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-win)"></div>Win</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-top2)"></div>Top 2</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-high)"></div>High</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-safe)"></div>Safe</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-run)"></div>Run (not in ep)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-low)"></div>Low</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-btm)"></div>Bottom (deferred)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-btm2)"></div>Bottom 2</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-elim)"></div>Eliminated</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-winner)"></div>Winner</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-runnerup)"></div>Runner-up</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-elim-final)"></div>Elim (Finale)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-miss-c)"></div>Miss Congeniality</div>
+  </div>
+</div>
+
+<div class="nav-wrap">
+  <nav class="nav-pill">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="survivor-all-stars.html" class="nav-btn">Survivor All-Stars Casting</a>
+    <a href="oscars.html" class="nav-btn">Oscars</a>
+    <a href="concerts.html" class="nav-btn">Concerts</a>
+    <a href="drag-race.html" class="nav-btn active">Drag Race</a>
+  </nav>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// CSV season files live in drag-race/<franchise>/<season>.csv
+// manifest.json lists all available seasons.
+//
+// CSV format — row 1 is headers:
+//   Place, Name, Photo, Score, <Episode 1 name>, <Episode 2 name>, ...
+// Each subsequent row is one queen.
+//
+// Valid result values (case-insensitive):
+//   WIN | HIGH | HIGH TEAM | SAFE | LOW | BTM2 | ELIM
+//   WINNER | RUNNER-UP | ELIM FINAL | MISS C
+//   (empty cell = not yet aired / not applicable)
+// ─────────────────────────────────────────────
+
+const RESULT_MAP = {
+  "WIN":        { cls: "r-win",        label: "WIN" },
+  "TOP2":       { cls: "r-top2",       label: "TOP2" },   // lip sync for the win, didn't win
+  "HIGH":       { cls: "r-high",       label: "HIGH" },
+  "HIGH TEAM":  { cls: "r-high-team",  label: "HIGH TEAM" },
+  "SAFE":       { cls: "r-safe",       label: "SAFE" },
+  "RUN":        { cls: "r-run",        label: "RUN" },    // not in episode, still in running
+  "LOW":        { cls: "r-low",        label: "LOW" },
+  "BTM":        { cls: "r-btm",        label: "BTM" },    // bottom, lip sync deferred to next ep
+  "BTM2":       { cls: "r-btm2",       label: "BTM2" },
+  "ELIM":       { cls: "r-elim",       label: "ELIM" },
+  "WINNER":     { cls: "r-winner",     label: "Winner" },
+  "RUNNER-UP":  { cls: "r-runnerup",   label: "Runner-up" },
+  "ELIM FINAL": { cls: "r-elim-final", label: "Eliminated" },
+  "MISS C":     { cls: "r-miss-c",     label: "Miss C" },
+};
+
+// ── CSV parser (handles quoted fields) ──────
+function parseCSV(text) {
+  const rows = [];
+  for (const line of text.trim().split(/\r?\n/)) {
+    const cells = [];
+    let cur = "", inQuote = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        if (inQuote && line[i + 1] === '"') { cur += '"'; i++; }
+        else inQuote = !inQuote;
+      } else if (ch === ',' && !inQuote) {
+        cells.push(cur); cur = "";
+      } else {
+        cur += ch;
+      }
+    }
+    cells.push(cur);
+    rows.push(cells);
+  }
+  return rows;
+}
+
+function csvToSeason(text, meta) {
+  const rows = parseCSV(text);
+  // Row 0: Place, Name, <episode name>, <episode name>, ...
+  const headers = rows[0];
+  const episodes = headers.slice(2).map((name, i) => ({ num: i + 1, name: name.trim() }));
+  const queens = rows.slice(1).filter(row => row.some(c => c.trim())).map(row => ({
+    place:   row[0]?.trim() ?? "",
+    name:    row[1]?.trim() ?? "",
+    photo:   "",
+    score:   0,
+    results: row.slice(2).map(r => r?.trim() ?? ""),
+  }));
+  return { ...meta, episodes, queens };
+}
+
+// ── Avatar helpers ───────────────────────────
+function initials(name) {
+  return name.split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase();
+}
+
+function avatarHTML(queen) {
+  if (queen.photo) {
+    return `<img class="queen-avatar" src="${queen.photo}" alt="${queen.name}" loading="lazy">`;
+  }
+  const hue = Math.abs(queen.name.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % 360);
+  return `<div class="queen-initials" style="background:hsl(${hue},38%,60%)">${initials(queen.name)}</div>`;
+}
+
+// ── Render ───────────────────────────────────
+function renderTable(season) {
+  const epNumCells  = season.episodes.map(ep => `<th>${ep.num}</th>`).join("");
+  const epNameCells = season.episodes.map(ep => `<th>${ep.name}</th>`).join("");
+
+  const thead = `<thead>
+    <tr>
+      <th class="col-queen" rowspan="2" style="text-align:left;padding:10px 10px 10px 14px">Queen</th>
+      <th class="col-place" rowspan="2">Place</th>
+      <th class="col-score" rowspan="2">Score</th>
+      ${epNumCells}
+    </tr>
+    <tr>${epNameCells}</tr>
+  </thead>`;
+
+  const rows = season.queens.map(queen => {
+    const epCells = season.episodes.map((_, i) => {
+      const raw = (queen.results[i] ?? "").toUpperCase();
+      const r = RESULT_MAP[raw];
+      if (!r) return `<td class="ep-cell"></td>`;
+      return `<td class="ep-cell"><span class="result-badge ${r.cls}">${r.label}</span></td>`;
+    }).join("");
+
+    const scoreDisplay = queen.score === 0 ? "—" : queen.score.toFixed(2);
+    return `<tr>
+      <td class="col-queen"><div class="queen-cell">${avatarHTML(queen)}<span class="queen-name">${queen.name}</span></div></td>
+      <td class="col-place"><div class="place-cell">${queen.place}</div></td>
+      <td class="col-score"><div class="score-cell">${scoreDisplay}</div></td>
+      ${epCells}
+    </tr>`;
+  }).join("");
+
+  document.getElementById("trackRecord").innerHTML = thead + `<tbody>${rows}</tbody>`;
+}
+
+function setLoading() {
+  document.getElementById("trackRecord").innerHTML =
+    `<tbody><tr><td colspan="99" style="padding:40px;text-align:center;font-family:var(--mono);font-size:0.7rem;color:var(--faint)">Loading…</td></tr></tbody>`;
+}
+
+// ── Season cache + tab state ─────────────────
+const cache = new Map();
+let seasons = [];
+let currentId = null;
+
+function renderTabs() {
+  const wrap = document.getElementById("seasonTabs");
+  wrap.innerHTML = seasons.map(s =>
+    `<button class="season-tab ${s.id === currentId ? "active" : ""}" data-id="${s.id}" data-path="${s.path}">${s.label}</button>`
+  ).join("");
+  wrap.querySelectorAll(".season-tab").forEach(btn => {
+    btn.addEventListener("click", () => loadSeason(btn.dataset.id, btn.dataset.path));
+  });
+}
+
+async function loadSeason(id, path) {
+  currentId = id;
+  renderTabs();
+  if (cache.has(id)) { renderTable(cache.get(id)); return; }
+  setLoading();
+  const res = await fetch(path);
+  const text = await res.text();
+  const meta = seasons.find(s => s.id === id);
+  const season = csvToSeason(text, { id: meta.id, label: meta.label });
+  cache.set(id, season);
+  renderTable(season);
+}
+
+// ── Boot ─────────────────────────────────────
+fetch("drag-race/manifest.json")
+  .then(r => r.json())
+  .then(({ seasons: list }) => {
+    seasons = list;
+    if (seasons.length === 0) return;
+    currentId = seasons[0].id;
+    renderTabs();
+    loadSeason(seasons[0].id, seasons[0].path);
+  })
+  .catch(err => {
+    document.getElementById("trackRecord").innerHTML =
+      `<tbody><tr><td colspan="99" style="padding:40px;text-align:center;font-family:var(--mono);font-size:0.7rem;color:var(--c-elim)">
+        Could not load seasons. If previewing locally, run: <code>npx serve .</code>
+      </td></tr></tbody>`;
+  });
+</script>
+</body>
+</html>
