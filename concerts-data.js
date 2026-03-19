@@ -1,7 +1,7 @@
 const CONCERTS = [
   { artist: "Sigrid",          venue: "Roundhouse",           city: "London", date: "2026-03-13", openers: [], with: ["Oliver"] },
   { artist: "Lorde",           venue: "The O2",               city: "London", date: "2025-11-17", openers: ["The Japanese House"], with: ["Oliver", "Devangini"], seated: true, fav: true },
-  { artist: "Katy Perry",      venue: "The O2",               city: "London", date: "2025-10-14", openers: [], with: ["Oliver"], seated: true },
+  { artist: "Katy Perry",      venue: "The O2",               city: "London", date: "2025-10-14", openers: [], with: ["Oliver"], seated: true, fav: true },
   { artist: "Rose Gray",       venue: "Village Underground",  city: "London", date: "2025-10-13", openers: [], with: ["Oliver"] },
   { artist: "Erika Vikman",    venue: "The Garage",           city: "London", date: "2025-10-04", openers: [], with: ["Devangini"] },
   { artist: "Lady Gaga",       venue: "The O2",               city: "London", date: "2025-10-02", openers: [], with: ["Oliver", "Devangini"], seated: true, fav: true },
@@ -91,5 +91,5 @@ const CONCERTS = [
   { artist: "Rina Sawayama",   venue: "Roundhouse",         city: "London", date: "2021-11-17", openers: ["HANA", "Ama Jones"], with: ["Oliver"], fav: true },
   { festival: "Jingle Bell Ball", venue: "The O2",                  city: "London",    date: "2019-12-08", headliners: ["Taylor Swift", "Sam Smith"], support: ["AJ Tracey", "Anne-Marie", "Becky Hill", "Ella Eyre", "Ella Henderson", "Hayley May", "Joel Corry", "Mabel", "Marvin Humes", "RANI", "Sam Feldt", "Sigala", "The Script", "Tom Walker"], with: ["Oliver", "Tai", "Ben"], seated: true, fav: true },
   { artist: "Jess Glynne",      venue: "Wembley Stadium",          city: "London",    date: "2018-10-14", openers: [], note: "NFL London Pre-Game Performance", with: ["Jack", "Tai"], seated: true },
-  { festival: "Eurovision Song Contest (Final - Family Show)", venue: "Globen", city: "Stockholm", date: "2016-05-14", artists: ["Justin Timberlake", "Amir", "Barei", "Dami Im", "Donny Montell", "Douwe Bob", "Francesca Michielin", "Frans", "Freddie", "Gabriela Guncikova", "Hovi Star", "Ira Losco", "Iveta Mukuchyan", "Jamala", "Jamie-Lee Kriewitz", "Joe & Jake", "Justs", "Laura Tesoro", "Måns Zelmerlöw", "Michał Szpak", "Minus One", "Nina Kraljic", "Petra Mede", "Poli Genova", "Samra", "Sanja Vucic", "Sergey Lazarev", "Young Georgian Lolitaz", "ZOË"], with: ["Mum"], seated: true },
+  { festival: "Eurovision Song Contest (Final - Family Show)", venue: "Globen", city: "Stockholm", date: "2016-05-14", artists: ["Justin Timberlake", "Amir", "Barei", "Dami Im", "Donny Montell", "Douwe Bob", "Francesca Michielin", "Frans", "Freddie", "Gabriela Guncikova", "Hovi Star", "Ira Losco", "Iveta Mukuchyan", "Jamala", "Jamie-Lee Kriewitz", "Joe & Jake", "Justs", "Laura Tesoro", "Måns Zelmerlöw", "Michał Szpak", "Minus One", "Nina Kraljic", "Petra Mede", "Poli Genova", "Samra", "Sanja Vucic", "Sergey Lazarev", "Young Georgian Lolitaz", "ZOË"], with: ["Mum"], seated: true, fav: true },
 ];
