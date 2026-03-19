@@ -358,7 +358,6 @@
     <div class="legend-item"><div class="legend-swatch" style="background:var(--c-winner)"></div>Winner</div>
     <div class="legend-item"><div class="legend-swatch" style="background:var(--c-runnerup)"></div>Runner-up</div>
     <div class="legend-item"><div class="legend-swatch" style="background:var(--c-elim-final)"></div>Elim (Finale)</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--c-miss-c)"></div>Miss Congeniality</div>
   </div>
 </div>
 
@@ -383,7 +382,7 @@
 //
 // Valid result values (case-insensitive):
 //   WIN | HIGH | HIGH TEAM | SAFE | LOW | BTM2 | ELIM
-//   WINNER | RUNNER-UP | ELIM FINAL | MISS C
+//   WINNER | BYENER-UP | ELIM FINAL | MISS C
 //   (empty cell = not yet aired / not applicable)
 // ─────────────────────────────────────────────
 
@@ -393,15 +392,14 @@ const RESULT_MAP = {
   "HIGH":       { cls: "r-high",       label: "HIGH" },
   "HIGH TEAM":  { cls: "r-high-team",  label: "HIGH TEAM" },
   "SAFE":       { cls: "r-safe",       label: "SAFE" },
-  "RUN":        { cls: "r-run",        label: "RUN" },    // not in episode, still in running
+  "BYE":        { cls: "r-run",        label: "BYE" },    // not in episode, still in running
   "LOW":        { cls: "r-low",        label: "LOW" },
   "BTM":        { cls: "r-btm",        label: "BTM" },    // bottom, lip sync deferred to next ep
   "BTM2":       { cls: "r-btm2",       label: "BTM2" },
   "ELIM":       { cls: "r-elim",       label: "ELIM" },
   "WINNER":     { cls: "r-winner",     label: "Winner" },
-  "RUNNER-UP":  { cls: "r-runnerup",   label: "Runner-up" },
+  "BYENER-UP":  { cls: "r-runnerup",   label: "Runner-up" },
   "ELIM FINAL": { cls: "r-elim-final", label: "Eliminated" },
-  "MISS C":     { cls: "r-miss-c",     label: "Miss C" },
 };
 
 // ── CSV parser (handles quoted fields) ──────
