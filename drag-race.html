@@ -285,6 +285,37 @@
       flex-shrink: 0;
     }
 
+    /* ── View toggle ── */
+    .view-toggle {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+
+    .view-btn {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .view-btn.active {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+
+    /* ── Diff cell colouring ── */
+    .diff-pos { color: #2a7a4a; }
+    .diff-neg { color: #c03030; }
+
     /* ── Sortable headers ── */
     .sort-th {
       cursor: pointer;
@@ -401,6 +432,11 @@
 
   <div class="season-tabs" id="seasonTabs"></div>
 
+  <div class="view-toggle" id="viewToggle" style="display:none">
+    <button class="view-btn active" data-view="my">My judging</button>
+    <button class="view-btn" data-view="show">Show's judging</button>
+  </div>
+
   <div class="track-record-wrap">
     <table class="track-record" id="trackRecord"></table>
   </div>
@@ -502,18 +538,33 @@ function calcScore(results) {
   return count > 0 ? +(total / count).toFixed(2) : null;
 }
 
-function csvToSeason(text, meta) {
+function csvToQueens(text) {
   const rows = parseCSV(text);
-  // Row 0: Place, Name, <episode name>, <episode name>, ...
-  const headers = rows[0];
-  const episodes = headers.slice(2).map((name, i) => ({ num: i + 1, name: name.trim() }));
-  const queens = rows.slice(1).filter(row => row.some(c => c.trim())).map(row => {
-    const results = row.slice(2).map(r => r?.trim() ?? "");
+  return rows.slice(1).filter(row => row.some(c => c.trim())).map(row => ({
+    place:   row[0]?.trim() ?? "",
+    name:    row[1]?.trim() ?? "",
+    results: row.slice(2).map(r => r?.trim() ?? ""),
+  }));
+}
+
+function csvToSeason(myText, showText, meta) {
+  const rows = parseCSV(myText);
+  const episodes = rows[0].slice(2).map((name, i) => ({ num: i + 1, name: name.trim() }));
+  const myQueens   = csvToQueens(myText);
+  const showQueens = showText ? csvToQueens(showText) : null;
+
+  const queens = myQueens.map((q, i) => {
+    const sq = showQueens?.[i] ?? null;
+    const myScore   = calcScore(q.results);
+    const showScore = sq ? calcScore(sq.results) : null;
     return {
-      place:   row[0]?.trim() ?? "",
-      name:    row[1]?.trim() ?? "",
-      score:   calcScore(results),
-      results,
+      place:       q.place,
+      name:        q.name,
+      myResults:   q.results,
+      showResults: sq?.results ?? [],
+      myScore,
+      showScore,
+      diff: (myScore !== null && showScore !== null) ? +(myScore - showScore).toFixed(2) : null,
     };
   });
   return { ...meta, episodes, queens };
@@ -565,7 +616,8 @@ const LEGEND_META = {
 };
 
 function renderLegend(season) {
-  const used = new Set(season.queens.flatMap(q => q.results.map(r => r.toUpperCase())));
+  const activeResults = currentView === "show" ? q => q.showResults : q => q.myResults;
+  const used = new Set(season.queens.flatMap(q => activeResults(q).map(r => r.toUpperCase())));
   const order = Object.keys(LEGEND_META);
   document.getElementById("legend").innerHTML = order
     .filter(key => used.has(key))
@@ -575,9 +627,10 @@ function renderLegend(season) {
     }).join("");
 }
 
-// ── Sort state ───────────────────────────────
-let sortCol = "place";   // "place" | "score"
-let sortDir = 1;         // 1 = asc, -1 = desc
+// ── Sort + view state ────────────────────────
+let sortCol = "place";   // "place" | "myscore" | "showscore" | "diff"
+let sortDir = 1;
+let currentView = "my";  // "my" | "show"
 
 function parsePlaceNum(place) {
   if (place.toUpperCase() === "TBA") return 0;
@@ -585,12 +638,18 @@ function parsePlaceNum(place) {
   return m ? parseInt(m[0]) : 999;
 }
 
+function arrow(col) {
+  if (sortCol !== col) return "";
+  // for score cols higher = better so ascending arrow means "best first" which is dir=-1
+  const scoreCol = col !== "place";
+  return (scoreCol ? sortDir === -1 : sortDir === 1) ? " ↑" : " ↓";
+}
+
 function sortedQueens(queens) {
   return [...queens].sort((a, b) => {
-    if (sortCol === "score") {
-      const sa = a.score ?? -1, sb = b.score ?? -1;
-      return sortDir * (sb - sa); // higher score = better, so default desc
-    }
+    if (sortCol === "myscore")   { const d = (b.myScore ?? -1)   - (a.myScore ?? -1);   return sortDir * d; }
+    if (sortCol === "showscore") { const d = (b.showScore ?? -1) - (a.showScore ?? -1); return sortDir * d; }
+    if (sortCol === "diff")      { const d = (b.diff ?? -99)     - (a.diff ?? -99);     return sortDir * d; }
     return sortDir * (parsePlaceNum(a.place) - parsePlaceNum(b.place));
   });
 }
@@ -600,36 +659,52 @@ let currentSeason_ = null;
 
 function renderTable(season) {
   currentSeason_ = season;
+  const hasShow = season.queens.some(q => q.showScore !== null);
 
   const epNumCells  = season.episodes.map(ep => `<th>${ep.num}</th>`).join("");
   const epNameCells = season.episodes.map(ep => `<th>${ep.name}</th>`).join("");
 
-  const placeArrow = sortCol === "place" ? (sortDir === 1 ? " ↑" : " ↓") : "";
-  const scoreArrow = sortCol === "score" ? (sortDir === -1 ? " ↑" : " ↓") : "";
+  const showScoreCols = hasShow ? `
+    <th class="col-score sort-th" rowspan="2" data-sort="showscore" data-dir="-1">Show${arrow("showscore")}</th>
+    <th class="col-score sort-th" rowspan="2" data-sort="diff" data-dir="-1">Diff${arrow("diff")}</th>` : "";
 
   const thead = `<thead>
     <tr>
       <th class="col-queen" rowspan="2" style="text-align:left;padding:10px 10px 10px 14px">Queen</th>
-      <th class="col-place sort-th" rowspan="2" data-sort="place">Place${placeArrow}</th>
-      <th class="col-score sort-th" rowspan="2" data-sort="score">Score${scoreArrow}</th>
+      <th class="col-place sort-th" rowspan="2" data-sort="place" data-dir="1">Place${arrow("place")}</th>
+      <th class="col-score sort-th" rowspan="2" data-sort="myscore" data-dir="-1">My Score${arrow("myscore")}</th>
+      ${showScoreCols}
       ${epNumCells}
     </tr>
     <tr>${epNameCells}</tr>
   </thead>`;
 
   const rows = sortedQueens(season.queens).map(queen => {
+    const results = currentView === "show" && hasShow ? queen.showResults : queen.myResults;
     const epCells = season.episodes.map((_, i) => {
-      const raw = (queen.results[i] ?? "").toUpperCase();
+      const raw = (results[i] ?? "").toUpperCase();
       const r = RESULT_MAP[raw];
       if (!r) return `<td class="ep-cell"></td>`;
       return `<td class="ep-cell"><span class="result-badge ${r.cls}">${r.label}</span></td>`;
     }).join("");
 
-    const scoreDisplay = queen.score !== null ? queen.score.toFixed(2) : "—";
+    const myDisplay   = queen.myScore   !== null ? queen.myScore.toFixed(2)   : "—";
+    const showDisplay = queen.showScore !== null ? queen.showScore.toFixed(2) : "—";
+    const diff        = (queen.myScore !== null && queen.showScore !== null)
+      ? +(queen.myScore - queen.showScore).toFixed(2) : null;
+    const diffDisplay = diff !== null
+      ? `<span class="${diff > 0 ? "diff-pos" : diff < 0 ? "diff-neg" : ""}">${diff > 0 ? "+" : ""}${diff.toFixed(2)}</span>`
+      : "—";
+
+    const showScoreCells = hasShow ? `
+      <td class="col-score"><div class="score-cell">${showDisplay}</div></td>
+      <td class="col-score"><div class="score-cell">${diffDisplay}</div></td>` : "";
+
     return `<tr>
       <td class="col-queen"><div class="queen-cell">${avatarHTML(queen.name, season.imageDir)}<span class="queen-name">${queen.name}</span></div></td>
       <td class="col-place"><div class="place-cell">${queen.place}</div></td>
-      <td class="col-score"><div class="score-cell">${scoreDisplay}</div></td>
+      <td class="col-score"><div class="score-cell">${myDisplay}</div></td>
+      ${showScoreCells}
       ${epCells}
     </tr>`;
   }).join("");
@@ -637,17 +712,22 @@ function renderTable(season) {
   document.getElementById("trackRecord").innerHTML = thead + `<tbody>${rows}</tbody>`;
   renderLegend(season);
 
+  // Sort click handlers
   document.querySelectorAll(".sort-th").forEach(th => {
     th.addEventListener("click", () => {
       const col = th.dataset.sort;
-      if (sortCol === col) {
-        sortDir *= -1;
-      } else {
-        sortCol = col;
-        sortDir = col === "score" ? -1 : 1; // score defaults desc, place defaults asc
-      }
+      if (sortCol === col) { sortDir *= -1; }
+      else { sortCol = col; sortDir = parseInt(th.dataset.dir); }
       renderTable(currentSeason_);
     });
+  });
+
+  // View toggle
+  const toggleWrap = document.getElementById("viewToggle");
+  toggleWrap.style.display = hasShow ? "flex" : "none";
+  toggleWrap.querySelectorAll(".view-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.view === currentView);
+    btn.onclick = () => { currentView = btn.dataset.view; renderTable(currentSeason_); };
   });
 }
 
@@ -667,19 +747,20 @@ function renderTabs() {
     `<button class="season-tab ${s.id === currentId ? "active" : ""}" data-id="${s.id}" data-path="${s.path}">${s.label}</button>`
   ).join("");
   wrap.querySelectorAll(".season-tab").forEach(btn => {
-    btn.addEventListener("click", () => loadSeason(btn.dataset.id, btn.dataset.path));
+    btn.addEventListener("click", () => loadSeason(btn.dataset.id));
   });
 }
 
-async function loadSeason(id, path) {
+async function loadSeason(id) {
   currentId = id;
   renderTabs();
   if (cache.has(id)) { renderTable(cache.get(id)); return; }
   setLoading();
-  const res = await fetch(path);
-  const text = await res.text();
   const meta = seasons.find(s => s.id === id);
-  const season = csvToSeason(text, { id: meta.id, label: meta.label, imageDir: meta.imageDir || "" });
+  const fetches = [fetch(meta.path).then(r => r.text())];
+  if (meta.showPath) fetches.push(fetch(meta.showPath).then(r => r.text()));
+  const [myText, showText = null] = await Promise.all(fetches);
+  const season = csvToSeason(myText, showText, { id: meta.id, label: meta.label, imageDir: meta.imageDir || "" });
   cache.set(id, season);
   renderTable(season);
 }
@@ -692,7 +773,7 @@ fetch("drag-race/manifest.json")
     if (seasons.length === 0) return;
     currentId = seasons[0].id;
     renderTabs();
-    loadSeason(seasons[0].id, seasons[0].path);
+    loadSeason(seasons[0].id);
   })
   .catch(err => {
     document.getElementById("trackRecord").innerHTML =
