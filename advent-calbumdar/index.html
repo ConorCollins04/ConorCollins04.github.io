@@ -80,7 +80,7 @@
       .calendar { grid-template-columns: repeat(4, 1fr); }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 460px) {
       .calendar { grid-template-columns: repeat(3, 1fr); }
     }
 
@@ -89,13 +89,10 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 16px 14px 14px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: 4px;
       transition: border-color 0.12s, box-shadow 0.12s;
-      position: relative;
-      min-height: 110px;
     }
 
     .door:hover {
@@ -105,52 +102,111 @@
 
     .door.top-three {
       border-color: rgba(80,60,120,0.25);
-      background: var(--surface2);
     }
 
-    .door-date {
+    /* ── Cover image ── */
+    .door-cover {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+
+    .door-cover-placeholder {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Card body ── */
+    .door-body {
+      padding: 10px 11px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      position: relative;
+      flex: 1;
+    }
+
+    .door-day {
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+      margin-bottom: 4px;
+    }
+
+    .door-day-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      color: var(--faint);
+      text-transform: uppercase;
+    }
+
+    .door-day-num {
       font-family: var(--slab);
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       font-weight: 400;
       line-height: 1;
       color: var(--faint);
     }
 
-    .door.top-three .door-date { color: var(--muted); }
-
-    .door-album {
-      font-size: 0.78rem;
-      font-weight: 500;
-      line-height: 1.3;
-      color: var(--text);
-      margin-top: auto;
-    }
-
-    .door-artist {
-      font-size: 0.7rem;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.3;
-    }
+    .door.top-three .door-day-label,
+    .door.top-three .door-day-num { color: var(--muted); }
 
     .door-rank {
       position: absolute;
       top: 10px;
-      right: 12px;
+      right: 10px;
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.55rem;
       color: var(--faint);
       letter-spacing: 0.04em;
     }
 
     .door.top-three .door-rank { color: var(--muted); }
 
+    .door-album {
+      font-size: 0.75rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    .door-artist {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+
+    .door-songs {
+      margin-top: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .door-song {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--faint);
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .door-note {
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 300;
       color: var(--faint);
       font-style: italic;
       line-height: 1.3;
+      margin-top: 3px;
     }
   </style>
 </head>
@@ -189,21 +245,35 @@
     const calendar = document.getElementById('calendar');
     const albums = CALBUMDAR[activeYear];
 
-    // Sort by door date order (Dec 1 = rank 24, Dec 24 = rank 1)
-    // door date = 25 - rank
-    const sorted = [...albums].sort((a, b) => a.rank - b.rank).reverse();
-    // sorted[0] is rank 24 (Dec 1), sorted[23] is rank 1 (Dec 24)
+    // Order by day: Dec 1 = rank 24, Dec 24 = rank 1
+    const sorted = [...albums].sort((a, b) => b.rank - a.rank);
 
     calendar.innerHTML = sorted.map(entry => {
-      const doorNum = 25 - entry.rank;
+      const dayNum = 25 - entry.rank;
       const isTop3 = entry.rank <= 3;
+
+      const coverHtml = entry.cover
+        ? `<img class="door-cover" src="${entry.cover}" alt="${entry.album}" loading="lazy">`
+        : `<div class="door-cover-placeholder"></div>`;
+
+      const songsHtml = entry.songs && entry.songs.length
+        ? `<div class="door-songs">${entry.songs.map(s => `<div class="door-song">${s}</div>`).join('')}</div>`
+        : '';
+
       return `
         <div class="door ${isTop3 ? 'top-three' : ''}">
-          <div class="door-date">${doorNum}</div>
-          <span class="door-rank">#${entry.rank}</span>
-          <div class="door-album">${entry.album}</div>
-          <div class="door-artist">${entry.artist}</div>
-          ${entry.note ? `<div class="door-note">${entry.note}</div>` : ''}
+          ${coverHtml}
+          <div class="door-body">
+            <div class="door-day">
+              <span class="door-day-label">Day</span>
+              <span class="door-day-num">${dayNum}</span>
+            </div>
+            <span class="door-rank">#${entry.rank}</span>
+            <div class="door-album">${entry.album}</div>
+            <div class="door-artist">${entry.artist}</div>
+            ${songsHtml}
+            ${entry.note ? `<div class="door-note">${entry.note}</div>` : ''}
+          </div>
         </div>
       `;
     }).join('');
