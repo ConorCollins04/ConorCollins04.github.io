@@ -175,121 +175,7 @@
     <h1>Memorable Moments</h1>
   </div>
 
-  <div class="seasons">
-
-    <!-- Season 1 -->
-    <div class="season" id="s01">
-      <button class="season-trigger" onclick="toggle('s01')">
-        <span class="season-arrow">▶</span>
-        <span class="season-num">S01</span>
-        <span class="season-name">Borneo</span>
-        <span class="season-count">1 moment</span>
-      </button>
-      <div class="moments">
-
-        <div class="moment-card">
-          <div class="moment-text">
-            <p class="moment-quote">Sue Hawk's final tribal council speech</p>
-            <p class="moment-attr">Sue Hawk — Ep. 13</p>
-          </div>
-          <video class="moment-video" controls preload="none">
-            <source src="../videos/season-01/snakes-and-rats.mp4" type="video/mp4">
-          </video>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Season 3 -->
-    <div class="season" id="s03">
-      <button class="season-trigger" onclick="toggle('s03')">
-        <span class="season-arrow">▶</span>
-        <span class="season-num">S03</span>
-        <span class="season-name">Africa</span>
-        <span class="season-count">2 moments</span>
-      </button>
-      <div class="moments">
-
-        <div class="moment-card">
-          <div class="moment-text">
-            <p class="moment-quote">Frank needs prescription drugs</p>
-            <p class="moment-attr">Kelly Goldsmith — Ep. 7</p>
-          </div>
-          <video class="moment-video" controls preload="none">
-            <source src="../videos/season-03/frank-loner.mp4" type="video/mp4">
-          </video>
-        </div>
-
-        <div class="moment-card">
-          <div class="moment-text">
-            <p class="moment-quote">"It was me... I mean I- I did it."</p>
-            <p class="moment-attr">T-Bird Cooper — Ep. 9</p>
-          </div>
-          <video class="moment-video" controls preload="none">
-            <source src="../videos/season-03/it-was-me-tbird.mp4" type="video/mp4">
-          </video>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Season 6 -->
-    <div class="season" id="s06">
-      <button class="season-trigger" onclick="toggle('s06')">
-        <span class="season-arrow">▶</span>
-        <span class="season-num">S06</span>
-        <span class="season-name">The Amazon</span>
-        <span class="season-count">1 moment</span>
-      </button>
-      <div class="moments">
-
-        <div class="moment-card">
-          <div class="moment-text">
-            <p class="moment-quote">"I didn't know that Jesus had a vested interest in Survivor"</p>
-            <p class="moment-attr">Rob Cesternino — Ep. 3</p>
-          </div>
-          <video class="moment-video" controls preload="none">
-            <source src="../videos/season-06/jesus-vested-interest.mp4" type="video/mp4">
-          </video>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Season 7 -->
-    <div class="season" id="s07">
-      <button class="season-trigger" onclick="toggle('s07')">
-        <span class="season-arrow">▶</span>
-        <span class="season-num">S07</span>
-        <span class="season-name">Pearl Islands</span>
-        <span class="season-count">2 moments</span>
-      </button>
-      <div class="moments">
-
-        <div class="moment-card">
-          <div class="moment-text">
-            <p class="moment-quote">Rupert steals the other tribe's shoes</p>
-            <p class="moment-attr">Rupert Boneham — Ep. 1</p>
-          </div>
-          <video class="moment-video" controls preload="none">
-            <source src="../videos/season-07/rupert-steals-shoes.mp4" type="video/mp4">
-          </video>
-        </div>
-
-        <div class="moment-card">
-          <div class="moment-text">
-            <p class="moment-quote">"I can get loud too, what the fuck!"</p>
-            <p class="moment-attr">Sandra Diaz-Twine — Ep. 3</p>
-          </div>
-          <video class="moment-video" controls preload="none">
-            <source src="../videos/season-07/i-can-get-loud-too.mp4" type="video/mp4">
-          </video>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
+  <div class="seasons" id="seasons"></div>
 
   <div class="nav-wrap">
     <nav class="nav-pill">
@@ -313,11 +199,38 @@
     </nav>
   </div>
 
+  <script src="moments-data.js"></script>
   <script>
     function toggle(id) {
-      const el = document.getElementById(id);
-      el.classList.toggle('open');
+      document.getElementById(id).classList.toggle('open');
     }
+
+    const container = document.getElementById('seasons');
+    MOMENTS.forEach(season => {
+      const id = season.season.toLowerCase();
+      const count = season.moments.length;
+      const cardsHTML = season.moments.map(m => `
+        <div class="moment-card">
+          <div class="moment-text">
+            <p class="moment-quote">${m.quote}</p>
+            <p class="moment-attr">${m.attr} — Ep. ${m.ep}</p>
+          </div>
+          <video class="moment-video" controls preload="none">
+            <source src="${m.video}" type="video/mp4">
+          </video>
+        </div>`).join('');
+
+      container.insertAdjacentHTML('beforeend', `
+        <div class="season" id="${id}">
+          <button class="season-trigger" onclick="toggle('${id}')">
+            <span class="season-arrow">▶</span>
+            <span class="season-num">${season.season}</span>
+            <span class="season-name">${season.name}</span>
+            <span class="season-count">${count} ${count === 1 ? 'moment' : 'moments'}</span>
+          </button>
+          <div class="moments">${cardsHTML}</div>
+        </div>`);
+    });
   </script>
 
   <script src="../nav.js"></script>
