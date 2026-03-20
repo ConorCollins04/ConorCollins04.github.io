@@ -103,7 +103,7 @@
 <div class="page">
   <div class="cards">
 
-    <a href="concerts.html" class="card">
+    <a href="concerts/" class="card">
 
       <div class="card-title">Concerts</div>
       <div class="card-desc">Log of concerts I've been to, with stats and separation by artist and venue</div>
@@ -113,7 +113,7 @@
       </div>
     </a>
 
-    <a href="oscars.html" class="card">
+    <a href="oscars/" class="card">
 
       <div class="card-title">Oscars</div>
       <div class="card-desc">My personal rankings for best picture and the acting categories</div>
@@ -123,7 +123,7 @@
       </div>
     </a>
 
-    <a href="survivor-all-stars.html" class="card">
+    <a href="survivor/all-stars.html" class="card">
 
       <div class="card-title">Survivor: All-Stars Cast Builder</div>
       <div class="card-desc">Tool for creating your ideal survivor all-stars cast</div>
@@ -133,7 +133,7 @@
       </div>
     </a>
 
-    <a href="survivor-moments.html" class="card">
+    <a href="survivor/moments.html" class="card">
 
       <div class="card-title">Survivor: Moments</div>
       <div class="card-desc">A handful of my favourite moments and quotes from the show</div>
@@ -143,7 +143,7 @@
       </div>
     </a>
 
-    <a href="drag-race.html" class="card">
+    <a href="drag-race/" class="card">
 
       <div class="card-title">Drag Race</div>
       <div class="card-desc">Comparing judging on RuPaul's Drag Race to my own judging</div>
@@ -153,7 +153,7 @@
       </div>
     </a>
 
-    <a href="drag-shows.html" class="card">
+    <a href="drag-shows/" class="card">
 
       <div class="card-title">Drag Shows</div>
       <div class="card-desc">Log of drag performances I've seen</div>
@@ -169,28 +169,28 @@
 <div class="nav-wrap">
   <nav class="nav-pill">
     <a href="index.html" class="nav-btn active">Home</a>
-    <a href="concerts.html" class="nav-btn">Concerts</a>
-    <a href="oscars.html" class="nav-btn">Oscars</a>
+    <a href="concerts/" class="nav-btn">Concerts</a>
+    <a href="oscars/" class="nav-btn">Oscars</a>
     <div class="nav-group" id="survivor-group">
       <button class="nav-btn" id="survivor-trigger">Survivor</button>
       <div class="nav-flyout" id="survivor-flyout">
-        <a href="survivor-all-stars.html" class="nav-sub-btn">All-Stars Casting</a>
-        <a href="survivor-moments.html" class="nav-sub-btn">Moments</a>
+        <a href="survivor/all-stars.html" class="nav-sub-btn">All-Stars Casting</a>
+        <a href="survivor/moments.html" class="nav-sub-btn">Moments</a>
       </div>
     </div>
     <div class="nav-group" id="drag-group">
       <button class="nav-btn" id="drag-trigger">Drag</button>
       <div class="nav-flyout" id="drag-flyout">
-        <a href="drag-race.html" class="nav-sub-btn">Drag Race</a>
-        <a href="drag-shows.html" class="nav-sub-btn">Live Shows</a>
+        <a href="drag-race/" class="nav-sub-btn">Drag Race</a>
+        <a href="drag-shows/" class="nav-sub-btn">Live Shows</a>
       </div>
     </div>
   </nav>
 </div>
 
-<script src="concerts-data.js"></script>
-<script src="drag-shows-data.js"></script>
-<script src="oscars-data.js"></script>
+<script src="concerts/data.js"></script>
+<script src="drag-shows/data.js"></script>
+<script src="oscars/data.js"></script>
 <script>
   // Concerts stat
   if (typeof CONCERTS !== "undefined") {

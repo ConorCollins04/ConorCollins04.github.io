@@ -6,8 +6,8 @@
   <title>Oscars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="nav.css" />
-  <link rel="stylesheet" href="global.css" />
+  <link rel="stylesheet" href="../nav.css" />
+  <link rel="stylesheet" href="../global.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -356,27 +356,27 @@
 
 <div class="nav-wrap">
   <nav class="nav-pill">
-    <a href="index.html" class="nav-btn">Home</a>
-    <a href="concerts.html" class="nav-btn">Concerts</a>
-    <a href="oscars.html" class="nav-btn active">Oscars</a>
+    <a href="../index.html" class="nav-btn">Home</a>
+    <a href="../concerts/" class="nav-btn">Concerts</a>
+    <a href="../oscars/" class="nav-btn active">Oscars</a>
     <div class="nav-group" id="survivor-group">
       <button class="nav-btn" id="survivor-trigger">Survivor</button>
       <div class="nav-flyout" id="survivor-flyout">
-        <a href="survivor-all-stars.html" class="nav-sub-btn">All-Stars Casting</a>
-        <a href="survivor-moments.html" class="nav-sub-btn">Moments</a>
+        <a href="../survivor/all-stars.html" class="nav-sub-btn">All-Stars Casting</a>
+        <a href="../survivor/moments.html" class="nav-sub-btn">Moments</a>
       </div>
     </div>
     <div class="nav-group" id="drag-group">
       <button class="nav-btn" id="drag-trigger">Drag</button>
       <div class="nav-flyout" id="drag-flyout">
-        <a href="drag-race.html" class="nav-sub-btn">Drag Race</a>
-        <a href="drag-shows.html" class="nav-sub-btn">Live Shows</a>
+        <a href="../drag-race/" class="nav-sub-btn">Drag Race</a>
+        <a href="../drag-shows/" class="nav-sub-btn">Live Shows</a>
       </div>
     </div>
   </nav>
 </div>
 
-<script src="oscars-data.js"></script>
+<script src="data.js"></script>
 <script>
   const years = Object.keys(OSCARS).map(Number).sort((a, b) => b - a);
   let currentYear = years[0];
@@ -581,6 +581,6 @@
   renderTabs();
   renderYear();
 </script>
-<script src="nav.js"></script>
+<script src="../nav.js"></script>
 </body>
 </html>
