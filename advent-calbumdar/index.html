@@ -100,9 +100,6 @@
       box-shadow: 0 4px 20px rgba(26,22,36,0.06);
     }
 
-    .door.top-three {
-      border-color: rgba(80,60,120,0.25);
-    }
 
     /* ── Cover image ── */
     .door-cover-link { display: block; }
@@ -232,7 +229,7 @@
     const albums = CALBUMDAR[activeYear];
 
     // Order by day: Dec 1 = rank 24, Dec 24 = rank 1
-    const sorted = [...albums].sort((a, b) => b.rank - a.rank);
+    const sorted = [...albums].sort((a, b) => a.rank - b.rank);
 
     calendar.innerHTML = sorted.map(entry => {
       const dayNum = 25 - entry.rank;
