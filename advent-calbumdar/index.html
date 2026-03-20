@@ -134,42 +134,26 @@
     }
 
     .door-day {
-      display: flex;
-      align-items: baseline;
-      gap: 3px;
-      margin-bottom: 4px;
-    }
-
-    .door-day-label {
       font-family: var(--mono);
       font-size: 0.55rem;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: var(--faint);
       text-transform: uppercase;
+      margin-bottom: 2px;
     }
 
-    .door-day-num {
+    .door.top-three .door-day { color: var(--muted); }
+
+    .door-rank {
       font-family: var(--slab);
       font-size: 1.4rem;
       font-weight: 400;
       line-height: 1;
-      color: var(--faint);
+      color: var(--text);
+      margin-bottom: 6px;
     }
 
-    .door.top-three .door-day-label,
-    .door.top-three .door-day-num { color: var(--muted); }
-
-    .door-rank {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-family: var(--mono);
-      font-size: 0.55rem;
-      color: var(--faint);
-      letter-spacing: 0.04em;
-    }
-
-    .door.top-three .door-rank { color: var(--muted); }
+    .door.top-three .door-rank { color: var(--text); }
 
     .door-album {
       font-size: 0.75rem;
@@ -269,11 +253,8 @@
         <div class="door ${isTop3 ? 'top-three' : ''}">
           ${coverHtml}
           <div class="door-body">
-            <div class="door-day">
-              <span class="door-day-label">Day</span>
-              <span class="door-day-num">${dayNum}</span>
-            </div>
-            <span class="door-rank">#${entry.rank}</span>
+            <div class="door-day">Day ${dayNum}</div>
+            <div class="door-rank">#${entry.rank}</div>
             <div class="door-album">${entry.album}</div>
             <div class="door-artist">${entry.artist}</div>
             ${songsHtml}
