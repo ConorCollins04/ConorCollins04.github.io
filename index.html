@@ -163,6 +163,16 @@
       </div>
     </a>
 
+    <a href="advent-calbumdar/" class="card">
+
+      <div class="card-title">Advent Calbumdar</div>
+      <div class="card-desc">My top 24 albums of each year</div>
+      <div class="card-footer">
+        <div class="card-stat" id="calbumdar-stat">—</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
   </div>
 </div>
 
@@ -185,12 +195,14 @@
         <a href="drag-shows/" class="nav-sub-btn">Live Shows</a>
       </div>
     </div>
+    <a href="advent-calbumdar/" class="nav-btn">Calbumdar</a>
   </nav>
 </div>
 
 <script src="concerts/data.js"></script>
 <script src="drag-shows/data.js"></script>
 <script src="oscars/data.js"></script>
+<script src="advent-calbumdar/data.js"></script>
 <script>
   // Concerts stat
   if (typeof CONCERTS !== "undefined") {
@@ -210,6 +222,13 @@
     const years = Object.keys(OSCARS).length;
     document.getElementById("oscars-stat").textContent =
       `${years} ${years === 1 ? "ceremony" : "ceremonies"}`;
+  }
+
+  // Calbumdar stat
+  if (typeof CALBUMDAR !== "undefined") {
+    const years = Object.keys(CALBUMDAR).length;
+    document.getElementById("calbumdar-stat").textContent =
+      `${years} ${years === 1 ? "year" : "years"}`;
   }
 </script>
 <script src="nav.js"></script>
