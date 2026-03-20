@@ -105,6 +105,8 @@
     }
 
     /* ── Cover image ── */
+    .door-cover-link { display: block; }
+
     .door-cover {
       width: 100%;
       aspect-ratio: 1;
@@ -252,9 +254,12 @@
       const dayNum = 25 - entry.rank;
       const isTop3 = entry.rank <= 3;
 
-      const coverHtml = entry.cover
+      const img = entry.cover
         ? `<img class="door-cover" src="${entry.cover}" alt="${entry.album}" loading="lazy">`
         : `<div class="door-cover-placeholder"></div>`;
+      const coverHtml = entry.spotify
+        ? `<a href="${entry.spotify}" target="_blank" rel="noopener" class="door-cover-link">${img}</a>`
+        : img;
 
       const songsHtml = entry.songs && entry.songs.length
         ? `<div class="door-songs">${entry.songs.map(s => `<div class="door-song">${s}</div>`).join('')}</div>`
