@@ -175,6 +175,42 @@
       line-height: 1.4;
     }
 
+    /* ── Diagnostic ── */
+    .diag {
+      margin-top: 60px;
+    }
+
+    .diag-summary {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      color: var(--faint);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .diag-table {
+      margin-top: 12px;
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .diag-table th {
+      text-align: left;
+      font-weight: 400;
+      color: var(--faint);
+      border-bottom: 1px solid var(--border);
+      padding: 4px 10px 4px 0;
+    }
+
+    .diag-table td {
+      padding: 4px 10px 4px 0;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
   </style>
 </head>
 <body>
@@ -186,6 +222,16 @@
   <button class="spin-btn" id="spin-btn">↻ Spin</button>
 
   <div class="picks" id="picks"></div>
+
+  <details class="diag">
+    <summary class="diag-summary">All albums</summary>
+    <table class="diag-table">
+      <thead>
+        <tr><th>Year</th><th>Artist</th><th>Album</th><th>Rank</th><th>Weight</th><th>Flags</th></tr>
+      </thead>
+      <tbody id="diag-body"></tbody>
+    </table>
+  </details>
 </div>
 
 <div class="nav-wrap"></div>
@@ -288,6 +334,23 @@
 
   spin();
   document.getElementById('spin-btn').addEventListener('click', spin);
+
+  // ── Diagnostic table ──
+  const rows = ALBUMS.map(a => {
+    const flags = [
+      a.unlistened ? 'unlistened' : '',
+      a.rediscover ? 'rediscover' : '',
+    ].filter(Boolean).join(', ');
+    return `<tr>
+      <td>${a.year}</td>
+      <td>${a.artist}</td>
+      <td>${a.album}</td>
+      <td>${a.rank ?? '—'}</td>
+      <td>${a.weight}</td>
+      <td>${flags}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('diag-body').innerHTML = rows;
 </script>
 <script src="../nav.js"></script>
 </body>
