@@ -179,27 +179,6 @@
       line-height: 1.4;
     }
 
-    /* ── Spotify link ── */
-    .pick-spotify {
-      display: inline-block;
-      margin-top: 12px;
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 5px 11px;
-      transition: border-color 0.12s, color 0.12s;
-      align-self: flex-start;
-    }
-
-    .pick-spotify:hover {
-      border-color: var(--border-hover);
-      color: var(--text);
-    }
   </style>
 </head>
 <body>
@@ -251,9 +230,6 @@
     const songs = a.songs && a.songs.length
       ? `<div class="pick-songs">${a.songs.map(s => `<div class="pick-song">${s}</div>`).join('')}</div>`
       : '';
-    const spotifyBtn = a.spotify
-      ? `<a href="${a.spotify}" target="_blank" rel="noopener" class="pick-spotify">Listen on Spotify ↗</a>`
-      : '';
     return `
       <div class="pick-card">
         <div class="pick-label">${label}</div>
@@ -264,7 +240,6 @@
           ${a.rank != null ? `<div class="pick-calbumdar-label">Calbumdar Stats:</div>` : ''}
           <div class="pick-rank">${a.rank != null ? '#' + a.rank + ' of ' + a.year : a.year}</div>
           ${songs}
-          ${spotifyBtn}
         </div>
       </div>
     `;
