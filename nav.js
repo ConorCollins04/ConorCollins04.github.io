@@ -46,7 +46,7 @@
         return (
           '<div class="nav-group" id="' + item.id + '-group">\n' +
           '      <button class="nav-btn' + (groupActive ? ' active' : '') + '" id="' + item.id + '-trigger">' + item.label + '</button>\n' +
-          '      <div class="nav-flyout' + (groupActive ? ' open' : '') + '" id="' + item.id + '-flyout">\n' +
+          '      <div class="nav-flyout" id="' + item.id + '-flyout">\n' +
           '        ' + subs + '\n' +
           '      </div>\n' +
           '    </div>'
