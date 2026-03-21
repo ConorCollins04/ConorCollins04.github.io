@@ -152,6 +152,15 @@
       margin-top: 4px;
     }
 
+    .pick-calbumdar-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-top: 10px;
+    }
+
     .pick-songs {
       margin-top: 8px;
       display: flex;
@@ -249,6 +258,7 @@
         <div class="pick-body">
           <div class="pick-album">${a.album}</div>
           <div class="pick-artist">${a.artist}</div>
+          ${a.rank != null ? `<div class="pick-calbumdar-label">Calbumdar</div>` : ''}
           <div class="pick-rank">${a.rank != null ? '#' + a.rank + ' of ' + a.year : a.year}</div>
           ${songs}
           ${spotifyBtn}
@@ -277,7 +287,7 @@
       const pick3 = weightedRandom(prevPool.filter(a => a !== pick2));
 
       const picks = [
-        pickHtml('Fresh Pick', pick1),
+        pickHtml('Released This Year', pick1),
         pickHtml('Throwback', pick2),
         pickHtml('Throwback', pick3),
       ];
