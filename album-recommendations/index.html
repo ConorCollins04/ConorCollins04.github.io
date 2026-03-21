@@ -343,7 +343,7 @@
   document.getElementById('spin-btn').addEventListener('click', spin);
 
   // ── Diagnostic table ──
-  let diagSort = { col: 'year', dir: 1 };
+  let diagSort = { col: 'year', dir: -1 };
 
   function renderDiag() {
     const sorted = [...ALBUMS].sort((a, b) => {
