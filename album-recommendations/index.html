@@ -261,7 +261,7 @@
   }
 
   function weightedRandom(pool) {
-    const weights = pool.map(a => a.weight);
+    const weights = pool.map(a => a.weight ** 2);
     const total = weights.reduce((s, w) => s + w, 0);
     let r = Math.random() * total;
     for (let i = 0; i < pool.length; i++) {
