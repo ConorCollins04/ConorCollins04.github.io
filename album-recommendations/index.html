@@ -306,22 +306,19 @@
     container.classList.add('spinning');
 
     setTimeout(function () {
-      const listened    = ALBUMS.filter(a => !a.unlistened && !a.rediscover);
-      const unlistened  = ALBUMS.filter(a => a.unlistened);
-      const rediscover  = ALBUMS.filter(a => a.rediscover);
+      const listened   = ALBUMS.filter(a => !a.unlistened);
+      const unlistened = ALBUMS.filter(a => a.unlistened);
 
-      const years = [...new Set(listened.map(a => a.year))].sort((a, b) => b - a);
-      const latestYear  = years[0];
-      const latestPool  = ALBUMS.filter(a => a.year === latestYear && !a.rediscover);
-      const favPool     = listened.filter(a => a.weight === 5);
-      const revisitPool = listened.filter(a => a.weight < 5);
+      const years      = [...new Set(listened.map(a => a.year))].sort((a, b) => b - a);
+      const latestYear = years[0];
+      const latestPool = ALBUMS.filter(a => a.year === latestYear);
+      const favPool    = listened.filter(a => a.weight === 5 && !a.rediscover);
+      const slot3Pool  = listened.filter(a => a.weight < 5 || a.rediscover);
 
-      const pick1 = weightedRandom(latestPool);
-      const pick2 = weightedRandom(favPool.filter(a => a !== pick1));
-
-      const useRediscover = rediscover.length > 0 && (revisitPool.length === 0 || Math.random() < 0.5);
-      const pick3      = useRediscover ? weightedRandom(rediscover) : weightedRandom(revisitPool.filter(a => a !== pick1 && a !== pick2));
-      const pick3Label = useRediscover ? 'Rediscover' : 'Revisit';
+      const pick1  = weightedRandom(latestPool);
+      const pick2  = weightedRandom(favPool.filter(a => a !== pick1));
+      const pick3  = weightedRandom(slot3Pool.filter(a => a !== pick1 && a !== pick2));
+      const pick3Label = pick3.rediscover ? 'Rediscover' : 'Revisit';
 
       const picks = [
         pickHtml('Released This Year', pick1),
