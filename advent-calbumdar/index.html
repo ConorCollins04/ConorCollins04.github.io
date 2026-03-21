@@ -111,13 +111,12 @@
       display: block;
     }
 
-    .door-cover-placeholder {
+    .door-cover-link.no-cover,
+    .door-cover-link:empty {
+      display: block;
       width: 100%;
       aspect-ratio: 1;
       background: var(--surface2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     /* ── Card body ── */
@@ -204,6 +203,21 @@
 
 <script src="data.js"></script>
 <script>
+  function toSlug(str) {
+    return str
+      .toLowerCase()
+      .replace(/ß/g, 'ss')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+  }
+
+  function coverSrc(entry) {
+    const file = entry.cover || (toSlug(entry.album) + '.jpg');
+    return '../images/advent-calbumdar/' + file;
+  }
+
   const years = Object.keys(CALBUMDAR).map(Number).sort((a, b) => b - a);
   let activeYear = years[0];
 
@@ -232,9 +246,7 @@
       const dayNum = 25 - entry.rank;
       const isTop3 = entry.rank <= 3;
 
-      const img = entry.cover
-        ? `<img class="door-cover" src="${entry.cover}" alt="${entry.album}" loading="lazy">`
-        : `<div class="door-cover-placeholder"></div>`;
+      const img = `<img class="door-cover" src="${coverSrc(entry)}" alt="${entry.album}" loading="lazy" onerror="this.parentElement.classList.add('no-cover');this.remove()">`;
       const coverHtml = entry.spotify
         ? `<a href="${entry.spotify}" target="_blank" rel="noopener" class="door-cover-link">${img}</a>`
         : img;
