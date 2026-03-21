@@ -53,7 +53,6 @@
       color: var(--bg);
       cursor: pointer;
       transition: opacity 0.15s, transform 0.15s;
-      margin-bottom: 40px;
       display: inline-block;
     }
 
@@ -175,6 +174,40 @@
       line-height: 1.4;
     }
 
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .slot-selects {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .slot-select {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 5px 10px;
+      cursor: pointer;
+      appearance: none;
+      transition: border-color 0.12s, color 0.12s;
+    }
+
+    .slot-select:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+    }
+
     /* ── Diagnostic ── */
     .diag {
       margin-top: 60px;
@@ -226,7 +259,43 @@
   <h1 class="page-title">What To Listen To</h1>
   <p class="page-sub">Suggestions for when I don't know what to listen to</p>
 
-  <button class="spin-btn" id="spin-btn">↻ Spin</button>
+  <div class="controls">
+    <button class="spin-btn" id="spin-btn">↻ Spin</button>
+    <div class="slot-selects">
+      <select class="slot-select" data-slot="0">
+        <option value="year">Released This Year</option>
+        <option value="favourites">All-time Favourites</option>
+        <option value="revisit-or-rediscover">Revisit / Rediscover</option>
+        <option value="revisit">Revisit</option>
+        <option value="rediscover">Rediscover</option>
+        <option value="new">New To Me</option>
+      </select>
+      <select class="slot-select" data-slot="1">
+        <option value="year">Released This Year</option>
+        <option value="favourites" selected>All-time Favourites</option>
+        <option value="revisit-or-rediscover">Revisit / Rediscover</option>
+        <option value="revisit">Revisit</option>
+        <option value="rediscover">Rediscover</option>
+        <option value="new">New To Me</option>
+      </select>
+      <select class="slot-select" data-slot="2">
+        <option value="year">Released This Year</option>
+        <option value="favourites">All-time Favourites</option>
+        <option value="revisit-or-rediscover" selected>Revisit / Rediscover</option>
+        <option value="revisit">Revisit</option>
+        <option value="rediscover">Rediscover</option>
+        <option value="new">New To Me</option>
+      </select>
+      <select class="slot-select" data-slot="3">
+        <option value="year">Released This Year</option>
+        <option value="favourites">All-time Favourites</option>
+        <option value="revisit-or-rediscover">Revisit / Rediscover</option>
+        <option value="revisit">Revisit</option>
+        <option value="rediscover">Rediscover</option>
+        <option value="new" selected>New To Me</option>
+      </select>
+    </div>
+  </div>
 
   <div class="picks" id="picks"></div>
 
@@ -308,30 +377,44 @@
     setTimeout(function () {
       const listened   = ALBUMS.filter(a => !a.unlistened);
       const unlistened = ALBUMS.filter(a => a.unlistened);
-
       const years      = [...new Set(listened.map(a => a.year))].sort((a, b) => b - a);
       const latestYear = years[0];
-      const latestPool = ALBUMS.filter(a => a.year === latestYear);
-      const favPool    = listened.filter(a => a.weight === 5 && !a.rediscover);
-      const slot3Pool  = listened.filter(a => a.weight < 5 || a.rediscover);
 
-      const pick1  = weightedRandom(latestPool);
-      const pick2  = weightedRandom(favPool.filter(a => a !== pick1));
-      const pick3  = weightedRandom(slot3Pool.filter(a => a !== pick1 && a !== pick2));
-      const pick3Label = pick3.rediscover ? 'Rediscover' : 'Revisit';
-
-      const picks = [
-        pickHtml('Released This Year', pick1),
-        pickHtml('All-time Favourites', pick2),
-        pickHtml(pick3Label, pick3),
-      ];
-
-      if (unlistened.length > 0) {
-        picks.push(pickHtml('New To Me', weightedRandom(unlistened)));
+      function poolFor(type) {
+        switch (type) {
+          case 'year':                  return ALBUMS.filter(a => a.year === latestYear);
+          case 'favourites':            return listened.filter(a => a.weight === 5 && !a.rediscover);
+          case 'revisit-or-rediscover': return listened.filter(a => a.weight < 5 || a.rediscover);
+          case 'revisit':               return listened.filter(a => a.weight < 5 && !a.rediscover);
+          case 'rediscover':            return listened.filter(a => a.rediscover);
+          case 'new':                   return unlistened;
+        }
       }
 
-      container.innerHTML = picks.join('');
+      function labelFor(type, album) {
+        switch (type) {
+          case 'year':                  return 'Released This Year';
+          case 'favourites':            return 'All-time Favourites';
+          case 'revisit-or-rediscover': return album.rediscover ? 'Rediscover' : 'Revisit';
+          case 'revisit':               return 'Revisit';
+          case 'rediscover':            return 'Rediscover';
+          case 'new':                   return 'New To Me';
+        }
+      }
 
+      const slotTypes = [...document.querySelectorAll('.slot-select')].map(s => s.value);
+      const picked = [];
+      const picks = [];
+
+      slotTypes.forEach(type => {
+        const pool = poolFor(type).filter(a => !picked.includes(a));
+        if (!pool.length) return;
+        const album = weightedRandom(pool);
+        picked.push(album);
+        picks.push(pickHtml(labelFor(type, album), album));
+      });
+
+      container.innerHTML = picks.join('');
       container.classList.remove('spinning');
     }, 200);
   }
