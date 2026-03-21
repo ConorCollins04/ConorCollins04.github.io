@@ -264,20 +264,29 @@
     container.classList.add('spinning');
 
     setTimeout(function () {
-      const years = [...new Set(ALBUMS.map(a => a.year))].sort((a, b) => b - a);
+      const listened = ALBUMS.filter(a => !a.unlistened);
+      const unlistened = ALBUMS.filter(a => a.unlistened);
+
+      const years = [...new Set(listened.map(a => a.year))].sort((a, b) => b - a);
       const latestYear = years[0];
-      const latestPool = ALBUMS.filter(a => a.year === latestYear);
-      const prevPool = ALBUMS.filter(a => a.year !== latestYear);
+      const latestPool = listened.filter(a => a.year === latestYear);
+      const prevPool = listened.filter(a => a.year !== latestYear);
 
       const pick1 = weightedRandom(latestPool);
       const pick2 = weightedRandom(prevPool);
       const pick3 = weightedRandom(prevPool.filter(a => a !== pick2));
 
-      container.innerHTML = [
+      const picks = [
         pickHtml('Fresh Pick', pick1),
         pickHtml('Throwback', pick2),
         pickHtml('Throwback', pick3),
-      ].join('');
+      ];
+
+      if (unlistened.length > 0) {
+        picks.push(pickHtml('New To Me', weightedRandom(unlistened)));
+      }
+
+      container.innerHTML = picks.join('');
 
       // Fade back in
       container.classList.remove('spinning');
