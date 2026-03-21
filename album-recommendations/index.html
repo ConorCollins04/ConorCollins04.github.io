@@ -204,7 +204,14 @@
       color: var(--faint);
       border-bottom: 1px solid var(--border);
       padding: 4px 10px 4px 0;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
     }
+
+    .diag-table th:hover { color: var(--muted); }
+    .diag-table th.sort-asc::after  { content: ' ↑'; }
+    .diag-table th.sort-desc::after { content: ' ↓'; }
 
     .diag-table td {
       padding: 4px 10px 4px 0;
@@ -227,7 +234,7 @@
     <summary class="diag-summary">All albums</summary>
     <table class="diag-table">
       <thead>
-        <tr><th>Year</th><th>Artist</th><th>Album</th><th>Rank</th><th>Weight</th><th>Flags</th></tr>
+        <tr><th data-col="date">Date</th><th data-col="year">Year</th><th data-col="artist">Artist</th><th data-col="album">Album</th><th data-col="weight">Weight</th><th data-col="flags">Flags</th></tr>
       </thead>
       <tbody id="diag-body"></tbody>
     </table>
@@ -336,21 +343,49 @@
   document.getElementById('spin-btn').addEventListener('click', spin);
 
   // ── Diagnostic table ──
-  const rows = ALBUMS.map(a => {
-    const flags = [
-      a.unlistened ? 'unlistened' : '',
-      a.rediscover ? 'rediscover' : '',
-    ].filter(Boolean).join(', ');
-    return `<tr>
-      <td>${a.year}</td>
-      <td>${a.artist}</td>
-      <td>${a.album}</td>
-      <td>${a.rank ?? '—'}</td>
-      <td>${a.weight}</td>
-      <td>${flags}</td>
-    </tr>`;
-  }).join('');
-  document.getElementById('diag-body').innerHTML = rows;
+  let diagSort = { col: 'year', dir: 1 };
+
+  function renderDiag() {
+    const sorted = [...ALBUMS].sort((a, b) => {
+      const col = diagSort.col;
+      let av = col === 'flags' ? [a.unlistened ? 'unlistened' : '', a.rediscover ? 'rediscover' : ''].filter(Boolean).join(',')
+             : col === 'date'  ? (a.date ?? '')
+             : (a[col] ?? '');
+      let bv = col === 'flags' ? [b.unlistened ? 'unlistened' : '', b.rediscover ? 'rediscover' : ''].filter(Boolean).join(',')
+             : col === 'date'  ? (b.date ?? '')
+             : (b[col] ?? '');
+      if (av < bv) return -diagSort.dir;
+      if (av > bv) return  diagSort.dir;
+      return 0;
+    });
+
+    document.getElementById('diag-body').innerHTML = sorted.map(a => {
+      const flags = [a.unlistened ? 'unlistened' : '', a.rediscover ? 'rediscover' : ''].filter(Boolean).join(', ');
+      return `<tr>
+        <td>${a.date ?? '—'}</td>
+        <td>${a.year}</td>
+        <td>${a.artist}</td>
+        <td>${a.album}</td>
+        <td>${a.weight}</td>
+        <td>${flags}</td>
+      </tr>`;
+    }).join('');
+
+    document.querySelectorAll('.diag-table th').forEach(th => {
+      th.classList.remove('sort-asc', 'sort-desc');
+      if (th.dataset.col === diagSort.col) th.classList.add(diagSort.dir === 1 ? 'sort-asc' : 'sort-desc');
+    });
+  }
+
+  document.querySelectorAll('.diag-table th').forEach(th => {
+    th.addEventListener('click', () => {
+      if (diagSort.col === th.dataset.col) diagSort.dir *= -1;
+      else diagSort = { col: th.dataset.col, dir: 1 };
+      renderDiag();
+    });
+  });
+
+  renderDiag();
 </script>
 <script src="../nav.js"></script>
 </body>
