@@ -219,42 +219,68 @@
   }
 
   const years = Object.keys(CALBUMDAR).map(Number).sort((a, b) => b - a);
-  let activeYear = years[0];
+  let activeYear = 'all';
 
   function renderTabs() {
     const tabs = document.getElementById('year-tabs');
-    tabs.innerHTML = years.map(y => `
+    tabs.innerHTML = `<button class="tab ${activeYear === 'all' ? 'active' : ''}" data-year="all">All</button>` +
+      years.map(y => `
       <button class="tab ${y === activeYear ? 'active' : ''}" data-year="${y}">${y}</button>
     `).join('');
     tabs.querySelectorAll('.tab').forEach(btn => {
       btn.addEventListener('click', () => {
-        activeYear = Number(btn.dataset.year);
+        activeYear = btn.dataset.year === 'all' ? 'all' : Number(btn.dataset.year);
         renderTabs();
         renderCalendar();
       });
     });
   }
 
+  function doorHtml(entry, year, labelHtml) {
+    const img = `<img class="door-cover" src="${coverSrc(entry, year)}" alt="${entry.album}" loading="lazy" onerror="this.parentElement.classList.add('no-cover');this.remove()">`;
+    const coverHtml = entry.spotify
+      ? `<a href="${entry.spotify}" target="_blank" rel="noopener" class="door-cover-link">${img}</a>`
+      : img;
+    const songsHtml = entry.songs && entry.songs.length
+      ? `<div class="door-songs">${entry.songs.map(s => `<div class="door-song">${s}</div>`).join('')}</div>`
+      : '';
+    return `
+      <div class="door top-three">
+        ${coverHtml}
+        <div class="door-body">
+          ${labelHtml}
+          <div class="door-album">${entry.album}</div>
+          <div class="door-artist">${entry.artist}</div>
+          ${songsHtml}
+          ${entry.note ? `<div class="door-note">${entry.note}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
   function renderCalendar() {
     const calendar = document.getElementById('calendar');
+
+    if (activeYear === 'all') {
+      calendar.innerHTML = years.map(y => {
+        const entry = CALBUMDAR[y].find(e => e.rank === 1);
+        return doorHtml(entry, y, `<div class="door-day">#1 of ${y}</div>`);
+      }).join('');
+      return;
+    }
+
     const albums = CALBUMDAR[activeYear];
-
-    // Order by day: Dec 1 = rank 24, Dec 24 = rank 1
     const sorted = [...albums].sort((a, b) => a.rank - b.rank);
-
     calendar.innerHTML = sorted.map(entry => {
       const dayNum = 25 - entry.rank;
       const isTop3 = entry.rank <= 3;
-
       const img = `<img class="door-cover" src="${coverSrc(entry, activeYear)}" alt="${entry.album}" loading="lazy" onerror="this.parentElement.classList.add('no-cover');this.remove()">`;
       const coverHtml = entry.spotify
         ? `<a href="${entry.spotify}" target="_blank" rel="noopener" class="door-cover-link">${img}</a>`
         : img;
-
       const songsHtml = entry.songs && entry.songs.length
         ? `<div class="door-songs">${entry.songs.map(s => `<div class="door-song">${s}</div>`).join('')}</div>`
         : '';
-
       return `
         <div class="door ${isTop3 ? 'top-three' : ''}">
           ${coverHtml}
