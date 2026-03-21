@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>What To Listen To</title>
+  <title>Album Recommendations</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../nav.css" />
@@ -194,7 +194,7 @@
 
 <div class="page">
   <h1 class="page-title">What To Listen To</h1>
-  <p class="page-sub">Not sure what to put on? Let me pick for you.</p>
+  <p class="page-sub">Suggestions for when I don't know what to listen to</p>
 
   <button class="spin-btn" id="spin-btn">↻ Spin</button>
 
@@ -221,8 +221,7 @@
   }
 
   function weightedRandom(pool) {
-    // Higher rank (lower number) = higher weight. Rank 1 → weight 24, rank 24 → weight 1.
-    const weights = pool.map(a => 25 - a.rank);
+    const weights = pool.map(a => a.weight);
     const total = weights.reduce((s, w) => s + w, 0);
     let r = Math.random() * total;
     for (let i = 0; i < pool.length; i++) {
@@ -250,7 +249,7 @@
         <div class="pick-body">
           <div class="pick-album">${a.album}</div>
           <div class="pick-artist">${a.artist}</div>
-          <div class="pick-rank">#${a.rank} of ${a.year}</div>
+          <div class="pick-rank">${a.rank != null ? '#' + a.rank + ' of ' + a.year : a.year}</div>
           ${songs}
           ${spotifyBtn}
         </div>
