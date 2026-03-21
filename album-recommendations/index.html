@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What To Listen To</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../nav.css" />
+  <link rel="stylesheet" href="../global.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 5vw 120px;
+    }
+
+    /* ── Header ── */
+    .page-title {
+      font-family: var(--slab);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.05;
+      margin-bottom: 6px;
+    }
+
+    .page-sub {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    /* ── Spin button ── */
+    .spin-btn {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 100px;
+      border: 1px solid var(--text);
+      background: var(--text);
+      color: var(--bg);
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.15s;
+      margin-bottom: 40px;
+      display: inline-block;
+    }
+
+    .spin-btn:hover { opacity: 0.8; }
+    .spin-btn:active { transform: scale(0.97); }
+
+    /* ── Picks grid ── */
+    .picks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 680px) {
+      .picks { grid-template-columns: 1fr; }
+    }
+
+    /* ── Fade animation ── */
+    .picks.spinning .pick-card {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .pick-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s, box-shadow 0.15s, opacity 0.2s, transform 0.2s;
+    }
+
+    .pick-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 4px 20px rgba(26,22,36,0.06);
+    }
+
+    /* ── Label ── */
+    .pick-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      padding: 14px 14px 0;
+    }
+
+    /* ── Cover ── */
+    .pick-cover-link {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .pick-cover-link.no-cover {
+      aspect-ratio: 1;
+      background: var(--surface2);
+      margin-top: 10px;
+    }
+
+    .pick-cover {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Card body ── */
+    .pick-body {
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+    }
+
+    .pick-album {
+      font-size: 0.85rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    .pick-artist {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+
+    .pick-rank {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.05em;
+      color: var(--faint);
+      margin-top: 4px;
+    }
+
+    .pick-songs {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .pick-song {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: var(--faint);
+      line-height: 1.4;
+    }
+
+    /* ── Spotify link ── */
+    .pick-spotify {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 5px 11px;
+      transition: border-color 0.12s, color 0.12s;
+      align-self: flex-start;
+    }
+
+    .pick-spotify:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <h1 class="page-title">What To Listen To</h1>
+  <p class="page-sub">Not sure what to put on? Let me pick for you.</p>
+
+  <button class="spin-btn" id="spin-btn">↻ Spin</button>
+
+  <div class="picks" id="picks"></div>
+</div>
+
+<div class="nav-wrap"></div>
+
+<script src="albums.js"></script>
+<script>
+  function toSlug(str) {
+    return str
+      .toLowerCase()
+      .replace(/ß/g, 'ss')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+  }
+
+  function coverSrc(entry) {
+    const file = entry.cover || (toSlug(entry.album) + '.jpg');
+    return '../images/albums/' + entry.year + '/' + file;
+  }
+
+  function weightedRandom(pool) {
+    // Higher rank (lower number) = higher weight. Rank 1 → weight 24, rank 24 → weight 1.
+    const weights = pool.map(a => 25 - a.rank);
+    const total = weights.reduce((s, w) => s + w, 0);
+    let r = Math.random() * total;
+    for (let i = 0; i < pool.length; i++) {
+      r -= weights[i];
+      if (r <= 0) return pool[i];
+    }
+    return pool[pool.length - 1];
+  }
+
+  function pickHtml(label, a) {
+    const img = `<img class="pick-cover" src="${coverSrc(a)}" alt="${a.album}" loading="lazy" onerror="this.parentElement.classList.add('no-cover');this.remove()">`;
+    const coverWrap = a.spotify
+      ? `<a href="${a.spotify}" target="_blank" rel="noopener" class="pick-cover-link">${img}</a>`
+      : `<div class="pick-cover-link">${img}</div>`;
+    const songs = a.songs && a.songs.length
+      ? `<div class="pick-songs">${a.songs.map(s => `<div class="pick-song">${s}</div>`).join('')}</div>`
+      : '';
+    const spotifyBtn = a.spotify
+      ? `<a href="${a.spotify}" target="_blank" rel="noopener" class="pick-spotify">Listen on Spotify ↗</a>`
+      : '';
+    return `
+      <div class="pick-card">
+        <div class="pick-label">${label}</div>
+        ${coverWrap}
+        <div class="pick-body">
+          <div class="pick-album">${a.album}</div>
+          <div class="pick-artist">${a.artist}</div>
+          <div class="pick-rank">#${a.rank} of ${a.year}</div>
+          ${songs}
+          ${spotifyBtn}
+        </div>
+      </div>
+    `;
+  }
+
+  function spin() {
+    const container = document.getElementById('picks');
+
+    // Fade out
+    container.classList.add('spinning');
+
+    setTimeout(function () {
+      const years = [...new Set(ALBUMS.map(a => a.year))].sort((a, b) => b - a);
+      const latestYear = years[0];
+      const latestPool = ALBUMS.filter(a => a.year === latestYear);
+      const prevPool = ALBUMS.filter(a => a.year !== latestYear);
+
+      const pick1 = weightedRandom(latestPool);
+      const pick2 = weightedRandom(prevPool);
+      const pick3 = weightedRandom(prevPool.filter(a => a !== pick2));
+
+      container.innerHTML = [
+        pickHtml('Fresh Pick', pick1),
+        pickHtml('Throwback', pick2),
+        pickHtml('Throwback', pick3),
+      ].join('');
+
+      // Fade back in
+      container.classList.remove('spinning');
+    }, 200);
+  }
+
+  spin();
+  document.getElementById('spin-btn').addEventListener('click', spin);
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

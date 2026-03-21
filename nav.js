@@ -19,7 +19,14 @@
         { label: 'Live Shows', href: '/drag-shows/' },
       ]
     },
-    { label: 'Calbumdar', href: '/advent-calbumdar/' },
+    {
+      label: 'Albums',
+      id: 'albums',
+      children: [
+        { label: 'Calbumdar',        href: '/advent-calbumdar/' },
+        { label: 'Recommendations',  href: '/album-recommendations/' },
+      ]
+    },
   ];
 
   var path = window.location.pathname;
