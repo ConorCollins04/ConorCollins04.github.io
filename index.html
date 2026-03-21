@@ -128,7 +128,7 @@
       <div class="card-title">Survivor: All-Stars Cast Builder</div>
       <div class="card-desc">Tool for creating your ideal survivor all-stars cast</div>
       <div class="card-footer">
-        <div class="card-stat"></div>
+        <div class="card-stat" id="all-stars-stat">1 format</div>
         <div class="card-arrow">→</div>
       </div>
     </a>
@@ -138,7 +138,7 @@
       <div class="card-title">Survivor: Moments</div>
       <div class="card-desc">A handful of my favourite moments and quotes from the show</div>
       <div class="card-footer">
-        <div class="card-stat"></div>
+        <div class="card-stat" id="moments-stat">—</div>
         <div class="card-arrow">→</div>
       </div>
     </a>
@@ -182,6 +182,7 @@
 <script src="drag-shows/data.js"></script>
 <script src="oscars/data.js"></script>
 <script src="advent-calbumdar/data.js"></script>
+<script src="survivor/moments-data.js"></script>
 <script>
   // Concerts stat
   if (typeof CONCERTS !== "undefined") {
@@ -201,6 +202,14 @@
     const years = Object.keys(OSCARS).length;
     document.getElementById("oscars-stat").textContent =
       `${years} ${years === 1 ? "ceremony" : "ceremonies"}`;
+  }
+
+  // Moments stat
+  if (typeof MOMENTS !== "undefined") {
+    const seasons = MOMENTS.length;
+    const total = MOMENTS.reduce((sum, s) => sum + s.moments.length, 0);
+    document.getElementById("moments-stat").textContent =
+      `${seasons} ${seasons === 1 ? "season" : "seasons"} · ${total} moments`;
   }
 
   // Calbumdar stat
