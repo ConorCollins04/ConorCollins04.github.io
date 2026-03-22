@@ -2,7 +2,7 @@ const SEASONS = [
   {
     id: 1, name: "Borneo", year: 2000,
     tribes: [
-      { name: "Tagi", color: "#FF7F00", textColor: "#7a3010", players: [
+      { name: "Tagi", color: "#ff6600", players: [
       { name: "Dirk Been",          gender: "m" },
       { name: "Rudy Boesch",        gender: "m" },
       { name: "Sonja Christopher",  gender: "f" },
@@ -12,7 +12,7 @@ const SEASONS = [
       { name: "Stacey Stillman",    gender: "f" },
       { name: "Kelly Wiglesworth",  gender: "f" },
       ]},
-      { name: "Pagong", color: "#FEE105", textColor: "#6a5808", players: [
+      { name: "Pagong", color: "#ffff00", players: [
       { name: "B.B. Andersen",      gender: "m" },
       { name: "Greg Buis",          gender: "m" },
       { name: "Gretchen Cordy",     gender: "f" },
@@ -27,7 +27,7 @@ const SEASONS = [
   {
     id: 2, name: "The Australian Outback", year: 2001,
     tribes: [
-      { name: "Ogakor", color: "#BFFF00", textColor: "#1a4a28", players: [
+      { name: "Ogakor", color: "#cbff00", players: [
       { name: "Amber Brkich",       gender: "f" },
       { name: "Colby Donaldson",    gender: "m" },
       { name: "Keith Famie",        gender: "m" },
@@ -37,7 +37,7 @@ const SEASONS = [
       { name: "Mitchell Olson",     gender: "m" },
       { name: "Tina Wesson",        gender: "f" },
       ]},
-      { name: "Kucha", color: "#48D1CC", textColor: "#1a3870", players: [
+      { name: "Kucha", color: "#0099cb", players: [
       { name: "Rodger Bingham",     gender: "m" },
       { name: "Nick Brown",         gender: "m" },
       { name: "Alicia Calaway",     gender: "f" },
@@ -52,7 +52,7 @@ const SEASONS = [
   {
     id: 3, name: "Africa", year: 2001,
     tribes: [
-      { name: "Boran", color: "#FFD700", textColor: "#6a4800", players: [
+      { name: "Boran", color: "#ffcc02", players: [
       { name: "Lex van den Berghe", gender: "m" },
       { name: "Clarence Black",     gender: "m" },
       { name: "Tom Buchanan",       gender: "m" },
@@ -62,7 +62,7 @@ const SEASONS = [
       { name: "Diane Ogden",        gender: "f" },
       { name: "Ethan Zohn",         gender: "m" },
       ]},
-      { name: "Samburu", color: "#FF0000", textColor: "#701010", players: [
+      { name: "Samburu", color: "#cc0133", players: [
       { name: "Carl Bilancione",    gender: "m" },
       { name: "Teresa Cooper",      gender: "f" },
       { name: "Silas Gaither",      gender: "m" },
@@ -77,7 +77,7 @@ const SEASONS = [
   {
     id: 4, name: "Marquesas", year: 2002,
     tribes: [
-      { name: "Maraamu", color: "#E6FF0A", textColor: "#6a5808", players: [
+      { name: "Maraamu", color: "#cbff00", players: [
       { name: "Gina Crews",            gender: "f" },
       { name: "Hunter Ellis",          gender: "m" },
       { name: "Peter Harkey",          gender: "m" },
@@ -87,7 +87,7 @@ const SEASONS = [
       { name: "Sean Rector",           gender: "m" },
       { name: "Vecepia Towery",        gender: "f" },
       ]},
-      { name: "Rotu", color: "#64DCFF", textColor: "#203080", players: [
+      { name: "Rotu", color: "#65cccc", players: [
       { name: "Gabriel Cade",          gender: "m" },
       { name: "John Carroll",          gender: "m" },
       { name: "Robert DeCanio",        gender: "m" },
@@ -102,7 +102,7 @@ const SEASONS = [
   {
     id: 5, name: "Thailand", year: 2002,
     tribes: [
-      { name: "Chuay Gahn", color: "#FF4F00", textColor: "#703000", players: [
+      { name: "Chuay Gahn", color: "#ff6600", players: [
       { name: "Jan Gentry",         gender: "f" },
       { name: "Helen Glover",       gender: "f" },
       { name: "Brian Heidik",       gender: "m" },
@@ -112,7 +112,7 @@ const SEASONS = [
       { name: "Ted Rogers Jr.",     gender: "m" },
       { name: "Tanya Vance",        gender: "f" },
       ]},
-      { name: "Sook Jai", color: "#660099", textColor: "#380878", players: [
+      { name: "Sook Jai", color: "#990099", players: [
       { name: "Shii-Ann Huang",     gender: "f" },
       { name: "Jake Billingsley",   gender: "m" },
       { name: "Erin Collins",       gender: "f" },
@@ -127,7 +127,7 @@ const SEASONS = [
   {
     id: 6, name: "The Amazon", year: 2003,
     tribes: [
-      { name: "Jaburu", color: "#FFFF31", textColor: "#702000", players: [
+      { name: "Jaburu", color: "#ffff00", players: [
       { name: "Deena Bennett",      gender: "f" },
       { name: "Jeanne Hebert",      gender: "f" },
       { name: "Janet Koth",         gender: "f" },
@@ -137,7 +137,7 @@ const SEASONS = [
       { name: "Heidi Strobel",      gender: "f" },
       { name: "JoAnna Ward",        gender: "f" },
       ]},
-      { name: "Tambaqui", color: "#3366FF", textColor: "#103878", players: [
+      { name: "Tambaqui", color: "#0099ff", players: [
       { name: "Ryan Aiken",           gender: "m" },
       { name: "Alex Bell",            gender: "m" },
       { name: "Rob Cesternino",       gender: "m" },
@@ -152,7 +152,7 @@ const SEASONS = [
   {
     id: 7, name: "Pearl Islands", year: 2003,
     tribes: [
-      { name: "Drake", color: "#87CEEB", textColor: "#0a4858", players: [
+      { name: "Drake", color: "#0099ff", players: [
       { name: "Rupert Boneham",     gender: "m" },
       { name: "Shawn Cohen",        gender: "m" },
       { name: "Nicole Delma",       gender: "f" },
@@ -162,7 +162,7 @@ const SEASONS = [
       { name: "Burton Roberts",     gender: "m" },
       { name: "Michelle Tesauro",   gender: "f" },
       ]},
-      { name: "Morgan", color: "#FFA500", textColor: "#601008", players: [
+      { name: "Morgan", color: "#ff9933", players: [
       { name: "Tijuana Bradley",    gender: "f" },
       { name: "Trish Dunn",         gender: "f" },
       { name: "Darrah Johnson",     gender: "f" },
@@ -177,7 +177,7 @@ const SEASONS = [
   {
     id: 47, name: "Survivor 47", year: 2024,
     tribes: [
-      { name: "Gata", color: "#fcde2d", textColor: "#5a4000", players: [
+      { name: "Gata", color: "#fcde2d", players: [
       { name: "Anika Dhar",         gender: "f" },
       { name: "Rachel Lamont",      gender: "f" },
       { name: "Jon Lovett",         gender: "m" },
@@ -185,7 +185,7 @@ const SEASONS = [
       { name: "Andy Rueda",         gender: "m" },
       { name: "Sierra Wright",      gender: "f" },
       ]},
-      { name: "Lavo", color: "#fc5f65", textColor: "#601020", players: [
+      { name: "Lavo", color: "#fc5f65", players: [
       { name: "Teeny Chirichillo",  gender: "m" },
       { name: "Rome Cooney",        gender: "m" },
       { name: "Genevieve Mushaluk", gender: "f" },
@@ -193,7 +193,7 @@ const SEASONS = [
       { name: "Aysha Welch",        gender: "f" },
       { name: "Sol Yi",             gender: "m" },
       ]},
-      { name: "Tuku", color: "#049fdd", textColor: "#003060", players: [
+      { name: "Tuku", color: "#049fdd", players: [
       { name: "TK Foster",          gender: "m" },
       { name: "Tiyana Hallums",     gender: "f" },
       { name: "Gabe Ortis",         gender: "m" },
