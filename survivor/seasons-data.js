@@ -314,6 +314,39 @@ const SEASONS = [
     ]
   },
   {
+    id: 13, name: "Cook Islands", year: 2006,
+    tribes: [
+      { name: "Aitutaki", color: "#cc0100", players: [
+      { name: "J.P. Calderon",      gender: "m" },
+      { name: "Cristina Coria",     gender: "f" },
+      { name: "Billy Garcia",       gender: "m" },
+      { name: "Ozzy Lusth",         gender: "m" },
+      { name: "Cecilia Mansilla",   gender: "f" },
+      ]},
+      { name: "Manihiki", color: "#ffcc33", players: [
+      { name: "Rebecca Borman",     gender: "f" },
+      { name: "Sekou Bunch",        gender: "m" },
+      { name: "Stephannie Favor",   gender: "f" },
+      { name: "Nate Gonzalez",      gender: "m" },
+      { name: "Sundra Oakley",      gender: "f" },
+      ]},
+      { name: "Puka Puka", color: "#009933", players: [
+      { name: "Cao Boi Bui",        gender: "m" },
+      { name: "Jenny Guzon-Bae",    gender: "f" },
+      { name: "Yul Kwon",           gender: "m" },
+      { name: "Becky Lee",          gender: "f" },
+      { name: "Brad Virata",        gender: "m" },
+      ]},
+      { name: "Rarotonga", color: "#000099", players: [
+      { name: "Adam Gentry",        gender: "m" },
+      { name: "Jonathan Penner",    gender: "m" },
+      { name: "Parvati Shallow",    gender: "f" },
+      { name: "Jessica Smith",      gender: "f" },
+      { name: "Candice Woodcock",   gender: "f" },
+      ]}
+    ]
+  },
+  {
     id: 38, name: "Edge of Extinction", year: 2019,
     tribes: [
       { name: "Kama", color: "#ffcc33", players: [

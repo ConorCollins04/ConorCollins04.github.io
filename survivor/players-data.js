@@ -49,6 +49,13 @@ const PLAYER_PICKS = [
     wantBack:  "Burton Roberts",
   },
   {
+    seasonId: 13,
+    star:      "Yul Kwon",
+    secondary: "Ozzy Lusth",
+    preMerge:  "Cao Boi Bui",
+    wantBack:  "Cao Boi Bui",
+  },
+  {
     seasonId: 38,
     star:      "Rick Devens",
     secondary: "Kelley Wentworth",
