@@ -15,7 +15,7 @@ function imgSlug(name) {
 
 function tryImage(img, name, seasonId) {
   const slug = imgSlug(name);
-  const base = `images/survivor/s${seasonId}/${slug}`;
+  const base = `../images/survivor/s${seasonId}/${slug}`;
   img.src = `${base}.webp`;
   img.onerror = () => {
     img.onerror = () => { img.style.display = "none"; };
