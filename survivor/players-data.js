@@ -118,4 +118,11 @@ const PLAYER_PICKS = [
     preMerge:  "Thomas Krottinger",
     wantBack:  "Saiounia Hughley",
   },
+  {
+    seasonId: 49,
+    star:      "Savannah Louie",
+    secondary: "Rizo Velovic",
+    preMerge:  "Jeremiah Ing",
+    wantBack:  "Saiounia Hughley",
+  },
 ];
