@@ -175,6 +175,62 @@ const SEASONS = [
     ]
   },
   {
+    id: 8, name: "All-Stars", year: 2004,
+    tribes: [
+      { name: "Chapera", color: "#cc0100", players: [
+      { name: "Amber Brkich",          gender: "f" },
+      { name: "Tom Buchanan",          gender: "m" },
+      { name: "Alicia Calaway",        gender: "f" },
+      { name: "Rob Cesternino",        gender: "m" },
+      { name: "Susan Hawk",            gender: "f" },
+      { name: "Rob Mariano",           gender: "m" },
+      ]},
+      { name: "Mogo Mogo", color: "#006633", players: [
+      { name: "Colby Donaldson",       gender: "m" },
+      { name: "Richard Hatch",         gender: "m" },
+      { name: "Shii-Ann Huang",        gender: "f" },
+      { name: "Jenna Morasca",         gender: "f" },
+      { name: "Lex van den Berghe",    gender: "m" },
+      { name: "Kathy Vavrick-O'Brien", gender: "f" },
+      ]},
+      { name: "Saboga", color: "#ffcc33", players: [
+      { name: "Rudy Boesch",           gender: "m" },
+      { name: "Rupert Boneham",        gender: "m" },
+      { name: "Jenna Lewis",           gender: "f" },
+      { name: "Jerri Manthey",         gender: "f" },
+      { name: "Tina Wesson",           gender: "f" },
+      { name: "Ethan Zohn",            gender: "m" },
+      ]}
+    ]
+  },
+  {
+    id: 9, name: "Vanuatu", year: 2004,
+    tribes: [
+      { name: "Lopevi", color: "#cc0100", players: [
+      { name: "Chad Crittenden",       gender: "m" },
+      { name: "Chris Daugherty",       gender: "m" },
+      { name: "Brady Finta",           gender: "m" },
+      { name: "Rory Freeman",          gender: "m" },
+      { name: "Brook Geraghty",        gender: "m" },
+      { name: "John Kenney",           gender: "m" },
+      { name: "Lea Masters",           gender: "m" },
+      { name: "John Palyok",           gender: "m" },
+      { name: "Travis Sampson",        gender: "m" },
+      ]},
+      { name: "Yasur", color: "#ffff33", players: [
+      { name: "Julie Berry",           gender: "f" },
+      { name: "Scout Cloud Lee",       gender: "f" },
+      { name: "Ami Cusack",            gender: "f" },
+      { name: "Mia Galeotalanza",      gender: "f" },
+      { name: "Lisa Keiffer",          gender: "f" },
+      { name: "Dolly Neely",           gender: "f" },
+      { name: "Eliza Orlins",          gender: "f" },
+      { name: "Leann Slaby",           gender: "f" },
+      { name: "Twila Tanner",          gender: "f" },
+      ]}
+    ]
+  },
+  {
     id: 38, name: "Edge of Extinction", year: 2019,
     tribes: [
       { name: "Kama", color: "#ffcc33", players: [
