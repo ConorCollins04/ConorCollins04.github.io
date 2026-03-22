@@ -201,8 +201,15 @@
 
 <div class="nav-wrap"></div>
 
-<script src="data.js"></script>
+<script src="../album-recommendations/albums.js"></script>
 <script>
+  const CALBUMDAR = {};
+  ALBUMS.filter(a => a.rank != null).forEach(a => {
+    const year = new Date(a.date).getFullYear();
+    if (!CALBUMDAR[year]) CALBUMDAR[year] = [];
+    CALBUMDAR[year].push(a);
+  });
+
   function toSlug(str) {
     return str
       .toLowerCase()
