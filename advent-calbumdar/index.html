@@ -270,12 +270,12 @@
     });
   }
 
-  function doorHtml(entry, year, labelHtml) {
+  function doorHtml(entry, year, labelHtml, showSongs = true, showArtist = true) {
     const img = `<img class="door-cover" src="${coverSrc(entry, year)}" alt="${entry.album}" loading="lazy" onerror="this.parentElement.classList.add('no-cover');this.remove()">`;
     const coverHtml = entry.spotify
       ? `<a href="${entry.spotify}" target="_blank" rel="noopener" class="door-cover-link">${img}</a>`
       : img;
-    const songsHtml = entry.songs && entry.songs.length
+    const songsHtml = showSongs && entry.songs && entry.songs.length
       ? `<div class="door-songs">${entry.songs.map(s => `<div class="door-song">${s}</div>`).join('')}</div>`
       : '';
     return `
@@ -284,7 +284,7 @@
         <div class="door-body">
           ${labelHtml}
           <div class="door-album">${entry.album}</div>
-          <div class="door-artist">${entry.artist}</div>
+          ${showArtist ? `<div class="door-artist">${entry.artist}</div>` : ''}
           ${songsHtml}
           ${entry.note ? `<div class="door-note">${entry.note}</div>` : ''}
         </div>
@@ -310,7 +310,7 @@
       calendar.innerHTML = artistGroups.map(([artist, albs]) => {
         const sorted = [...albs].sort((a, b) => b._year - a._year || a.rank - b.rank);
         const albumsHtml = sorted.map(a =>
-          doorHtml(a, a._year, `<div class="door-day">${a._year} · #${a.rank}</div>`)
+          doorHtml(a, a._year, `<div class="door-day">${a._year} · #${a.rank}</div>`, false, false)
         ).join('');
         return `<div class="artist-row">
           <div class="artist-row-label">${artist} · ${albs.length} entries</div>
