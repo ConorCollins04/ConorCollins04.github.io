@@ -174,6 +174,35 @@ const SEASONS = [
       ]}
     ]
   },
+  {
+    id: 47, name: "Survivor 47", year: 2024,
+    tribes: [
+      { name: "Gata", color: "#fcde2d", textColor: "#5a4000", players: [
+      { name: "Anika Dhar",         gender: "f" },
+      { name: "Rachel Lamont",      gender: "f" },
+      { name: "Jon Lovett",         gender: "m" },
+      { name: "Sam Phalen",         gender: "m" },
+      { name: "Andy Rueda",         gender: "m" },
+      { name: "Sierra Wright",      gender: "f" },
+      ]},
+      { name: "Lavo", color: "#fc5f65", textColor: "#601020", players: [
+      { name: "Teeny Chirichillo",  gender: "m" },
+      { name: "Rome Cooney",        gender: "m" },
+      { name: "Genevieve Mushaluk", gender: "f" },
+      { name: "Kishan Patel",       gender: "m" },
+      { name: "Aysha Welch",        gender: "f" },
+      { name: "Sol Yi",             gender: "m" },
+      ]},
+      { name: "Tuku", color: "#049fdd", textColor: "#003060", players: [
+      { name: "TK Foster",          gender: "m" },
+      { name: "Tiyana Hallums",     gender: "f" },
+      { name: "Gabe Ortis",         gender: "m" },
+      { name: "Kyle Ostwald",       gender: "m" },
+      { name: "Sue Smey",           gender: "f" },
+      { name: "Caroline Vidmar",    gender: "f" },
+      ]}
+    ]
+  },
 ];
 
 const PLAYER_INFO = {};
