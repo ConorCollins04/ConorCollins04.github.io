@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# build_cache.py
-# Reads scrobbles.json and writes lastfm-cache.js
-#
-# Run directly:  python3 build_cache.py
-# Or called automatically by fetch_scrobbles.py after a refresh.
-
 import json
 import os
 

@@ -1,15 +1,3 @@
-#!/usr/bin/env python3
-# fetch_scrobbles.py
-# Fetches scrobbles from Last.fm and saves to scrobbles.json
-#
-# Requires env var: LASTFM_API_KEY
-#
-# First run (full history):  LASTFM_API_KEY=yourkey python3 fetch_scrobbles.py --full
-# Regular refresh:           LASTFM_API_KEY=yourkey python3 fetch_scrobbles.py
-#
-# Or set it in your shell profile so you don't need to prefix every command:
-#   export LASTFM_API_KEY=yourkey
-
 import json
 import time
 import urllib.request
