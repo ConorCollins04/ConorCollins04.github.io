@@ -175,6 +175,35 @@ const SEASONS = [
     ]
   },
   {
+    id: 39, name: "Island of the Idols", year: 2019,
+    tribes: [
+      { name: "Lairo", color: "#ff9966", players: [
+      { name: "Elizabeth Beisel",   gender: "f" },
+      { name: "Missy Byrd",         gender: "f" },
+      { name: "Dean Kowalski",      gender: "m" },
+      { name: "Tom Laidlaw",        gender: "m" },
+      { name: "Aaron Meredith",     gender: "m" },
+      { name: "Vince Moua",         gender: "m" },
+      { name: "Karishma Patel",     gender: "f" },
+      { name: "Ronnie Bardah",      gender: "m" },
+      { name: "Elaine Stott",       gender: "f" },
+      { name: "Chelsea Walker",     gender: "f" },
+      ]},
+      { name: "Vokai", color: "#996699", players: [
+      { name: "Lauren Beck",        gender: "f" },
+      { name: "Molly Byman",        gender: "f" },
+      { name: "Janet Carbin",       gender: "f" },
+      { name: "Kellee Kim",         gender: "f" },
+      { name: "Jason Linden",       gender: "m" },
+      { name: "Jack Nichting",      gender: "m" },
+      { name: "Noura Salman",       gender: "f" },
+      { name: "Tommy Sheehan",      gender: "m" },
+      { name: "Jamal Shipman",      gender: "m" },
+      { name: "Dan Spilo",          gender: "m" },
+      ]}
+    ]
+  },
+  {
     id: 40, name: "Winners at War", year: 2020,
     tribes: [
       { name: "Dakal", color: "#cc3232", players: [

@@ -49,6 +49,13 @@ const PLAYER_PICKS = [
     wantBack:  "Burton Roberts",
   },
   {
+    seasonId: 39,
+    star:      "Kellee Kim",
+    secondary: "Noura Salman",
+    preMerge:  "Vince Moua",
+    wantBack:  "Kellee Kim",
+  },
+  {
     seasonId: 40,
     star:      "Tony Vlachos",
     secondary: "Michele Fitzgerald",
