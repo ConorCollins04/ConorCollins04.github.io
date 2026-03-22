@@ -49,6 +49,13 @@ const PLAYER_PICKS = [
     wantBack:  "Burton Roberts",
   },
   {
+    seasonId: 40,
+    star:      "Tony Vlachos",
+    secondary: "Michele Fitzgerald",
+    preMerge:  "Parvati Shallow",
+    wantBack:  "Sophie Clarke",
+  },
+  {
     seasonId: 41,
     star:      "Shan Smith",
     secondary: "Ricard Foyé",

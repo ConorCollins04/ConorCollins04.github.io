@@ -175,6 +175,35 @@ const SEASONS = [
     ]
   },
   {
+    id: 40, name: "Winners at War", year: 2020,
+    tribes: [
+      { name: "Dakal", color: "#cc3232", players: [
+      { name: "Tyson Apostol",        gender: "m" },
+      { name: "Sophie Clarke",        gender: "f" },
+      { name: "Sandra Diaz-Twine",    gender: "f" },
+      { name: "Wendell Holland",      gender: "m" },
+      { name: "Kim Spradlin-Wolfe",   gender: "f" },
+      { name: "Yul Kwon",             gender: "m" },
+      { name: "Sarah Lacina",         gender: "f" },
+      { name: "Amber Mariano",        gender: "f" },
+      { name: "Nick Wilson",          gender: "m" },
+      { name: "Tony Vlachos",         gender: "m" },
+      ]},
+      { name: "Sele", color: "#013399", players: [
+      { name: "Natalie Anderson",     gender: "f" },
+      { name: "Danni Boatwright",     gender: "f" },
+      { name: "Ben Driebergen",       gender: "m" },
+      { name: "Michele Fitzgerald",   gender: "f" },
+      { name: "Jeremy Collins",       gender: "m" },
+      { name: "Adam Klein",           gender: "m" },
+      { name: "Rob Mariano",          gender: "m" },
+      { name: "Parvati Shallow",      gender: "f" },
+      { name: "Denise Stapley",       gender: "f" },
+      { name: "Ethan Zohn",           gender: "m" },
+      ]}
+    ]
+  },
+  {
     id: 41, name: "Survivor 41", year: 2021,
     tribes: [
       { name: "Luvu", color: "#65ccff", players: [
