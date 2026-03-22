@@ -49,6 +49,13 @@ const PLAYER_PICKS = [
     wantBack:  "Burton Roberts",
   },
   {
+    seasonId: 44,
+    star:      "Carolyn Wiger",
+    secondary: "Yam Yam Arocho",
+    preMerge:  "Matthew Grinstead-Mayle",
+    wantBack:  "Carolyn Wiger",
+  },
+  {
     seasonId: 47,
     star:      "Genevieve Mushaluk",
     secondary: "Andy Rueda",

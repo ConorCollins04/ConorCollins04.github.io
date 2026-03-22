@@ -175,6 +175,35 @@ const SEASONS = [
     ]
   },
   {
+    id: 44, name: "Survivor 44", year: 2023,
+    tribes: [
+      { name: "Ratu", color: "#ff9c43", players: [
+      { name: "Brandon Cottom",           gender: "m" },
+      { name: "Kane Fritzler",            gender: "m" },
+      { name: "Lauren Harpe",             gender: "f" },
+      { name: "Matthew Grinstead-Mayle",  gender: "m" },
+      { name: "Maddy Pomilla",            gender: "f" },
+      { name: "Jaime Lynn Ruiz",          gender: "f" },
+      ]},
+      { name: "Soka", color: "#80e962", players: [
+      { name: "Heidi Lagares-Greenblatt", gender: "f" },
+      { name: "Frannie Marin",            gender: "f" },
+      { name: "Danny Massa",              gender: "m" },
+      { name: "Matt Blankinship",         gender: "m" },
+      { name: "Claire Rafson",            gender: "f" },
+      { name: "Josh Wilder",              gender: "m" },
+      ]},
+      { name: "Tika", color: "#d6a9f4", players: [
+      { name: "Yam Yam Arocho",          gender: "m" },
+      { name: "Carson Garrett",          gender: "m" },
+      { name: "Helen Li",                gender: "f" },
+      { name: "Bruce Perreault",         gender: "m" },
+      { name: "Sarah Wade",              gender: "f" },
+      { name: "Carolyn Wiger",           gender: "f" },
+      ]}
+    ]
+  },
+  {
     id: 47, name: "Survivor 47", year: 2024,
     tribes: [
       { name: "Gata", color: "#fcde2d", players: [
