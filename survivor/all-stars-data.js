@@ -1,3 +1,5 @@
+const ALL_STARS_SEASONS = SEASONS.filter(s => s.id <= 7);
+
 let currentSeason = 1;
 const castW = [], castM = [];
 const MAX = 9;
@@ -46,7 +48,7 @@ function genderFull(g) { return g === "f" ? castW.length >= MAX : castM.length >
 
 function renderTabs() {
   const el = document.getElementById("season-tabs");
-  el.innerHTML = SEASONS.map(s =>
+  el.innerHTML = ALL_STARS_SEASONS.map(s =>
     `<button class="season-tab ${s.id === currentSeason ? "active" : ""}" data-season="${s.id}">S${s.id}</button>`
   ).join("");
   el.querySelectorAll(".season-tab").forEach(btn => {
@@ -55,7 +57,7 @@ function renderTabs() {
 }
 
 function renderPool() {
-  const season = SEASONS.find(s => s.id === currentSeason);
+  const season = ALL_STARS_SEASONS.find(s => s.id === currentSeason);
   document.getElementById("season-heading").innerHTML = `
     <h2>${season.name}</h2>
     <p>${season.year} · ${season.tribes.reduce((n, t) => n + t.players.length, 0)} players</p>
@@ -150,7 +152,7 @@ document.getElementById("randomize-cast-btn").addEventListener("click", () => {
     return arr;
   };
   const allWomen = [], allMen = [];
-  SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
+  ALL_STARS_SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
     (p.gender === "f" ? allWomen : allMen).push(p.name);
   })));
   castW.length = 0; castM.length = 0;
@@ -325,7 +327,7 @@ function randomizeTribes() {
 
 // ─── Share view ─────────────────────────────────────────────────────────────
 const ALL_PLAYERS = [];
-SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => ALL_PLAYERS.push(p.name))));
+ALL_STARS_SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => ALL_PLAYERS.push(p.name))));
 
 function encodeShare() {
   const idx = n => ALL_PLAYERS.indexOf(n);
