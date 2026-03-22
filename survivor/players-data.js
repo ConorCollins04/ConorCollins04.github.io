@@ -123,6 +123,6 @@ const PLAYER_PICKS = [
     star:      "Savannah Louie",
     secondary: "Rizo Velovic",
     preMerge:  "Jeremiah Ing",
-    wantBack:  "Saiounia Hughley",
+    wantBack:  "Sophie Segreti",
   },
 ];
