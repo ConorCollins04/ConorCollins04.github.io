@@ -432,6 +432,64 @@ const SEASONS = [
     ]
   },
   {
+    id: 45, name: "Survivor 45", year: 2023,
+    tribes: [
+      { name: "Belo", color: "#01a0e7", players: [
+      { name: "Kendra McQuarrie",  gender: "f" },
+      { name: "Brando Meyer",      gender: "m" },
+      { name: "Kellie Nalbandian", gender: "f" },
+      { name: "Jake O'Kane",       gender: "m" },
+      { name: "Bruce Perreault",   gender: "m" },
+      { name: "Katurah Topps",     gender: "f" },
+      ]},
+      { name: "Lulu", color: "#ffe12f", players: [
+      { name: "Sabiyah Broderick", gender: "f" },
+      { name: "Brandon Donlon",    gender: "m" },
+      { name: "Sean Edwards",      gender: "m" },
+      { name: "Emily Flippen",     gender: "f" },
+      { name: "Kaleb Gebrewold",   gender: "m" },
+      { name: "Hannah Rose",       gender: "f" },
+      ]},
+      { name: "Reba", color: "#fe5e59", players: [
+      { name: "Julie Allie",       gender: "f" },
+      { name: "Sifu Alsup",        gender: "m" },
+      { name: "Drew Basile",       gender: "m" },
+      { name: "Austin Li Coon",    gender: "m" },
+      { name: "J. Maya",           gender: "f" },
+      { name: "Dee Valladares",    gender: "f" },
+      ]}
+    ]
+  },
+  {
+    id: 46, name: "Survivor 46", year: 2024,
+    tribes: [
+      { name: "Nami", color: "#fea729", players: [
+      { name: "Tevin Davis",            gender: "m" },
+      { name: "Hunter McKnight",        gender: "m" },
+      { name: "Randen Montalvo",        gender: "m" },
+      { name: "Soda Thompson",          gender: "f" },
+      { name: "Venus Vafa",             gender: "f" },
+      { name: "Liz Wilcox",             gender: "f" },
+      ]},
+      { name: "Siga", color: "#6cd859", players: [
+      { name: "Charlie Davis",          gender: "m" },
+      { name: "Moriah Gaynor",          gender: "f" },
+      { name: "Jem Hussain-Adams",      gender: "f" },
+      { name: "Ben Katzman",            gender: "m" },
+      { name: "Maria Shrime Gonzalez",  gender: "f" },
+      { name: "Tim Spicer",             gender: "m" },
+      ]},
+      { name: "Yanu", color: "#cf72d3", players: [
+      { name: "Q Burdette",             gender: "m" },
+      { name: "Jess Chong",             gender: "f" },
+      { name: "Tiffany Nicole Ervin",   gender: "f" },
+      { name: "Bhanu Gopal",            gender: "m" },
+      { name: "David Jelinsky",         gender: "m" },
+      { name: "Kenzie Petty",           gender: "f" },
+      ]}
+    ]
+  },
+  {
     id: 47, name: "Survivor 47", year: 2024,
     tribes: [
       { name: "Gata", color: "#fcde2d", players: [
@@ -486,6 +544,70 @@ const SEASONS = [
       { name: "Cedrek McFadden",    gender: "m" },
       { name: "Justin Pioppi",      gender: "m" },
       { name: "Mary Zheng",         gender: "f" },
+      ]}
+    ]
+  },
+  {
+    id: 49, name: "Survivor 49", year: 2025,
+    tribes: [
+      { name: "Hina", color: "#feda47", players: [
+      { name: "MC Chukwujekwu",        gender: "f" },
+      { name: "Kristina Mills",         gender: "f" },
+      { name: "Steven Ramm",            gender: "m" },
+      { name: "Sophie Segreti",         gender: "f" },
+      { name: "Jason Treul",            gender: "m" },
+      { name: "Matt Williams",          gender: "m" },
+      ]},
+      { name: "Kele", color: "#32aad6", players: [
+      { name: "Sophi Balerdi",          gender: "f" },
+      { name: "Annie Davis",            gender: "f" },
+      { name: "Jeremiah Ing",           gender: "m" },
+      { name: "Jake Latimer",           gender: "m" },
+      { name: "Nicole Mazullo",         gender: "f" },
+      { name: "Alex Moore",             gender: "m" },
+      ]},
+      { name: "Uli", color: "#f16b52", players: [
+      { name: "Sage Ahrens-Nichols",    gender: "f" },
+      { name: "Shannon Fairweather",    gender: "f" },
+      { name: "Savannah Louie",         gender: "f" },
+      { name: "Nate Moore",             gender: "m" },
+      { name: "Jawan Pitts",            gender: "m" },
+      { name: "Rizo Velovic",           gender: "m" },
+      ]}
+    ]
+  },
+  {
+    id: 50, name: "In the Hands of the Fans", year: 2026,
+    tribes: [
+      { name: "Civa", color: "#f28c27", players: [
+      { name: "Rick Devens",                  gender: "m" },
+      { name: "Cirie Fields",                 gender: "f" },
+      { name: "Emily Flippen",                gender: "f" },
+      { name: "Christian Hubicki",            gender: "m" },
+      { name: "Joe Hunter",                   gender: "m" },
+      { name: "Jenna Lewis-Dougherty",        gender: "f" },
+      { name: "Savannah Louie",               gender: "f" },
+      { name: "Ozzy Lusth",                   gender: "m" },
+      ]},
+      { name: "Kalo", color: "#7febf2", players: [
+      { name: "Charlie Davis",                gender: "m" },
+      { name: "Tiffany Nicole Ervin",         gender: "f" },
+      { name: "Chrissy Hofbeck",              gender: "f" },
+      { name: "Kamilla Karthigesu",           gender: "f" },
+      { name: "Dee Valladares",               gender: "f" },
+      { name: "Coach Wade",                   gender: "m" },
+      { name: "Mike White",                   gender: "m" },
+      { name: "Jonathan Young",               gender: "m" },
+      ]},
+      { name: "Vatu", color: "#ff66cc", players: [
+      { name: "Aubry Bracco",                 gender: "f" },
+      { name: "Q Burdette",                   gender: "m" },
+      { name: "Colby Donaldson",              gender: "m" },
+      { name: "Kyle Fraser",                  gender: "m" },
+      { name: "Angelina Keeley",              gender: "f" },
+      { name: "Stephenie LaGrossa Kendrick",  gender: "f" },
+      { name: "Genevieve Mushaluk",           gender: "f" },
+      { name: "Rizo Velovic",                 gender: "m" },
       ]}
     ]
   },
