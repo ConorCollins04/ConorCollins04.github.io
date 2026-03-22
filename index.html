@@ -173,11 +173,22 @@
       </div>
     </a>
 
+    <a href="album-recommendations/" class="card">
+
+      <div class="card-title">Album Recommendations</div>
+      <div class="card-desc">Tool for suggesting albums for me to listen to across different categories, taking into account how much I like them and when I last listened</div>
+      <div class="card-footer">
+        <div class="card-stat" id="recommendations-stat">—</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
   </div>
 </div>
 
 <div class="nav-wrap"></div>
 
+<script src="album-recommendations/albums.js"></script>
 <script src="concerts/data.js"></script>
 <script src="drag-shows/data.js"></script>
 <script src="oscars/data.js"></script>
@@ -210,6 +221,12 @@
     const total = MOMENTS.reduce((sum, s) => sum + s.moments.length, 0);
     document.getElementById("moments-stat").textContent =
       `${seasons} ${seasons === 1 ? "season" : "seasons"} · ${total} moments`;
+  }
+
+  // Recommendations stat
+  if (typeof ALBUMS !== "undefined") {
+    document.getElementById("recommendations-stat").textContent =
+      `${ALBUMS.length} albums`;
   }
 
   // Calbumdar stat
