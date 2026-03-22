@@ -299,7 +299,7 @@
     <summary class="diag-summary">All albums</summary>
     <table class="diag-table">
       <thead>
-        <tr><th data-col="date">Date</th><th data-col="year">Year</th><th data-col="artist">Artist</th><th data-col="album">Album</th><th data-col="weight">Weight</th><th data-col="flags">Flags</th><th data-col="lastPlayed">Last Played</th></tr>
+        <tr><th data-col="date">Date</th><th data-col="artist">Artist</th><th data-col="album">Album</th><th data-col="weight">Weight</th><th data-col="effectiveWeight">Effective</th><th data-col="flags">Flags</th><th data-col="lastPlayed">Last Played</th></tr>
       </thead>
       <tbody id="diag-body"></tbody>
     </table>
@@ -378,6 +378,19 @@
     return cache[key];
   }
 
+  function freshnessMultiplier(a) {
+    const now = Date.now() / 1000;
+    const lp = lastPlayedTs(a) ?? 0;
+    if (lp > now - 7   * 24 * 60 * 60) return 0;
+    if (lp > now - 90  * 24 * 60 * 60) return 0.25;
+    if (lp > now - 180 * 24 * 60 * 60) return 0.5;
+    return 1;
+  }
+
+  function effectiveWeight(a) {
+    return a.weight * freshnessMultiplier(a);
+  }
+
   function spin() {
     const container = document.getElementById('picks');
 
@@ -392,14 +405,6 @@
 
       const now = Date.now() / 1000;
       const staleThreshold = now - 180 * 24 * 60 * 60; // 6 months ago
-
-      function freshnessMultiplier(a) {
-        const lp = lastPlayedTs(a) ?? 0;
-        if (lp > now - 7   * 24 * 60 * 60) return 0;    // heard in last week
-        if (lp > now - 90  * 24 * 60 * 60) return 0.25; // heard in last 3 months
-        if (lp > now - 180 * 24 * 60 * 60) return 0.5;  // heard in last 6 months
-        return 1;
-      }
 
       function poolFor(type) {
         switch (type) {
@@ -442,18 +447,20 @@
   document.getElementById('spin-btn').addEventListener('click', spin);
 
   // ── Diagnostic table ──
-  let diagSort = { col: 'year', dir: -1 };
+  let diagSort = { col: 'date', dir: -1 };
 
   function renderDiag() {
     const sorted = [...ALBUMS].sort((a, b) => {
       const col = diagSort.col;
-      let av = col === 'flags'      ? a.unlistened ? 'unlistened' : ''
-             : col === 'date'       ? (a.date ?? '')
-             : col === 'lastPlayed' ? (lastPlayedTs(a) ?? 0)
+      let av = col === 'flags'           ? (a.unlistened ? 'unlistened' : '')
+             : col === 'date'            ? (a.date ?? '')
+             : col === 'lastPlayed'      ? (lastPlayedTs(a) ?? 0)
+             : col === 'effectiveWeight' ? effectiveWeight(a)
              : (a[col] ?? '');
-      let bv = col === 'flags'      ? [b.unlistened ? 'unlistened' : '', b.rediscover ? 'rediscover' : ''].filter(Boolean).join(',')
-             : col === 'date'       ? (b.date ?? '')
-             : col === 'lastPlayed' ? (lastPlayedTs(b) ?? 0)
+      let bv = col === 'flags'           ? (b.unlistened ? 'unlistened' : '')
+             : col === 'date'            ? (b.date ?? '')
+             : col === 'lastPlayed'      ? (lastPlayedTs(b) ?? 0)
+             : col === 'effectiveWeight' ? effectiveWeight(b)
              : (b[col] ?? '');
       if (av < bv) return -diagSort.dir;
       if (av > bv) return  diagSort.dir;
@@ -464,12 +471,14 @@
       const flags = a.unlistened ? 'unlistened' : '';
       const lp = lastPlayedTs(a);
       const lpDisplay = lp ? formatDate(new Date(lp * 1000).toISOString().slice(0, 10)) : '—';
+      const ew = effectiveWeight(a);
+      const ewDisplay = ew === a.weight ? a.weight : `${ew.toFixed(2)}`;
       return `<tr>
         <td>${a.date ?? '—'}</td>
-        <td>${a.date.slice(0, 4)}</td>
         <td>${a.artist}</td>
         <td>${a.album}</td>
         <td>${a.weight}</td>
+        <td>${ewDisplay}</td>
         <td>${flags}</td>
         <td>${lpDisplay}</td>
       </tr>`;
