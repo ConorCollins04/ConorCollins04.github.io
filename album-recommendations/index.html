@@ -330,7 +330,7 @@
 
   function coverSrc(entry) {
     const file = entry.cover || (toSlug(entry.album) + '.jpg');
-    return '../images/albums/' + entry.year + '/' + file;
+    return '../images/albums/' + entry.date.slice(0, 4) + '/' + file;
   }
 
   function weightedRandom(pool, weightFn) {
@@ -367,7 +367,7 @@
           <div class="pick-album">${a.album}</div>
           <div class="pick-artist">${a.artist}</div>
           ${a.rank != null ? `<div class="pick-calbumdar-label">Calbumdar Stats:</div>` : ''}
-          <div class="pick-rank">${a.rank != null ? '#' + a.rank + ' of ' + a.year : a.date ? formatDate(a.date) : a.year}</div>
+          <div class="pick-rank">${a.rank != null ? '#' + a.rank + ' of ' + a.date.slice(0, 4) : formatDate(a.date)}</div>
           ${songs}
         </div>
       </div>
@@ -394,7 +394,7 @@
     setTimeout(function () {
       const listened   = ALBUMS.filter(a => !a.unlistened);
       const unlistened = ALBUMS.filter(a => a.unlistened);
-      const years      = [...new Set(listened.map(a => a.year))].sort((a, b) => b - a);
+      const years      = [...new Set(listened.map(a => a.date.slice(0, 4)))].sort((a, b) => b - a);
       const latestYear = years[0];
 
       const now = Date.now() / 1000;
@@ -410,7 +410,7 @@
 
       function poolFor(type) {
         switch (type) {
-          case 'year':                  return ALBUMS.filter(a => a.year === latestYear);
+          case 'year':                  return ALBUMS.filter(a => a.date.slice(0, 4) === latestYear);
           case 'favourites':            return listened.filter(a => a.weight === 5 && !a.rediscover);
           case 'revisit-or-rediscover': return listened.filter(a => a.weight < 5 || a.rediscover);
           case 'revisit':               return listened.filter(a => a.weight < 5 && !a.rediscover);
@@ -477,7 +477,7 @@
       const lpDisplay = lp ? formatDate(new Date(lp * 1000).toISOString().slice(0, 10)) : '—';
       return `<tr>
         <td>${a.date ?? '—'}</td>
-        <td>${a.year}</td>
+        <td>${a.date.slice(0, 4)}</td>
         <td>${a.artist}</td>
         <td>${a.album}</td>
         <td>${a.weight}</td>
