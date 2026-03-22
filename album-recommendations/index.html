@@ -268,6 +268,7 @@
         <option value="revisit">Revisit</option>
         <option value="new">New To Me</option>
         <option value="stale">Haven't Heard In A While</option>
+        <option value="anything">Anything Goes</option>
       </select>
       <select class="slot-select" data-slot="1">
         <option value="year">Released This Year</option>
@@ -275,6 +276,7 @@
         <option value="revisit">Revisit</option>
         <option value="new">New To Me</option>
         <option value="stale">Haven't Heard In A While</option>
+        <option value="anything">Anything Goes</option>
       </select>
       <select class="slot-select" data-slot="2">
         <option value="year">Released This Year</option>
@@ -282,6 +284,7 @@
         <option value="revisit" selected>Revisit</option>
         <option value="new">New To Me</option>
         <option value="stale">Haven't Heard In A While</option>
+        <option value="anything">Anything Goes</option>
       </select>
       <select class="slot-select" data-slot="3">
         <option value="year">Released This Year</option>
@@ -289,6 +292,7 @@
         <option value="revisit">Revisit</option>
         <option value="new" selected>New To Me</option>
         <option value="stale">Haven't Heard In A While</option>
+        <option value="anything">Anything Goes</option>
       </select>
     </div>
   </div>
@@ -413,6 +417,7 @@
           case 'revisit':    return listened.filter(a => a.weight < 5);
           case 'new':        return unlistened;
           case 'stale':      return listened.filter(a => (lastPlayedTs(a) ?? 0) < staleThreshold);
+          case 'anything':   return ALBUMS;
         }
       }
 
@@ -423,6 +428,7 @@
           case 'revisit':    return 'Revisit';
           case 'new':        return 'New To Me';
           case 'stale':      return "Haven't Heard In A While";
+          case 'anything':   return 'Anything Goes';
         }
       }
 
