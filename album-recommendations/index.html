@@ -269,6 +269,7 @@
         <option value="revisit">Revisit</option>
         <option value="rediscover">Rediscover</option>
         <option value="new">New To Me</option>
+        <option value="stale">Haven't Heard In A While</option>
       </select>
       <select class="slot-select" data-slot="1">
         <option value="year">Released This Year</option>
@@ -277,6 +278,7 @@
         <option value="revisit">Revisit</option>
         <option value="rediscover">Rediscover</option>
         <option value="new">New To Me</option>
+        <option value="stale">Haven't Heard In A While</option>
       </select>
       <select class="slot-select" data-slot="2">
         <option value="year">Released This Year</option>
@@ -285,6 +287,7 @@
         <option value="revisit">Revisit</option>
         <option value="rediscover">Rediscover</option>
         <option value="new">New To Me</option>
+        <option value="stale">Haven't Heard In A While</option>
       </select>
       <select class="slot-select" data-slot="3">
         <option value="year">Released This Year</option>
@@ -303,7 +306,7 @@
     <summary class="diag-summary">All albums</summary>
     <table class="diag-table">
       <thead>
-        <tr><th data-col="date">Date</th><th data-col="year">Year</th><th data-col="artist">Artist</th><th data-col="album">Album</th><th data-col="weight">Weight</th><th data-col="flags">Flags</th></tr>
+        <tr><th data-col="date">Date</th><th data-col="year">Year</th><th data-col="artist">Artist</th><th data-col="album">Album</th><th data-col="weight">Weight</th><th data-col="flags">Flags</th><th data-col="lastPlayed">Last Played</th></tr>
       </thead>
       <tbody id="diag-body"></tbody>
     </table>
@@ -313,6 +316,7 @@
 <div class="nav-wrap"></div>
 
 <script src="albums.js"></script>
+<script src="lastfm-cache.js"></script>
 <script>
   function toSlug(str) {
     return str
@@ -329,9 +333,11 @@
     return '../images/albums/' + entry.year + '/' + file;
   }
 
-  function weightedRandom(pool) {
-    const weights = pool.map(a => a.weight ** 2);
+  function weightedRandom(pool, weightFn) {
+    weightFn = weightFn || (a => a.weight);
+    const weights = pool.map(a => weightFn(a) ** 2);
     const total = weights.reduce((s, w) => s + w, 0);
+    if (total === 0) return null;
     let r = Math.random() * total;
     for (let i = 0; i < pool.length; i++) {
       r -= weights[i];
@@ -368,6 +374,12 @@
     `;
   }
 
+  const cache = (typeof LASTFM_CACHE !== 'undefined') ? LASTFM_CACHE : {};
+
+  function lastPlayedTs(a) {
+    return cache[a.artist + '|||' + a.album];
+  }
+
   function spin() {
     const container = document.getElementById('picks');
 
@@ -380,6 +392,17 @@
       const years      = [...new Set(listened.map(a => a.year))].sort((a, b) => b - a);
       const latestYear = years[0];
 
+      const now = Date.now() / 1000;
+      const staleThreshold = now - 180 * 24 * 60 * 60; // 6 months ago
+
+      function freshnessMultiplier(a) {
+        const lp = lastPlayedTs(a) ?? 0;
+        if (lp > now - 7   * 24 * 60 * 60) return 0;    // heard in last week
+        if (lp > now - 90  * 24 * 60 * 60) return 0.25; // heard in last 3 months
+        if (lp > now - 180 * 24 * 60 * 60) return 0.5;  // heard in last 6 months
+        return 1;
+      }
+
       function poolFor(type) {
         switch (type) {
           case 'year':                  return ALBUMS.filter(a => a.year === latestYear);
@@ -388,6 +411,7 @@
           case 'revisit':               return listened.filter(a => a.weight < 5 && !a.rediscover);
           case 'rediscover':            return listened.filter(a => a.rediscover);
           case 'new':                   return unlistened;
+          case 'stale':                 return listened.filter(a => (lastPlayedTs(a) ?? 0) < staleThreshold);
         }
       }
 
@@ -399,6 +423,7 @@
           case 'revisit':               return 'Revisit';
           case 'rediscover':            return 'Rediscover';
           case 'new':                   return 'New To Me';
+          case 'stale':                 return "Haven't Heard In A While";
         }
       }
 
@@ -409,7 +434,7 @@
       slotTypes.forEach(type => {
         const pool = poolFor(type).filter(a => !picked.includes(a));
         if (!pool.length) return;
-        const album = weightedRandom(pool);
+        const album = weightedRandom(pool, a => a.weight * freshnessMultiplier(a));
         picked.push(album);
         picks.push(pickHtml(labelFor(type, album), album));
       });
@@ -428,11 +453,13 @@
   function renderDiag() {
     const sorted = [...ALBUMS].sort((a, b) => {
       const col = diagSort.col;
-      let av = col === 'flags' ? [a.unlistened ? 'unlistened' : '', a.rediscover ? 'rediscover' : ''].filter(Boolean).join(',')
-             : col === 'date'  ? (a.date ?? '')
+      let av = col === 'flags'      ? [a.unlistened ? 'unlistened' : '', a.rediscover ? 'rediscover' : ''].filter(Boolean).join(',')
+             : col === 'date'       ? (a.date ?? '')
+             : col === 'lastPlayed' ? (lastPlayedTs(a) ?? 0)
              : (a[col] ?? '');
-      let bv = col === 'flags' ? [b.unlistened ? 'unlistened' : '', b.rediscover ? 'rediscover' : ''].filter(Boolean).join(',')
-             : col === 'date'  ? (b.date ?? '')
+      let bv = col === 'flags'      ? [b.unlistened ? 'unlistened' : '', b.rediscover ? 'rediscover' : ''].filter(Boolean).join(',')
+             : col === 'date'       ? (b.date ?? '')
+             : col === 'lastPlayed' ? (lastPlayedTs(b) ?? 0)
              : (b[col] ?? '');
       if (av < bv) return -diagSort.dir;
       if (av > bv) return  diagSort.dir;
@@ -441,6 +468,8 @@
 
     document.getElementById('diag-body').innerHTML = sorted.map(a => {
       const flags = [a.unlistened ? 'unlistened' : '', a.rediscover ? 'rediscover' : ''].filter(Boolean).join(', ');
+      const lp = lastPlayedTs(a);
+      const lpDisplay = lp ? formatDate(new Date(lp * 1000).toISOString().slice(0, 10)) : '—';
       return `<tr>
         <td>${a.date ?? '—'}</td>
         <td>${a.year}</td>
@@ -448,6 +477,7 @@
         <td>${a.album}</td>
         <td>${a.weight}</td>
         <td>${flags}</td>
+        <td>${lpDisplay}</td>
       </tr>`;
     }).join('');
 
