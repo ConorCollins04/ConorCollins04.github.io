@@ -26,7 +26,7 @@ def build():
         ts     = s.get("ts", 0)
         if not artist or not album:
             continue
-        key = artist + "|||" + album
+        key = artist.lower() + "|||" + album.lower()
         if key not in last_played:
             last_played[key] = ts
 

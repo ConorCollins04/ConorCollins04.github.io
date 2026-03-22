@@ -377,7 +377,8 @@
   const cache = (typeof LASTFM_CACHE !== 'undefined') ? LASTFM_CACHE : {};
 
   function lastPlayedTs(a) {
-    return cache[a.artist + '|||' + a.album];
+    const key = (a.cacheKey || (a.artist + '|||' + a.album)).toLowerCase();
+    return cache[key];
   }
 
   function spin() {
