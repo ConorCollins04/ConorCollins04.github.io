@@ -49,6 +49,13 @@ const PLAYER_PICKS = [
     wantBack:  "Burton Roberts",
   },
   {
+    seasonId: 38,
+    star:      "Rick Devens",
+    secondary: "Kelley Wentworth",
+    preMerge:  "Reem Daly",
+    wantBack:  "Victoria Baamonde",
+  },
+  {
     seasonId: 39,
     star:      "Kellee Kim",
     secondary: "Noura Salman",

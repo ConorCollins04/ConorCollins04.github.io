@@ -175,6 +175,33 @@ const SEASONS = [
     ]
   },
   {
+    id: 38, name: "Edge of Extinction", year: 2019,
+    tribes: [
+      { name: "Kama", color: "#ffcc33", players: [
+      { name: "Joe Anglim",          gender: "m" },
+      { name: "Victoria Baamonde",   gender: "f" },
+      { name: "Aubry Bracco",        gender: "f" },
+      { name: "Ron Clark",           gender: "m" },
+      { name: "Eric Hafemann",       gender: "m" },
+      { name: "Aurora McCreary",     gender: "f" },
+      { name: "Julie Rosenberg",     gender: "f" },
+      { name: "Gavin Whitson",       gender: "m" },
+      { name: "Julia Carter",        gender: "f" },
+      ]},
+      { name: "Manu", color: "#013399", players: [
+      { name: "Reem Daly",           gender: "f" },
+      { name: "WarDog DaSilva",      gender: "m" },
+      { name: "Rick Devens",         gender: "m" },
+      { name: "Wendy Diaz",          gender: "f" },
+      { name: "Lauren O'Connell",    gender: "f" },
+      { name: "Keith Sowell",        gender: "m" },
+      { name: "Chris Underwood",     gender: "m" },
+      { name: "Kelley Wentworth",    gender: "f" },
+      { name: "David Wright",        gender: "m" },
+      ]}
+    ]
+  },
+  {
     id: 39, name: "Island of the Idols", year: 2019,
     tribes: [
       { name: "Lairo", color: "#ff9966", players: [
