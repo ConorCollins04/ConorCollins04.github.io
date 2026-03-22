@@ -175,6 +175,35 @@ const SEASONS = [
     ]
   },
   {
+    id: 42, name: "Survivor 42", year: 2022,
+    tribes: [
+      { name: "Ika", color: "#0099cb", players: [
+      { name: "Rocksroy Bailey",      gender: "m" },
+      { name: "Romeo Escobar",        gender: "m" },
+      { name: "Swati Goel",           gender: "f" },
+      { name: "Tori Meehan",          gender: "f" },
+      { name: "Drea Wheeler",         gender: "f" },
+      { name: "Zach Wurtenberger",    gender: "m" },
+      ]},
+      { name: "Taku", color: "#ff9900", players: [
+      { name: "Lindsay Dolashewich",  gender: "f" },
+      { name: "Jackson Fox",          gender: "m" },
+      { name: "Maryanne Oketch",      gender: "f" },
+      { name: "Marya Sherron",        gender: "f" },
+      { name: "Jonathan Young",       gender: "m" },
+      { name: "Omar Zaheer",          gender: "m" },
+      ]},
+      { name: "Vati", color: "#34cc66", players: [
+      { name: "Hai Giang",            gender: "m" },
+      { name: "Chanelle Howell",      gender: "f" },
+      { name: "Jenny Kim",            gender: "f" },
+      { name: "Lydia Meredith",       gender: "f" },
+      { name: "Daniel Strunk",        gender: "m" },
+      { name: "Mike Turner",          gender: "m" },
+      ]}
+    ]
+  },
+  {
     id: 44, name: "Survivor 44", year: 2023,
     tribes: [
       { name: "Ratu", color: "#ff9c43", players: [

@@ -49,6 +49,13 @@ const PLAYER_PICKS = [
     wantBack:  "Burton Roberts",
   },
   {
+    seasonId: 42,
+    star:      "Maryanne Oketch",
+    secondary: "Omar Zaheer",
+    preMerge:  "Zach Wurtenberger",
+    wantBack:  "Omar Zaheer",
+  },
+  {
     seasonId: 44,
     star:      "Carolyn Wiger",
     secondary: "Yam Yam Arocho",
