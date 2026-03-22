@@ -110,6 +110,10 @@
       flex: 0 0 140px;
     }
 
+    .door.unranked {
+      opacity: 0.45;
+    }
+
     /* ── Door card ── */
     .door {
       background: var(--surface);
@@ -270,7 +274,7 @@
     });
   }
 
-  function doorHtml(entry, year, labelHtml, showSongs = true, showArtist = true) {
+  function doorHtml(entry, year, labelHtml, showSongs = true, showArtist = true, extraClass = '') {
     const img = `<img class="door-cover" src="${coverSrc(entry, year)}" alt="${entry.album}" loading="lazy" onerror="this.parentElement.classList.add('no-cover');this.remove()">`;
     const coverHtml = entry.spotify
       ? `<a href="${entry.spotify}" target="_blank" rel="noopener" class="door-cover-link">${img}</a>`
@@ -279,7 +283,7 @@
       ? `<div class="door-songs">${entry.songs.map(s => `<div class="door-song">${s}</div>`).join('')}</div>`
       : '';
     return `
-      <div class="door top-three">
+      <div class="door top-three${extraClass ? ' ' + extraClass : ''}">
         ${coverHtml}
         <div class="door-body">
           ${labelHtml}
@@ -298,7 +302,7 @@
 
     if (activeYear === 'by-artist') {
       calendar.className = 'calendar by-artist';
-      const allAlbums = years.flatMap(y => CALBUMDAR[y].map(a => Object.assign({ _year: y }, a)));
+      const allAlbums = ALBUMS.map(a => Object.assign({ _year: new Date(a.date).getFullYear() }, a));
       const byArtist = {};
       allAlbums.forEach(a => {
         if (!byArtist[a.artist]) byArtist[a.artist] = [];
@@ -308,10 +312,16 @@
         .filter(([, albs]) => albs.length > 1)
         .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
       calendar.innerHTML = artistGroups.map(([artist, albs]) => {
-        const sorted = [...albs].sort((a, b) => b._year - a._year || a.rank - b.rank);
-        const albumsHtml = sorted.map(a =>
-          doorHtml(a, a._year, `<div class="door-day">${a._year} · #${a.rank}</div>`, false, false)
-        ).join('');
+        const sorted = [...albs].sort((a, b) => {
+          const aRanked = a.rank != null, bRanked = b.rank != null;
+          if (aRanked !== bRanked) return aRanked ? -1 : 1;
+          if (b._year !== a._year) return b._year - a._year;
+          return (a.rank ?? 0) - (b.rank ?? 0);
+        });
+        const albumsHtml = sorted.map(a => {
+          const label = `<div class="door-day">${a._year} · ${a.rank != null ? '#' + a.rank : '#N/A'}</div>`;
+          return doorHtml(a, a._year, label, false, false, a.rank == null ? 'unranked' : '');
+        }).join('');
         return `<div class="artist-row">
           <div class="artist-row-label">${artist} · ${albs.length} entries</div>
           <div class="artist-row-albums">${albumsHtml}</div>
