@@ -65,6 +65,7 @@
 
     col.col-season { width: 160px; }
     col.col-pick   { width: auto; }
+    col.col-pick   { width: auto; }
 
     thead th {
       font-family: var(--mono);
@@ -173,11 +174,13 @@
       <col class="col-pick" />
       <col class="col-pick" />
       <col class="col-pick" />
+      <col class="col-pick" />
     </colgroup>
     <thead>
       <tr>
         <th>Season</th>
-        <th>Star</th>
+        <th>Star of the season</th>
+        <th>Secondary Standout Player</th>
         <th>Best pre-merger</th>
         <th>Most want to see return</th>
       </tr>
@@ -235,6 +238,10 @@
   PLAYER_PICKS.forEach(pick => {
     const season = seasonMeta[pick.seasonId];
     if (!season) return;
+
+    // Skip seasons with no picks filled in
+    if (!pick.star && !pick.secondary && !pick.preMerge && !pick.wantBack) return;
+
     const num = String(pick.seasonId).padStart(2, '0');
 
     const tr = document.createElement('tr');
@@ -245,9 +252,10 @@
           <span class="season-name">${season.name}</span>
         </div>
       </td>
-      <td>${playerCell(pick.star,     pick.seasonId)}</td>
-      <td>${playerCell(pick.preMerge, pick.seasonId)}</td>
-      <td>${playerCell(pick.wantBack, pick.seasonId)}</td>
+      <td>${playerCell(pick.star,      pick.seasonId)}</td>
+      <td>${playerCell(pick.secondary, pick.seasonId)}</td>
+      <td>${playerCell(pick.preMerge,  pick.seasonId)}</td>
+      <td>${playerCell(pick.wantBack,  pick.seasonId)}</td>
     `;
     tbody.appendChild(tr);
   });
