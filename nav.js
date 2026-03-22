@@ -9,6 +9,7 @@
       children: [
         { label: 'All-Stars Casting', href: '/survivor/all-stars.html' },
         { label: 'Moments',           href: '/survivor/moments.html' },
+        { label: 'Players',           href: '/survivor/players.html' },
       ]
     },
     {
