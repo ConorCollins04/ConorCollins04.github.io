@@ -84,6 +84,32 @@
       .calendar { grid-template-columns: repeat(3, 1fr); }
     }
 
+    /* ── By-artist layout ── */
+    .calendar.by-artist {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .artist-row-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .artist-row-albums {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .artist-row-albums .door {
+      flex: 0 0 140px;
+    }
+
     /* ── Door card ── */
     .door {
       background: var(--surface);
@@ -230,13 +256,14 @@
 
   function renderTabs() {
     const tabs = document.getElementById('year-tabs');
-    tabs.innerHTML = `<button class="tab ${activeYear === 'all' ? 'active' : ''}" data-year="all">All</button>` +
-      years.map(y => `
-      <button class="tab ${y === activeYear ? 'active' : ''}" data-year="${y}">${y}</button>
-    `).join('');
+    tabs.innerHTML =
+      `<button class="tab ${activeYear === 'all' ? 'active' : ''}" data-year="all">All</button>` +
+      years.map(y => `<button class="tab ${y === activeYear ? 'active' : ''}" data-year="${y}">${y}</button>`).join('') +
+      `<button class="tab ${activeYear === 'by-artist' ? 'active' : ''}" data-year="by-artist">By Artist</button>`;
     tabs.querySelectorAll('.tab').forEach(btn => {
       btn.addEventListener('click', () => {
-        activeYear = btn.dataset.year === 'all' ? 'all' : Number(btn.dataset.year);
+        const v = btn.dataset.year;
+        activeYear = (v === 'all' || v === 'by-artist') ? v : Number(v);
         renderTabs();
         renderCalendar();
       });
@@ -267,6 +294,31 @@
 
   function renderCalendar() {
     const calendar = document.getElementById('calendar');
+    calendar.className = 'calendar';
+
+    if (activeYear === 'by-artist') {
+      calendar.className = 'calendar by-artist';
+      const allAlbums = years.flatMap(y => CALBUMDAR[y].map(a => Object.assign({ _year: y }, a)));
+      const byArtist = {};
+      allAlbums.forEach(a => {
+        if (!byArtist[a.artist]) byArtist[a.artist] = [];
+        byArtist[a.artist].push(a);
+      });
+      const artistGroups = Object.entries(byArtist)
+        .filter(([, albs]) => albs.length > 1)
+        .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+      calendar.innerHTML = artistGroups.map(([artist, albs]) => {
+        const sorted = [...albs].sort((a, b) => b._year - a._year || a.rank - b.rank);
+        const albumsHtml = sorted.map(a =>
+          doorHtml(a, a._year, `<div class="door-day">${a._year} · #${a.rank}</div>`)
+        ).join('');
+        return `<div class="artist-row">
+          <div class="artist-row-label">${artist} · ${albs.length} entries</div>
+          <div class="artist-row-albums">${albumsHtml}</div>
+        </div>`;
+      }).join('');
+      return;
+    }
 
     if (activeYear === 'all') {
       calendar.innerHTML = years.map(y => {
