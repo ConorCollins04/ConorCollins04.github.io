@@ -203,6 +203,35 @@ const SEASONS = [
       ]}
     ]
   },
+  {
+    id: 48, name: "Survivor 48", year: 2025,
+    tribes: [
+      { name: "Civa", color: "#feb93c", players: [
+      { name: "Kyle Fraser",        gender: "m" },
+      { name: "Mitch Guerra",       gender: "m" },
+      { name: "Kamilla Karthigesu", gender: "f" },
+      { name: "David Kinne",        gender: "m" },
+      { name: "Charity Nelms",      gender: "f" },
+      { name: "Chrissy Sarnowsky",  gender: "f" },
+      ]},
+      { name: "Lagi", color: "#e365c7", players: [
+      { name: "Shauhin Davari",     gender: "m" },
+      { name: "Eva Erickson",       gender: "f" },
+      { name: "Joe Hunter",         gender: "m" },
+      { name: "Thomas Krottinger",  gender: "m" },
+      { name: "Bianca Roses",       gender: "f" },
+      { name: "Star Toomey",        gender: "f" },
+      ]},
+      { name: "Vula", color: "#a8f496", players: [
+      { name: "Stephanie Berger",   gender: "f" },
+      { name: "Saiounia Hughley",   gender: "f" },
+      { name: "Kevin Leung",        gender: "m" },
+      { name: "Cedrek McFadden",    gender: "m" },
+      { name: "Justin Pioppi",      gender: "m" },
+      { name: "Mary Zheng",         gender: "f" },
+      ]}
+    ]
+  },
 ];
 
 const PLAYER_INFO = {};

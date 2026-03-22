@@ -55,4 +55,11 @@ const PLAYER_PICKS = [
     preMerge:  "Anika Dhar",
     wantBack:  "Sam Phalen",
   },
+  {
+    seasonId: 48,
+    star:      "Kamilla Karthigesu",
+    secondary: "Kyle Fraser",
+    preMerge:  "Thomas Krottinger",
+    wantBack:  "Saiounia Hughley",
+  },
 ];
