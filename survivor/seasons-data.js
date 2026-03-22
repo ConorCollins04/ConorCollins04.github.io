@@ -347,6 +347,232 @@ const SEASONS = [
     ]
   },
   {
+    id: 14, name: "Fiji", year: 2007,
+    tribes: [
+      { name: "Moto", color: "#66ff33", players: [
+      ]},
+      { name: "Ravu", color: "#ff6632", players: [
+      ]}
+    ]
+  },
+  {
+    id: 15, name: "China", year: 2007,
+    tribes: [
+      { name: "Fei Long", color: "#cc0100", players: [
+      ]},
+      { name: "Zhan Hu", color: "#ffcc33", players: [
+      ]}
+    ]
+  },
+  {
+    id: 16, name: "Micronesia", year: 2008,
+    tribes: [
+      { name: "Airai", color: "#ff9933", players: [
+      ]},
+      { name: "Malakal", color: "#9966cc", players: [
+      ]}
+    ]
+  },
+  {
+    id: 17, name: "Gabon", year: 2008,
+    tribes: [
+      { name: "Fang", color: "#ff3333", players: [
+      ]},
+      { name: "Kota", color: "#ffff33", players: [
+      ]}
+    ]
+  },
+  {
+    id: 18, name: "Tocantins", year: 2009,
+    tribes: [
+      { name: "Jalapao", color: "#cc3232", players: [
+      ]},
+      { name: "Timbira", color: "#000000", players: [
+      ]}
+    ]
+  },
+  {
+    id: 19, name: "Samoa", year: 2009,
+    tribes: [
+      { name: "Foa Foa", color: "#ffcc33", players: [
+      ]},
+      { name: "Galu", color: "#983399", players: [
+      ]}
+    ]
+  },
+  {
+    id: 20, name: "Heroes vs. Villains", year: 2010,
+    tribes: [
+      { name: "Heroes", color: "#0066cc", players: [
+      ]},
+      { name: "Villains", color: "#cc0100", players: [
+      ]}
+    ]
+  },
+  {
+    id: 21, name: "Nicaragua", year: 2010,
+    tribes: [
+      { name: "Espada", color: "#013399", players: [
+      ]},
+      { name: "La Flor", color: "#ffcc02", players: [
+      ]}
+    ]
+  },
+  {
+    id: 22, name: "Redemption Island", year: 2011,
+    tribes: [
+      { name: "Ometepe", color: "#ff9900", players: [
+      ]},
+      { name: "Zapatera", color: "#663399", players: [
+      ]}
+    ]
+  },
+  {
+    id: 23, name: "South Pacific", year: 2011,
+    tribes: [
+      { name: "Savaii", color: "#ff3333", players: [
+      ]},
+      { name: "Upolu", color: "#013399", players: [
+      ]}
+    ]
+  },
+  {
+    id: 24, name: "One World", year: 2012,
+    tribes: [
+      { name: "Manono", color: "#ff9933", players: [
+      ]},
+      { name: "Salani", color: "#65cccc", players: [
+      ]}
+    ]
+  },
+  {
+    id: 25, name: "Philippines", year: 2012,
+    tribes: [
+      { name: "Kalabaw", color: "#cc0100", players: [
+      ]},
+      { name: "Matsing", color: "#3366ff", players: [
+      ]},
+      { name: "Tandang", color: "#ffff33", players: [
+      ]}
+    ]
+  },
+  {
+    id: 26, name: "Caramoan", year: 2013,
+    tribes: [
+      { name: "Bikal", color: "#983399", players: [
+      ]},
+      { name: "Gota", color: "#ff6600", players: [
+      ]}
+    ]
+  },
+  {
+    id: 27, name: "Blood vs. Water", year: 2013,
+    tribes: [
+      { name: "Galang", color: "#ffcc33", players: [
+      ]},
+      { name: "Tadhana", color: "#cc3232", players: [
+      ]}
+    ]
+  },
+  {
+    id: 28, name: "Cagayan", year: 2014,
+    tribes: [
+      { name: "Aparri", color: "#ff9933", players: [
+      ]},
+      { name: "Luzon", color: "#009966", players: [
+      ]},
+      { name: "Solana", color: "#983366", players: [
+      ]}
+    ]
+  },
+  {
+    id: 29, name: "San Juan del Sur", year: 2014,
+    tribes: [
+      { name: "Coyopa", color: "#ff9933", players: [
+      ]},
+      { name: "Hunahpu", color: "#65cccc", players: [
+      ]}
+    ]
+  },
+  {
+    id: 30, name: "Worlds Apart", year: 2015,
+    tribes: [
+      { name: "Escameca", color: "#006598", players: [
+      ]},
+      { name: "Masaya", color: "#fecb04", players: [
+      ]},
+      { name: "Nagarote", color: "#cb0100", players: [
+      ]}
+    ]
+  },
+  {
+    id: 31, name: "Cambodia", year: 2015,
+    tribes: [
+      { name: "Bayon", color: "#cc3266", players: [
+      ]},
+      { name: "Ta Keo", color: "#009999", players: [
+      ]}
+    ]
+  },
+  {
+    id: 32, name: "Kaôh Rōng", year: 2016,
+    tribes: [
+      { name: "Chan Loh", color: "#013399", players: [
+      ]},
+      { name: "Gondol", color: "#ffcc02", players: [
+      ]},
+      { name: "To Tang", color: "#cc0100", players: [
+      ]}
+    ]
+  },
+  {
+    id: 33, name: "Millennials vs. Gen X", year: 2016,
+    tribes: [
+      { name: "Takali", color: "#663399", players: [
+      ]},
+      { name: "Vanua", color: "#ff3300", players: [
+      ]}
+    ]
+  },
+  {
+    id: 34, name: "Game Changers", year: 2017,
+    tribes: [
+      { name: "Mana", color: "#983301", players: [
+      ]},
+      { name: "Nuku", color: "#013365", players: [
+      ]}
+    ]
+  },
+  {
+    id: 35, name: "Heroes vs. Healers vs. Hustlers", year: 2017,
+    tribes: [
+      { name: "Levu", color: "#006699", players: [
+      ]},
+      { name: "Soko", color: "#ffcc33", players: [
+      ]},
+      { name: "Yawa", color: "#cc3232", players: [
+      ]}
+    ]
+  },
+  {
+    id: 36, name: "Ghost Island", year: 2018,
+    tribes: [
+      { name: "Malolo", color: "#ff9933", players: [
+      ]},
+      { name: "Naviti", color: "#983399", players: [
+      ]}
+    ]
+  },
+  {
+    id: 37, name: "David vs. Goliath", year: 2018,
+    tribes: [
+      { name: "David", color: "#ff9900", players: [
+      ]},
+      { name: "Goliath", color: "#663399", players: [
+      ]}
+    ]
+  },
+  {
     id: 38, name: "Edge of Extinction", year: 2019,
     tribes: [
       { name: "Kama", color: "#ffcc33", players: [
