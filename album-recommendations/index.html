@@ -376,8 +376,12 @@
 
   const cache = (typeof LASTFM_CACHE !== 'undefined') ? LASTFM_CACHE : {};
 
+  function normaliseKey(str) {
+    return str.toLowerCase().replace(/[\u2018\u2019]/g, "'");
+  }
+
   function lastPlayedTs(a) {
-    const key = (a.cacheKey || (a.artist + '|||' + a.album)).toLowerCase();
+    const key = normaliseKey(a.cacheKey || (a.artist + '|||' + a.album));
     return cache[key];
   }
 
