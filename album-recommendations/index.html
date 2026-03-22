@@ -388,7 +388,7 @@
   }
 
   function effectiveWeight(a) {
-    return a.weight * freshnessMultiplier(a);
+    return (a.weight * freshnessMultiplier(a)) ** 2;
   }
 
   function spin() {
@@ -472,7 +472,7 @@
       const lp = lastPlayedTs(a);
       const lpDisplay = lp ? formatDate(new Date(lp * 1000).toISOString().slice(0, 10)) : '—';
       const ew = effectiveWeight(a);
-      const ewDisplay = ew === a.weight ? a.weight : `${ew.toFixed(2)}`;
+      const ewDisplay = Number.isInteger(ew) ? ew : ew.toFixed(2);
       return `<tr>
         <td>${a.date ?? '—'}</td>
         <td>${a.artist}</td>
