@@ -175,6 +175,35 @@ const SEASONS = [
     ]
   },
   {
+    id: 41, name: "Survivor 41", year: 2021,
+    tribes: [
+      { name: "Luvu", color: "#65ccff", players: [
+      { name: "Heather Aldret",    gender: "f" },
+      { name: "Erika Casupanan",   gender: "f" },
+      { name: "Danny McCray",      gender: "m" },
+      { name: "Naseer Muttalif",   gender: "m" },
+      { name: "DeShawn Radden",    gender: "m" },
+      { name: "Sydney Segal",      gender: "f" },
+      ]},
+      { name: "Ua", color: "#99cc66", players: [
+      { name: "Ricard Foyé",       gender: "m" },
+      { name: "Genie Chen",        gender: "f" },
+      { name: "Brad Reese",        gender: "m" },
+      { name: "JD Robinson",       gender: "m" },
+      { name: "Shan Smith",        gender: "f" },
+      { name: "Sara Wilson",       gender: "f" },
+      ]},
+      { name: "Yase", color: "#ffff67", players: [
+      { name: "Eric Abraham",      gender: "m" },
+      { name: "Xander Hastings",   gender: "m" },
+      { name: "Evvie Jagoda",      gender: "f" },
+      { name: "Tiffany Seely",     gender: "f" },
+      { name: "David Voce",        gender: "m" },
+      { name: "Liana Wallace",     gender: "f" },
+      ]}
+    ]
+  },
+  {
     id: 42, name: "Survivor 42", year: 2022,
     tribes: [
       { name: "Ika", color: "#0099cb", players: [

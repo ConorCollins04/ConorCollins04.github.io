@@ -49,6 +49,13 @@ const PLAYER_PICKS = [
     wantBack:  "Burton Roberts",
   },
   {
+    seasonId: 41,
+    star:      "Shan Smith",
+    secondary: "Ricard Foyé",
+    preMerge:  "JD Robinson",
+    wantBack:  "Shan Smith",
+  },
+  {
     seasonId: 42,
     star:      "Maryanne Oketch",
     secondary: "Omar Zaheer",
