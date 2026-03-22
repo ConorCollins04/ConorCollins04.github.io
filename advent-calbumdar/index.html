@@ -308,10 +308,15 @@
         .filter(a => rankedYears.has(a._year));
       const byArtist = {};
       allAlbums.forEach(a => {
-        if (!byArtist[a.artist]) byArtist[a.artist] = [];
-        byArtist[a.artist].push(a);
+        const key = a.artist.toLowerCase();
+        if (!byArtist[key]) byArtist[key] = [];
+        byArtist[key].push(a);
       });
       const artistGroups = Object.entries(byArtist)
+        .map(([, albs]) => {
+          const display = albs.reduce((latest, a) => a.date > latest.date ? a : latest).artist;
+          return [display, albs];
+        })
         .filter(([, albs]) => albs.length > 1)
         .sort((a, b) => {
           const ranked = arr => arr.filter(e => e.rank != null).length;
