@@ -313,7 +313,10 @@
       });
       const artistGroups = Object.entries(byArtist)
         .filter(([, albs]) => albs.length > 1)
-        .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+        .sort((a, b) => {
+          const ranked = arr => arr.filter(e => e.rank != null).length;
+          return ranked(b[1]) - ranked(a[1]) || a[0].localeCompare(b[0]);
+        });
       calendar.innerHTML = artistGroups.map(([artist, albs]) => {
         const sorted = [...albs].sort((a, b) =>
           b._year - a._year || (a.rank ?? Infinity) - (b.rank ?? Infinity)
@@ -323,7 +326,11 @@
           return doorHtml(a, a._year, label, false, false, a.rank == null ? 'unranked' : '');
         }).join('');
         return `<div class="artist-row">
-          <div class="artist-row-label">${artist} · ${albs.length} entries</div>
+          <div class="artist-row-label">${(() => {
+            const ranked = albs.filter(a => a.rank != null).length;
+            const unranked = albs.length - ranked;
+            return artist + ' · ' + ranked + ' entr' + (ranked === 1 ? 'y' : 'ies') + (unranked ? ', ' + unranked + ' unranked' : '');
+          })()}</div>
           <div class="artist-row-albums">${albumsHtml}</div>
         </div>`;
       }).join('');
