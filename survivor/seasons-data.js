@@ -190,7 +190,7 @@ const SEASONS = [
       ]},
       { name: "Manu", color: "#013399", players: [
       { name: "Reem Daly",           gender: "f" },
-      { name: "WarDog DaSilva",      gender: "m" },
+      { name: "Wardog DaSilva",      gender: "m" },
       { name: "Rick Devens",         gender: "m" },
       { name: "Wendy Diaz",          gender: "f" },
       { name: "Lauren O'Connell",    gender: "f" },
@@ -314,6 +314,35 @@ const SEASONS = [
       { name: "Lydia Meredith",       gender: "f" },
       { name: "Daniel Strunk",        gender: "m" },
       { name: "Mike Turner",          gender: "m" },
+      ]}
+    ]
+  },
+  {
+    id: 43, name: "Survivor 43", year: 2022,
+    tribes: [
+      { name: "Baka", color: "#f7e32d", players: [
+      { name: "Mike Gabler",        gender: "m" },
+      { name: "Owen Knight",        gender: "m" },
+      { name: "Sami Layadi",        gender: "m" },
+      { name: "Elie Scott",         gender: "f" },
+      { name: "Morriah Young",      gender: "f" },
+      { name: "Jeanine Zheng",      gender: "f" },
+      ]},
+      { name: "Coco", color: "#15bcf0", players: [
+      { name: "Geo Bustamante",     gender: "m" },
+      { name: "Lindsay Carmine",    gender: "f" },
+      { name: "Cassidy Clark",      gender: "f" },
+      { name: "Karla Cruz Godoy",   gender: "f" },
+      { name: "James Jones",        gender: "m" },
+      { name: "Ryan Medrano",       gender: "m" },
+      ]},
+      { name: "Vesi", color: "#fc5f65", players: [
+      { name: "Cody Assenmacher",   gender: "m" },
+      { name: "Justine Brennan",    gender: "f" },
+      { name: "Nneka Ejere",        gender: "f" },
+      { name: "Noelle Lambert",     gender: "f" },
+      { name: "Jesse Lopez",        gender: "m" },
+      { name: "Dwight Moore",       gender: "m" },
       ]}
     ]
   },

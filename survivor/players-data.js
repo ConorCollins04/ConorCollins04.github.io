@@ -84,6 +84,13 @@ const PLAYER_PICKS = [
     wantBack:  "Omar Zaheer",
   },
   {
+    seasonId: 43,
+    star:      "Jesse Lopez",
+    secondary: "Cassidy Clark",
+    preMerge:  "Lindsay Carmine",
+    wantBack:  "Jesse Lopez",
+  },
+  {
     seasonId: 44,
     star:      "Carolyn Wiger",
     secondary: "Yam Yam Arocho",
