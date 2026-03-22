@@ -265,37 +265,30 @@
       <select class="slot-select" data-slot="0">
         <option value="year">Released This Year</option>
         <option value="favourites">All-time Favourites</option>
-        <option value="revisit-or-rediscover">Revisit / Rediscover</option>
         <option value="revisit">Revisit</option>
-        <option value="rediscover">Rediscover</option>
         <option value="new">New To Me</option>
         <option value="stale">Haven't Heard In A While</option>
       </select>
       <select class="slot-select" data-slot="1">
         <option value="year">Released This Year</option>
         <option value="favourites" selected>All-time Favourites</option>
-        <option value="revisit-or-rediscover">Revisit / Rediscover</option>
         <option value="revisit">Revisit</option>
-        <option value="rediscover">Rediscover</option>
         <option value="new">New To Me</option>
         <option value="stale">Haven't Heard In A While</option>
       </select>
       <select class="slot-select" data-slot="2">
         <option value="year">Released This Year</option>
         <option value="favourites">All-time Favourites</option>
-        <option value="revisit-or-rediscover" selected>Revisit / Rediscover</option>
-        <option value="revisit">Revisit</option>
-        <option value="rediscover">Rediscover</option>
+        <option value="revisit" selected>Revisit</option>
         <option value="new">New To Me</option>
         <option value="stale">Haven't Heard In A While</option>
       </select>
       <select class="slot-select" data-slot="3">
         <option value="year">Released This Year</option>
         <option value="favourites">All-time Favourites</option>
-        <option value="revisit-or-rediscover">Revisit / Rediscover</option>
         <option value="revisit">Revisit</option>
-        <option value="rediscover">Rediscover</option>
         <option value="new" selected>New To Me</option>
+        <option value="stale">Haven't Heard In A While</option>
       </select>
     </div>
   </div>
@@ -410,25 +403,21 @@
 
       function poolFor(type) {
         switch (type) {
-          case 'year':                  return ALBUMS.filter(a => a.date.slice(0, 4) === latestYear);
-          case 'favourites':            return listened.filter(a => a.weight === 5 && !a.rediscover);
-          case 'revisit-or-rediscover': return listened.filter(a => a.weight < 5 || a.rediscover);
-          case 'revisit':               return listened.filter(a => a.weight < 5 && !a.rediscover);
-          case 'rediscover':            return listened.filter(a => a.rediscover);
-          case 'new':                   return unlistened;
-          case 'stale':                 return listened.filter(a => (lastPlayedTs(a) ?? 0) < staleThreshold);
+          case 'year':      return ALBUMS.filter(a => a.date.slice(0, 4) === latestYear);
+          case 'favourites': return listened.filter(a => a.weight === 5);
+          case 'revisit':    return listened.filter(a => a.weight < 5);
+          case 'new':        return unlistened;
+          case 'stale':      return listened.filter(a => (lastPlayedTs(a) ?? 0) < staleThreshold);
         }
       }
 
       function labelFor(type, album) {
         switch (type) {
-          case 'year':                  return 'Released This Year';
-          case 'favourites':            return 'All-time Favourites';
-          case 'revisit-or-rediscover': return album.rediscover ? 'Rediscover' : 'Revisit';
-          case 'revisit':               return 'Revisit';
-          case 'rediscover':            return 'Rediscover';
-          case 'new':                   return 'New To Me';
-          case 'stale':                 return "Haven't Heard In A While";
+          case 'year':       return 'Released This Year';
+          case 'favourites': return 'All-time Favourites';
+          case 'revisit':    return 'Revisit';
+          case 'new':        return 'New To Me';
+          case 'stale':      return "Haven't Heard In A While";
         }
       }
 
@@ -458,7 +447,7 @@
   function renderDiag() {
     const sorted = [...ALBUMS].sort((a, b) => {
       const col = diagSort.col;
-      let av = col === 'flags'      ? [a.unlistened ? 'unlistened' : '', a.rediscover ? 'rediscover' : ''].filter(Boolean).join(',')
+      let av = col === 'flags'      ? a.unlistened ? 'unlistened' : ''
              : col === 'date'       ? (a.date ?? '')
              : col === 'lastPlayed' ? (lastPlayedTs(a) ?? 0)
              : (a[col] ?? '');
@@ -472,7 +461,7 @@
     });
 
     document.getElementById('diag-body').innerHTML = sorted.map(a => {
-      const flags = [a.unlistened ? 'unlistened' : '', a.rediscover ? 'rediscover' : ''].filter(Boolean).join(', ');
+      const flags = a.unlistened ? 'unlistened' : '';
       const lp = lastPlayedTs(a);
       const lpDisplay = lp ? formatDate(new Date(lp * 1000).toISOString().slice(0, 10)) : '—';
       return `<tr>
