@@ -21,7 +21,6 @@
       padding-bottom: 120px;
     }
 
-    /* ── Page header ── */
     .page-header {
       padding: 56px 10vw 36px;
       max-width: 1100px;
@@ -64,11 +63,8 @@
       border-collapse: collapse;
     }
 
-    /* Column widths */
-    col.col-season   { width: 180px; }
-    col.col-star     { width: auto; }
-    col.col-pre      { width: auto; }
-    col.col-back     { width: auto; }
+    col.col-season { width: 160px; }
+    col.col-pick   { width: auto; }
 
     thead th {
       font-family: var(--mono);
@@ -78,35 +74,16 @@
       color: var(--faint);
       font-weight: 400;
       text-align: left;
-      padding: 0 12px 10px 0;
+      padding: 0 16px 10px 0;
       border-bottom: 1px solid var(--border);
     }
-
     thead th:first-child { padding-left: 0; }
 
-    /* Column header icons/labels */
-    .col-label { display: flex; align-items: center; gap: 6px; }
-    .col-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 16px;
-      height: 16px;
-      border-radius: 4px;
-      font-size: 0.65rem;
-      flex-shrink: 0;
-    }
-    .col-icon.star-icon    { background: rgba(255,210,60,0.18); }
-    .col-icon.pre-icon     { background: rgba(80,60,120,0.1); }
-    .col-icon.back-icon    { background: rgba(60,160,120,0.12); }
-
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-    }
+    tbody tr { border-bottom: 1px solid var(--border); }
     tbody tr:last-child { border-bottom: none; }
 
     tbody td {
-      padding: 14px 12px 14px 0;
+      padding: 14px 16px 14px 0;
       vertical-align: middle;
     }
     tbody td:first-child { padding-left: 0; }
@@ -117,14 +94,12 @@
       flex-direction: column;
       gap: 2px;
     }
-
     .season-num {
       font-family: var(--mono);
       font-size: 0.58rem;
       color: var(--faint);
       letter-spacing: 0.06em;
     }
-
     .season-name {
       font-size: 0.8rem;
       font-weight: 500;
@@ -132,37 +107,50 @@
       line-height: 1.3;
     }
 
-    /* Player chip */
-    .player-chip {
+    /* Player card */
+    .player-card {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 5px 10px;
-      border-radius: 100px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      font-size: 0.72rem;
-      font-weight: 400;
-      color: var(--text);
-      white-space: nowrap;
-      line-height: 1;
+      gap: 10px;
     }
 
-    .player-chip.star-chip  { border-color: rgba(200,160,0,0.3); background: rgba(255,210,60,0.07); }
-    .player-chip.pre-chip   { border-color: var(--border); }
-    .player-chip.back-chip  { border-color: rgba(40,140,100,0.25); background: rgba(60,160,120,0.06); }
-
-    .chip-dot {
-      width: 5px;
-      height: 5px;
+    .avatar {
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      overflow: hidden;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
     }
-    .star-chip  .chip-dot { background: #c8a000; }
-    .pre-chip   .chip-dot { background: var(--faint); }
-    .back-chip  .chip-dot { background: #2a9c70; }
 
-    .chip-empty {
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    .player-name {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .player-name-last {
+      font-weight: 300;
+      color: var(--muted);
+    }
+
+    .cell-empty {
       font-family: var(--mono);
       font-size: 0.6rem;
       color: var(--faint);
@@ -182,31 +170,16 @@
   <table>
     <colgroup>
       <col class="col-season" />
-      <col class="col-star" />
-      <col class="col-pre" />
-      <col class="col-back" />
+      <col class="col-pick" />
+      <col class="col-pick" />
+      <col class="col-pick" />
     </colgroup>
     <thead>
       <tr>
         <th>Season</th>
-        <th>
-          <div class="col-label">
-            <span class="col-icon star-icon">★</span>
-            Star
-          </div>
-        </th>
-        <th>
-          <div class="col-label">
-            <span class="col-icon pre-icon">◇</span>
-            Best pre-merger
-          </div>
-        </th>
-        <th>
-          <div class="col-label">
-            <span class="col-icon back-icon">↩</span>
-            Most want to see return
-          </div>
-        </th>
+        <th>Star</th>
+        <th>Best pre-merger</th>
+        <th>Most want to see return</th>
       </tr>
     </thead>
     <tbody id="picks-body"></tbody>
@@ -219,38 +192,81 @@
 <script src="players-data.js"></script>
 <script src="../nav.js"></script>
 <script>
-  const tbody = document.getElementById('picks-body');
+  function imgSlug(name) {
+    return name.toLowerCase()
+      .replace(/['']/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+  }
 
-  // Build a lookup from season id → season meta
+  function initials(name) {
+    return name.split(" ").filter(w => w.length > 1).map(w => w[0]).slice(0, 2).join("").toUpperCase();
+  }
+
+  function playerCell(name, seasonId) {
+    if (!name) return `<span class="cell-empty">—</span>`;
+
+    const slug = imgSlug(name);
+    const base = `../images/survivor/s${seasonId}/${slug}`;
+    const id = initials(name);
+
+    // Split on last space for first/last name styling
+    const parts = name.trim().split(" ");
+    const last = parts.pop();
+    const first = parts.join(" ");
+    const nameHtml = first
+      ? `${first} <span class="player-name-last">${last}</span>`
+      : last;
+
+    return `
+      <div class="player-card">
+        <div class="avatar" data-base="${base}" data-id="${id}">
+          <span class="avatar-initials">${id}</span>
+        </div>
+        <span class="player-name">${nameHtml}</span>
+      </div>`;
+  }
+
   const seasonMeta = {};
   SEASONS.forEach(s => { seasonMeta[s.id] = s; });
+
+  const tbody = document.getElementById('picks-body');
 
   PLAYER_PICKS.forEach(pick => {
     const season = seasonMeta[pick.seasonId];
     if (!season) return;
-
-    const seasonNum = String(pick.seasonId).padStart(2, '0');
-
-    function chip(name, type) {
-      if (!name) return `<span class="chip-empty">—</span>`;
-      return `<span class="player-chip ${type}-chip">
-        <span class="chip-dot"></span>${name}
-      </span>`;
-    }
+    const num = String(pick.seasonId).padStart(2, '0');
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>
         <div class="season-cell">
-          <span class="season-num">S${seasonNum}</span>
+          <span class="season-num">S${num}</span>
           <span class="season-name">${season.name}</span>
         </div>
       </td>
-      <td>${chip(pick.star, 'star')}</td>
-      <td>${chip(pick.preMerge, 'pre')}</td>
-      <td>${chip(pick.wantBack, 'back')}</td>
+      <td>${playerCell(pick.star,     pick.seasonId)}</td>
+      <td>${playerCell(pick.preMerge, pick.seasonId)}</td>
+      <td>${playerCell(pick.wantBack, pick.seasonId)}</td>
     `;
     tbody.appendChild(tr);
+  });
+
+  // Load images, fall back to initials
+  document.querySelectorAll('.avatar[data-base]').forEach(el => {
+    const base = el.dataset.base;
+    const initials = el.dataset.id;
+    const span = el.querySelector('.avatar-initials');
+    const img = document.createElement('img');
+    img.alt = "";
+    img.onload = () => { el.insertBefore(img, span); span.style.display = 'none'; };
+    img.onerror = () => {
+      const jpg = document.createElement('img');
+      jpg.alt = "";
+      jpg.onload = () => { el.insertBefore(jpg, span); span.style.display = 'none'; };
+      jpg.src = base + '.jpg';
+    };
+    img.src = base + '.webp';
   });
 </script>
 </body>
