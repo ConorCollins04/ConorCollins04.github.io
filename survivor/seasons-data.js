@@ -231,6 +231,89 @@ const SEASONS = [
     ]
   },
   {
+    id: 10, name: "Palau", year: 2005,
+    tribes: [
+      { name: "Koror", color: "#663300", players: [
+      { name: "Coby Archa",        gender: "m" },
+      { name: "Gregg Carey",       gender: "m" },
+      { name: "Katie Gallagher",   gender: "f" },
+      { name: "Caryn Groedel",     gender: "f" },
+      { name: "Jenn Lyon",         gender: "f" },
+      { name: "Ian Rosenberger",   gender: "m" },
+      { name: "Willard Smith",     gender: "m" },
+      { name: "Janu Tornell",      gender: "f" },
+      { name: "Tom Westman",       gender: "m" },
+      ]},
+      { name: "Ulong", color: "#013399", players: [
+      { name: "Ashlee Ashby",      gender: "f" },
+      { name: "Bobby Jon Drinkard",gender: "m" },
+      { name: "Angie Jakusz",      gender: "f" },
+      { name: "Jolanda Jones",     gender: "f" },
+      { name: "Stephenie LaGrossa",gender: "f" },
+      { name: "James Miller",      gender: "m" },
+      { name: "Kim Mullen",        gender: "f" },
+      { name: "Ibrehem Rahman",    gender: "m" },
+      { name: "Jeff Wilson",       gender: "m" },
+      ]}
+    ]
+  },
+  {
+    id: 11, name: "Guatemala", year: 2005,
+    tribes: [
+      { name: "Nakúm", color: "#ffcc33", players: [
+      { name: "Brandon Bellinger",  gender: "m" },
+      { name: "Danni Boatwright",   gender: "f" },
+      { name: "Margaret Bobonich",  gender: "f" },
+      { name: "Bobby Jon Drinkard", gender: "m" },
+      { name: "Cindy Hall",         gender: "f" },
+      { name: "Jim Lynch",          gender: "m" },
+      { name: "Judd Sergeant",      gender: "m" },
+      { name: "Brooke Struck",      gender: "f" },
+      { name: "Blake Towsley",      gender: "m" },
+      ]},
+      { name: "Yaxhá", color: "#65cccc", players: [
+      { name: "Brian Corridan",     gender: "m" },
+      { name: "Gary Hogeboom",      gender: "m" },
+      { name: "Rafe Judkins",       gender: "m" },
+      { name: "Stephenie LaGrossa", gender: "f" },
+      { name: "Morgan McDevitt",    gender: "f" },
+      { name: "Lydia Morales",      gender: "f" },
+      { name: "Jamie Newton",       gender: "m" },
+      { name: "Amy O'Hara",         gender: "f" },
+      { name: "Brianna Varela",     gender: "f" },
+      ]}
+    ]
+  },
+  {
+    id: 12, name: "Panama", year: 2006,
+    tribes: [
+      { name: "Bayoneta", color: "#00ccff", players: [
+      { name: "Danielle DiLorenzo",  gender: "f" },
+      { name: "Misty Giles",         gender: "f" },
+      { name: "Courtney Marit",      gender: "f" },
+      { name: "Sally Schumann",      gender: "f" },
+      ]},
+      { name: "Casaya", color: "#990099", players: [
+      { name: "Cirie Fields",        gender: "f" },
+      { name: "Melinda Hyder",       gender: "f" },
+      { name: "Ruth Marie Milliman", gender: "f" },
+      { name: "Tina Scheer",         gender: "f" },
+      ]},
+      { name: "La Mina", color: "#ff6600", players: [
+      { name: "Dan Barry",           gender: "m" },
+      { name: "Terry Deitz",         gender: "m" },
+      { name: "Bruce Kanegai",       gender: "m" },
+      { name: "Shane Powers",        gender: "m" },
+      ]},
+      { name: "Viveros", color: "#65cc33", players: [
+      { name: "Aras Baskauskas",     gender: "m" },
+      { name: "Austin Carty",        gender: "m" },
+      { name: "Bobby Mason",         gender: "m" },
+      { name: "Nick Stanbury",       gender: "m" },
+      ]}
+    ]
+  },
+  {
     id: 38, name: "Edge of Extinction", year: 2019,
     tribes: [
       { name: "Kama", color: "#ffcc33", players: [
