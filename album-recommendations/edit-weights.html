@@ -197,14 +197,7 @@
       color: var(--accent);
     }
 
-    .flag {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      padding: 2px 7px;
-      border-radius: 4px;
-      background: var(--surface2);
-      color: var(--faint);
-    }
+    .listened-cb { cursor: default; accent-color: var(--accent); }
 
     /* ── Status bar ── */
     .status-bar {
@@ -259,8 +252,8 @@
           <th data-col="artist">Artist</th>
           <th data-col="album">Album</th>
           <th data-col="weight">Weight</th>
-          <th data-col="rank">Rank</th>
-          <th data-col="flags">Flags</th>
+          <th data-col="lastPlayed">Last Played</th>
+          <th data-col="listened">Listened</th>
         </tr>
       </thead>
       <tbody id="table-body">
@@ -277,11 +270,14 @@ const REPO      = 'ConorCollins04/ConorCollins04.github.io';
 const FILE_PATH = 'album-recommendations/albums.js';
 const LS_KEY    = 'gh_pat_album_editor';
 
-let albums          = [];
-let originalWeights = {};   // albumKey -> original weight
-let currentWeights  = {};   // albumKey -> current weight
-let rawContent      = '';   // raw JS file text
-let fileSha         = '';   // GitHub file SHA (required for PUT)
+let albums           = [];
+let originalWeights  = {};   // albumKey -> original weight
+let currentWeights   = {};   // albumKey -> current weight
+let originalListened = {};   // albumKey -> bool (true = listened)
+let currentListened  = {};   // albumKey -> bool
+let rawContent       = '';   // raw JS file text
+let fileSha          = '';   // GitHub file SHA (required for PUT)
+let cache            = {};   // Last.fm cache: normalised key -> unix timestamp
 
 let sortState   = { col: 'date', dir: -1 };
 let filterText  = '';
@@ -290,6 +286,18 @@ let filterWeight = '';
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function albumKey(a) { return a.artist + '|||' + a.album; }
+
+function normaliseKey(str) { return str.toLowerCase().replace(/[\u2018\u2019]/g, "'"); }
+
+function lastPlayedTs(a) {
+  const key = normaliseKey(a.cacheKey || (a.artist + '|||' + a.album));
+  return cache[key];
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
 
 function esc(str) {
   return String(str)
@@ -351,14 +359,19 @@ async function fetchAlbums() {
   setStatus('Loading…');
 
   try {
-    const res = await fetch(
-      `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,
-      { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } }
-    );
-    if (!res.ok) throw new Error(`GitHub API ${res.status}: ${res.statusText}`);
-    const data = await res.json();
+    const [albumsRes, cacheRes] = await Promise.all([
+      fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,
+        { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } }),
+      fetch('lastfm-cache.js').catch(() => null)
+    ]);
+    if (!albumsRes.ok) throw new Error(`GitHub API ${albumsRes.status}: ${albumsRes.statusText}`);
+    const data = await albumsRes.json();
     fileSha    = data.sha;
     rawContent = b64decode(data.content);
+    if (cacheRes && cacheRes.ok) {
+      const cacheText = await cacheRes.text();
+      cache = new Function(cacheText + '; return typeof LASTFM_CACHE !== "undefined" ? LASTFM_CACHE : {}')();
+    }
     parseAndRender();
     setStatus(`Loaded ${albums.length} albums.`, 'ok');
   } catch (e) {
@@ -374,20 +387,30 @@ async function commitChanges() {
   setStatus('Committing…');
   document.getElementById('btn-save').disabled = true;
 
-  // Apply weight changes line-by-line in the raw source
+  // Apply changes line-by-line in the raw source
   let newContent = rawContent;
   for (const key of changed) {
-    const idx = key.indexOf('|||');
-    const artist    = key.slice(0, idx);
-    const album     = key.slice(idx + 3);
-    const newWeight = currentWeights[key];
+    const idx    = key.indexOf('|||');
+    const artist = key.slice(0, idx);
+    const album  = key.slice(idx + 3);
 
     const lines = newContent.split('\n');
     let found   = false;
     for (let i = 0; i < lines.length; i++) {
       if (lines[i].includes(`artist: "${artist}"`) && lines[i].includes(`album: "${album}"`)) {
-        lines[i] = lines[i].replace(/\bweight:\s*\d+/, `weight: ${newWeight}`);
-        found    = true;
+        if (currentWeights[key] !== originalWeights[key]) {
+          lines[i] = lines[i].replace(/\bweight:\s*\d+/, `weight: ${currentWeights[key]}`);
+        }
+        if (currentListened[key] !== originalListened[key]) {
+          if (!currentListened[key]) {
+            // Marking as unlistened — add unlistened: true before closing brace
+            lines[i] = lines[i].replace(/(},?\s*)$/, ', unlistened: true$1');
+          } else {
+            // Marking as listened — remove unlistened: true
+            lines[i] = lines[i].replace(/,\s*unlistened:\s*true|unlistened:\s*true,?\s*/, '');
+          }
+        }
+        found = true;
         break;
       }
     }
@@ -423,7 +446,10 @@ async function commitChanges() {
     const data = await res.json();
     fileSha    = data.content.sha;
     rawContent = newContent;
-    for (const k of changed) originalWeights[k] = currentWeights[k];
+    for (const k of changed) {
+      originalWeights[k]  = currentWeights[k];
+      originalListened[k] = currentListened[k];
+    }
     setStatus(`Committed ${changed.length} change${changed.length !== 1 ? 's' : ''}.`, 'ok');
     renderTable();
   } catch (e) {
@@ -437,12 +463,16 @@ async function commitChanges() {
 function parseAndRender() {
   const fn = new Function(rawContent + '; return typeof ALBUMS !== "undefined" ? ALBUMS : [];');
   albums = fn();
-  originalWeights = {};
-  currentWeights  = {};
+  originalWeights  = {};
+  currentWeights   = {};
+  originalListened = {};
+  currentListened  = {};
   for (const a of albums) {
     const k = albumKey(a);
-    originalWeights[k] = a.weight;
-    currentWeights[k]  = a.weight;
+    originalWeights[k]  = a.weight;
+    currentWeights[k]   = a.weight;
+    originalListened[k] = !a.unlistened;
+    currentListened[k]  = !a.unlistened;
   }
   renderTable();
 }
@@ -462,8 +492,8 @@ function getVisibleAlbums() {
     const col = sortState.col;
     let av, bv;
     if      (col === 'weight') { av = currentWeights[albumKey(a)] ?? 0; bv = currentWeights[albumKey(b)] ?? 0; }
-    else if (col === 'rank')   { av = a.rank ?? 999;                    bv = b.rank ?? 999; }
-    else if (col === 'flags')  { av = a.unlistened ? 1 : 0;             bv = b.unlistened ? 1 : 0; }
+    else if (col === 'lastPlayed') { av = lastPlayedTs(a) ?? 0; bv = lastPlayedTs(b) ?? 0; }
+    else if (col === 'listened')   { av = currentListened[albumKey(a)] ? 1 : 0; bv = currentListened[albumKey(b)] ? 1 : 0; }
     else                       { av = a[col] ?? '';                     bv = b[col] ?? ''; }
     return av < bv ? -sortState.dir : av > bv ? sortState.dir : 0;
   });
@@ -471,7 +501,9 @@ function getVisibleAlbums() {
 }
 
 function getChangedKeys() {
-  return Object.keys(currentWeights).filter(k => currentWeights[k] !== originalWeights[k]);
+  return Object.keys(currentWeights).filter(k =>
+    currentWeights[k] !== originalWeights[k] || currentListened[k] !== originalListened[k]
+  );
 }
 
 // ── Render ───────────────────────────────────────────────────────────────��────
@@ -499,8 +531,8 @@ function renderTable() {
       <td>${esc(a.artist)}</td>
       <td>${esc(a.album)}</td>
       <td><select class="weight-select${isChg ? ' changed' : ''}" data-key="${esc(k)}">${options}</select></td>
-      <td>${a.rank != null ? '#' + a.rank : '—'}</td>
-      <td>${a.unlistened ? '<span class="flag">unlistened</span>' : ''}</td>
+      <td>${(() => { const lp = lastPlayedTs(a); return lp ? formatDate(new Date(lp * 1000).toISOString().slice(0, 10)) : '—'; })()}</td>
+      <td><input type="checkbox" class="listened-cb"${currentListened[k] ? ' checked' : ''} data-key="${esc(k)}" /></td>
     </tr>`;
   }).join('');
 
@@ -508,9 +540,19 @@ function renderTable() {
     sel.addEventListener('change', e => {
       const k = e.target.dataset.key;
       currentWeights[k] = parseInt(e.target.value, 10);
-      const isChg = currentWeights[k] !== originalWeights[k];
+      const isChg = currentWeights[k] !== originalWeights[k] || currentListened[k] !== originalListened[k];
       e.target.closest('tr').classList.toggle('changed', isChg);
       e.target.classList.toggle('changed', isChg);
+      updateControls();
+    });
+  });
+
+  tbody.querySelectorAll('.listened-cb').forEach(cb => {
+    cb.addEventListener('change', e => {
+      const k = e.target.dataset.key;
+      currentListened[k] = e.target.checked;
+      const isChg = currentWeights[k] !== originalWeights[k] || currentListened[k] !== originalListened[k];
+      e.target.closest('tr').classList.toggle('changed', isChg);
       updateControls();
     });
   });
@@ -546,7 +588,8 @@ document.getElementById('btn-load').addEventListener('click', fetchAlbums);
 document.getElementById('btn-save').addEventListener('click', commitChanges);
 
 document.getElementById('btn-reset').addEventListener('click', () => {
-  for (const k of Object.keys(currentWeights)) currentWeights[k] = originalWeights[k];
+  for (const k of Object.keys(currentWeights))  currentWeights[k]  = originalWeights[k];
+  for (const k of Object.keys(currentListened)) currentListened[k] = originalListened[k];
   renderTable();
 });
 
