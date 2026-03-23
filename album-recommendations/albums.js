@@ -39,7 +39,7 @@ const ALBUMS = [
   { date: "2025-08-22", weight: -1, artist: "Ava Max",          album: "Don't Click Play",       spotify: "https://open.spotify.com/album/48fwvNa8p0qrqO5RKEnOTI?si=SnpF9pCMRrWWBEGNbQB3-g" },
   { date: "2025-01-05", weight: -1, artist: "Bad Bunny",        album: "DeBÍ TiRAR MáS FOToS",   spotify: "https://open.spotify.com/album/5K79FLRUCSysQnVESLcTdb?si=-7Fdwy8cTWiMZ2qDBn-2nw" },
   { date: "2025-03-20", weight: -1, artist: "BESS",             album: "ULTRAVIOLETTI",           spotify: "https://open.spotify.com/album/0v7kaOJYUoOnNxaNlzOnEb?si=LfTtt9oQQ36zjYRq3933GQ" },
-  { date: "2025-03-07", weight: -1, artist: "Coma_Cose",        album: "VITA_FUSA",               spotify: "https://open.spotify.com/album/7lUQ8zSvRJwgC77Pb3St5Z?si=n8RPDbmMT2uop4FXvCSy1w" },
+  { date: "2025-03-07", weight: -1, artist: "Coma_Cose",        album: "VITA_FUSA",               cover: "vita-fusa.jpg", spotify: "https://open.spotify.com/album/7lUQ8zSvRJwgC77Pb3St5Z?si=n8RPDbmMT2uop4FXvCSy1w" },
   { date: "2025-06-06", weight: -1, artist: "Cynthia Erivo",    album: "I Forgive You",           spotify: "https://open.spotify.com/album/4FpWxfojxH2a3S5OBrMYoj?si=e-n4YQRESJmBYkomU87Khg" },
 
   { date: "2024-07-12", rank:  1, weight: 5, artist: "Griff",            album: "Vertigo",                                songs: ["Miss Me Too", "Anything", "Cycles"],                                spotify: "https://open.spotify.com/album/3VA9PnquCzG4E2GHgBzFQE?si=7YZScpvOQsubu9yguUKmiA" },
