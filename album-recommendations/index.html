@@ -402,8 +402,10 @@
     container.classList.add('spinning');
 
     setTimeout(function () {
-      const listened   = ALBUMS.filter(a => !a.unlistened);
-      const unlistened = ALBUMS.filter(a => a.unlistened);
+      const today      = new Date().toISOString().slice(0, 10);
+      const released   = ALBUMS.filter(a => a.date <= today);
+      const listened   = released.filter(a => !a.unlistened);
+      const unlistened = released.filter(a => a.unlistened);
       const years      = [...new Set(listened.map(a => a.date.slice(0, 4)))].sort((a, b) => b - a);
       const latestYear = years[0];
 
@@ -412,12 +414,12 @@
 
       function poolFor(type) {
         switch (type) {
-          case 'year':      return ALBUMS.filter(a => a.date.slice(0, 4) === latestYear);
+          case 'year':      return released.filter(a => a.date.slice(0, 4) === latestYear);
           case 'favourites': return listened.filter(a => a.weight === 5);
           case 'revisit':    return listened.filter(a => a.weight < 5);
           case 'new':        return unlistened;
           case 'stale':      return listened.filter(a => (lastPlayedTs(a) ?? 0) < staleThreshold);
-          case 'anything':   return ALBUMS;
+          case 'anything':   return released;
         }
       }
 
