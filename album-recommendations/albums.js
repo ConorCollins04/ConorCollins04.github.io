@@ -36,6 +36,11 @@ const ALBUMS = [
   { date: "2025-09-26", rank: 24, weight: 1, artist: "Perrie",          album: "Perrie",                                  songs: ["If He Wanted To He Would", "Rocket Scientist", "Absofuckinglutely"], spotify: "https://open.spotify.com/album/40D8mOfQknlA99Q7QpLJEC?si=uiHELowjQSm2tCU3nly7jg" },
   { date: "2025-10-03", weight: 0, artist: "Taylor Swift",       album: "The Life of a Showgirl", songs: ["The Fate of Ophelia", "Opalite", "The Life of a Showgirl"], spotify: "https://open.spotify.com/album/4a6NzYL1YHRUgx9e3YZI6I?si=rY_qF7bdRpG8OkoJXvuTrA" },
   { date: "2025-08-29", weight: 1, artist: "Sabrina Carpenter", album: "Man's Best Friend",      spotify: "https://open.spotify.com/album/1aqg30bNvLSWgShZgX4oop?si=eSYOjR3PR1Gj123aclcQ5Q" },
+  { date: "2025-08-22", weight: -1, artist: "Ava Max",          album: "Don't Click Play",       spotify: "https://open.spotify.com/album/48fwvNa8p0qrqO5RKEnOTI?si=SnpF9pCMRrWWBEGNbQB3-g" },
+  { date: "2025-01-05", weight: -1, artist: "Bad Bunny",        album: "DeBÍ TiRAR MáS FOToS",   spotify: "https://open.spotify.com/album/5K79FLRUCSysQnVESLcTdb?si=-7Fdwy8cTWiMZ2qDBn-2nw" },
+  { date: "2025-03-20", weight: -1, artist: "BESS",             album: "ULTRAVIOLETTI",           spotify: "https://open.spotify.com/album/0v7kaOJYUoOnNxaNlzOnEb?si=LfTtt9oQQ36zjYRq3933GQ" },
+  { date: "2025-03-07", weight: -1, artist: "Coma_Cose",        album: "VITA_FUSA",               spotify: "https://open.spotify.com/album/7lUQ8zSvRJwgC77Pb3St5Z?si=n8RPDbmMT2uop4FXvCSy1w" },
+  { date: "2025-06-06", weight: -1, artist: "Cynthia Erivo",    album: "I Forgive You",           spotify: "https://open.spotify.com/album/4FpWxfojxH2a3S5OBrMYoj?si=e-n4YQRESJmBYkomU87Khg" },
 
   { date: "2024-07-12", rank:  1, weight: 5, artist: "Griff",            album: "Vertigo",                                songs: ["Miss Me Too", "Anything", "Cycles"],                                spotify: "https://open.spotify.com/album/3VA9PnquCzG4E2GHgBzFQE?si=7YZScpvOQsubu9yguUKmiA" },
   { date: "2024-05-03", rank:  2, weight: 5, artist: "Rachel Chinouriri", album: "What A Devastating Turn of Events",     songs: ["Garden of Eden", "The Hills", "Never Need Me"],                     spotify: "https://open.spotify.com/album/1Td1oiZTQFYR7N1QX00uhr?si=BNrf8j4ASACXMG33X0jSxQ" },

@@ -241,6 +241,7 @@
     <input class="filter-input" type="text" id="text-filter" placeholder="Filter artist or album…" />
     <select class="filter-input" id="weight-filter">
       <option value="">All weights</option>
+      <option value="-1">Weight -1</option>
       <option value="5">Weight 5</option>
       <option value="4">Weight 4</option>
       <option value="3">Weight 3</option>
@@ -545,7 +546,7 @@ function renderTable() {
     const k       = albumKey(a);
     const w       = currentWeights[k] ?? a.weight;
     const isChg   = changed.has(k);
-    const options = [0,1,2,3,4,5].map(n =>
+    const options = [-1,0,1,2,3,4,5].map(n =>
       `<option value="${n}"${n === w ? ' selected' : ''}>${n}</option>`
     ).join('');
     return `<tr class="${isChg ? 'changed' : ''}" data-key="${esc(k)}">
