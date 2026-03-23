@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Weights</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:           #f3f1f8;
+      --surface:      #faf9fd;
+      --surface2:     #f0eef6;
+      --border:       rgba(80,60,120,0.1);
+      --border-hover: rgba(80,60,120,0.28);
+      --text:         #1a1624;
+      --muted:        #6b6278;
+      --faint:        #b0a8be;
+      --accent:       #7c5cbf;
+      --slab: 'Alfa Slab One', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --mono: 'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    .page { max-width: 1100px; margin: 0 auto; padding: 64px 5vw 120px; }
+
+    .page-title {
+      font-family: var(--slab);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.05;
+      margin-bottom: 6px;
+    }
+
+    .back-link {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      color: var(--faint);
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 28px;
+    }
+    .back-link:hover { color: var(--muted); }
+
+    /* ── Token bar ── */
+    .token-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .token-status {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      flex: 1;
+      min-width: 180px;
+    }
+    .token-status.ok  { color: #5a9e6f; }
+    .token-status.err { color: #c0614a; }
+
+    .token-input {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      width: 260px;
+    }
+    .token-input:focus { outline: none; border-color: var(--border-hover); }
+
+    /* ── Buttons ── */
+    .btn {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--text);
+      background: var(--text);
+      color: var(--bg);
+      cursor: pointer;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .btn:hover { opacity: 0.75; }
+    .btn:disabled { opacity: 0.3; cursor: default; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border-color: var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--border-hover); color: var(--text); opacity: 1; }
+
+    .btn-save {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .filter-input {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      background: var(--surface);
+      color: var(--text);
+      transition: border-color 0.12s;
+    }
+    .filter-input:focus { outline: none; border-color: var(--border-hover); }
+
+    #text-filter { width: 220px; }
+    #weight-filter { width: auto; appearance: none; cursor: pointer; }
+
+    .change-count {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-left: auto;
+    }
+    .change-count.has-changes { color: var(--accent); font-weight: 500; }
+
+    /* ── Table ── */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    th {
+      text-align: left;
+      font-weight: 400;
+      color: var(--faint);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 14px;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    th:hover { color: var(--muted); }
+    th.sort-asc::after  { content: ' ↑'; }
+    th.sort-desc::after { content: ' ↓'; }
+
+    td {
+      padding: 6px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr.changed td:first-child { border-left: 2px solid var(--accent); }
+
+    .weight-select {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .weight-select.changed {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .flag {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--surface2);
+      color: var(--faint);
+    }
+
+    /* ── Status bar ── */
+    .status-bar {
+      margin-top: 16px;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--faint);
+      min-height: 1.4em;
+    }
+    .status-bar.ok  { color: #5a9e6f; }
+    .status-bar.err { color: #c0614a; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <a class="back-link" href="index.html">← Back to recommendations</a>
+  <h1 class="page-title">Edit Weights</h1>
+
+  <!-- Token bar -->
+  <div class="token-bar">
+    <span class="token-status" id="token-status">No token loaded</span>
+    <input class="token-input" type="password" id="token-input" placeholder="Paste GitHub Personal Access Token…" />
+    <button class="btn" id="btn-token-save">Save token</button>
+    <button class="btn btn-ghost" id="btn-token-forget">Forget</button>
+    <button class="btn btn-ghost" id="btn-load">Load albums</button>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <input class="filter-input" type="text" id="text-filter" placeholder="Filter artist or album…" />
+    <select class="filter-input" id="weight-filter">
+      <option value="">All weights</option>
+      <option value="5">Weight 5</option>
+      <option value="4">Weight 4</option>
+      <option value="3">Weight 3</option>
+      <option value="2">Weight 2</option>
+      <option value="1">Weight 1</option>
+      <option value="0">Weight 0</option>
+    </select>
+    <button class="btn btn-ghost" id="btn-reset" disabled>Reset changes</button>
+    <span class="change-count" id="change-count">No changes</span>
+    <button class="btn btn-save" id="btn-save" disabled>↑ Commit to GitHub</button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table id="main-table">
+      <thead>
+        <tr>
+          <th data-col="date">Date</th>
+          <th data-col="artist">Artist</th>
+          <th data-col="album">Album</th>
+          <th data-col="weight">Weight</th>
+          <th data-col="rank">Rank</th>
+          <th data-col="flags">Flags</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <tr><td colspan="6" style="color:var(--faint);padding:24px 14px;">Load albums to begin.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="status-bar" id="status-bar"></div>
+
+</div>
+<script>
+const REPO      = 'ConorCollins04/ConorCollins04.github.io';
+const FILE_PATH = 'album-recommendations/albums.js';
+const LS_KEY    = 'gh_pat_album_editor';
+
+let albums          = [];
+let originalWeights = {};   // albumKey -> original weight
+let currentWeights  = {};   // albumKey -> current weight
+let rawContent      = '';   // raw JS file text
+let fileSha         = '';   // GitHub file SHA (required for PUT)
+
+let sortState   = { col: 'date', dir: -1 };
+let filterText  = '';
+let filterWeight = '';
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+function albumKey(a) { return a.artist + '|||' + a.album; }
+
+function esc(str) {
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function b64decode(b64) {
+  const binary = atob(b64.replace(/\n/g, ''));
+  const bytes  = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+
+function b64encode(str) {
+  const bytes = new TextEncoder().encode(str);
+  let binary  = '';
+  for (const b of bytes) binary += String.fromCharCode(b);
+  return btoa(binary);
+}
+
+// ── Token UI ─────────────────────────────────────────────────────────────────
+
+function getToken() { return localStorage.getItem(LS_KEY) || ''; }
+
+function refreshTokenUI() {
+  const token = getToken();
+  const statusEl = document.getElementById('token-status');
+  const inputEl  = document.getElementById('token-input');
+  if (token) {
+    statusEl.textContent  = 'Token loaded (' + token.slice(0, 10) + '…)';
+    statusEl.className    = 'token-status ok';
+    inputEl.value         = '';
+    inputEl.placeholder   = 'Token saved — paste new one to replace';
+  } else {
+    statusEl.textContent  = 'No token — paste your GitHub PAT';
+    statusEl.className    = 'token-status err';
+    inputEl.placeholder   = 'Paste GitHub Personal Access Token…';
+  }
+}
+
+document.getElementById('btn-token-save').addEventListener('click', () => {
+  const val = document.getElementById('token-input').value.trim();
+  if (!val) return;
+  localStorage.setItem(LS_KEY, val);
+  refreshTokenUI();
+});
+
+document.getElementById('btn-token-forget').addEventListener('click', () => {
+  localStorage.removeItem(LS_KEY);
+  refreshTokenUI();
+});
+
+// ── GitHub API ────────────────────────────────────────────────────────────────
+
+async function fetchAlbums() {
+  const token = getToken();
+  if (!token) { setStatus('No token saved.', 'err'); return; }
+  setStatus('Loading…');
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,
+      { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } }
+    );
+    if (!res.ok) throw new Error(`GitHub API ${res.status}: ${res.statusText}`);
+    const data = await res.json();
+    fileSha    = data.sha;
+    rawContent = b64decode(data.content);
+    parseAndRender();
+    setStatus(`Loaded ${albums.length} albums.`, 'ok');
+  } catch (e) {
+    setStatus(e.message, 'err');
+  }
+}
+
+async function commitChanges() {
+  const token   = getToken();
+  const changed = getChangedKeys();
+  if (!token || !changed.length) return;
+
+  setStatus('Committing…');
+  document.getElementById('btn-save').disabled = true;
+
+  // Apply weight changes line-by-line in the raw source
+  let newContent = rawContent;
+  for (const key of changed) {
+    const idx = key.indexOf('|||');
+    const artist    = key.slice(0, idx);
+    const album     = key.slice(idx + 3);
+    const newWeight = currentWeights[key];
+
+    const lines = newContent.split('\n');
+    let found   = false;
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].includes(`artist: "${artist}"`) && lines[i].includes(`album: "${album}"`)) {
+        lines[i] = lines[i].replace(/\bweight:\s*\d+/, `weight: ${newWeight}`);
+        found    = true;
+        break;
+      }
+    }
+    if (!found) {
+      setStatus(`Could not locate line for: ${artist} — ${album}`, 'err');
+      document.getElementById('btn-save').disabled = false;
+      return;
+    }
+    newContent = lines.join('\n');
+  }
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: `Update album weights (${changed.length} change${changed.length !== 1 ? 's' : ''})`,
+          content: b64encode(newContent),
+          sha:     fileSha
+        })
+      }
+    );
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || res.statusText);
+    }
+    const data = await res.json();
+    fileSha    = data.content.sha;
+    rawContent = newContent;
+    for (const k of changed) originalWeights[k] = currentWeights[k];
+    setStatus(`Committed ${changed.length} change${changed.length !== 1 ? 's' : ''}.`, 'ok');
+    renderTable();
+  } catch (e) {
+    setStatus(`Commit failed: ${e.message}`, 'err');
+    document.getElementById('btn-save').disabled = false;
+  }
+}
+
+// ── Parse ─────────────────────────────────────────────────────────────────────
+
+function parseAndRender() {
+  const fn = new Function(rawContent + '; return typeof ALBUMS !== "undefined" ? ALBUMS : [];');
+  albums = fn();
+  originalWeights = {};
+  currentWeights  = {};
+  for (const a of albums) {
+    const k = albumKey(a);
+    originalWeights[k] = a.weight;
+    currentWeights[k]  = a.weight;
+  }
+  renderTable();
+}
+
+// ── Filter / sort ─────────────────────────────────────────────────────────────
+
+function getVisibleAlbums() {
+  let list = [...albums];
+  if (filterText) {
+    const q = filterText.toLowerCase();
+    list = list.filter(a => a.artist.toLowerCase().includes(q) || a.album.toLowerCase().includes(q));
+  }
+  if (filterWeight !== '') {
+    list = list.filter(a => currentWeights[albumKey(a)] == filterWeight);
+  }
+  list.sort((a, b) => {
+    const col = sortState.col;
+    let av, bv;
+    if      (col === 'weight') { av = currentWeights[albumKey(a)] ?? 0; bv = currentWeights[albumKey(b)] ?? 0; }
+    else if (col === 'rank')   { av = a.rank ?? 999;                    bv = b.rank ?? 999; }
+    else if (col === 'flags')  { av = a.unlistened ? 1 : 0;             bv = b.unlistened ? 1 : 0; }
+    else                       { av = a[col] ?? '';                     bv = b[col] ?? ''; }
+    return av < bv ? -sortState.dir : av > bv ? sortState.dir : 0;
+  });
+  return list;
+}
+
+function getChangedKeys() {
+  return Object.keys(currentWeights).filter(k => currentWeights[k] !== originalWeights[k]);
+}
+
+// ── Render ───────────────────────────────────────────────────────────────��────
+
+function renderTable() {
+  const list    = getVisibleAlbums();
+  const changed = new Set(getChangedKeys());
+  const tbody   = document.getElementById('table-body');
+
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="6" style="color:var(--faint);padding:24px 14px;">No albums match.</td></tr>`;
+    updateControls();
+    return;
+  }
+
+  tbody.innerHTML = list.map(a => {
+    const k       = albumKey(a);
+    const w       = currentWeights[k] ?? a.weight;
+    const isChg   = changed.has(k);
+    const options = [0,1,2,3,4,5].map(n =>
+      `<option value="${n}"${n === w ? ' selected' : ''}>${n}</option>`
+    ).join('');
+    return `<tr class="${isChg ? 'changed' : ''}" data-key="${esc(k)}">
+      <td>${a.date ?? '—'}</td>
+      <td>${esc(a.artist)}</td>
+      <td>${esc(a.album)}</td>
+      <td><select class="weight-select${isChg ? ' changed' : ''}" data-key="${esc(k)}">${options}</select></td>
+      <td>${a.rank != null ? '#' + a.rank : '—'}</td>
+      <td>${a.unlistened ? '<span class="flag">unlistened</span>' : ''}</td>
+    </tr>`;
+  }).join('');
+
+  tbody.querySelectorAll('.weight-select').forEach(sel => {
+    sel.addEventListener('change', e => {
+      const k = e.target.dataset.key;
+      currentWeights[k] = parseInt(e.target.value, 10);
+      const isChg = currentWeights[k] !== originalWeights[k];
+      e.target.closest('tr').classList.toggle('changed', isChg);
+      e.target.classList.toggle('changed', isChg);
+      updateControls();
+    });
+  });
+
+  document.querySelectorAll('th[data-col]').forEach(th => {
+    th.classList.remove('sort-asc', 'sort-desc');
+    if (th.dataset.col === sortState.col)
+      th.classList.add(sortState.dir === 1 ? 'sort-asc' : 'sort-desc');
+  });
+
+  updateControls();
+}
+
+function updateControls() {
+  const n       = getChangedKeys().length;
+  const countEl = document.getElementById('change-count');
+  countEl.textContent = n ? `${n} change${n !== 1 ? 's' : ''}` : 'No changes';
+  countEl.className   = 'change-count' + (n ? ' has-changes' : '');
+  document.getElementById('btn-save').disabled  = n === 0;
+  document.getElementById('btn-reset').disabled = n === 0;
+}
+
+function setStatus(msg, type) {
+  const el = document.getElementById('status-bar');
+  el.textContent = msg;
+  el.className   = 'status-bar' + (type ? ' ' + type : '');
+}
+
+// ── Event wiring ──────────────────────────────────────────────────────────────
+
+document.getElementById('btn-load').addEventListener('click', fetchAlbums);
+
+document.getElementById('btn-save').addEventListener('click', commitChanges);
+
+document.getElementById('btn-reset').addEventListener('click', () => {
+  for (const k of Object.keys(currentWeights)) currentWeights[k] = originalWeights[k];
+  renderTable();
+});
+
+document.getElementById('text-filter').addEventListener('input', e => {
+  filterText = e.target.value;
+  renderTable();
+});
+
+document.getElementById('weight-filter').addEventListener('change', e => {
+  filterWeight = e.target.value;
+  renderTable();
+});
+
+document.querySelectorAll('th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    if (sortState.col === th.dataset.col) sortState.dir *= -1;
+    else sortState = { col: th.dataset.col, dir: 1 };
+    renderTable();
+  });
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+
+refreshTokenUI();
+</script>
+</body>
+</html>
