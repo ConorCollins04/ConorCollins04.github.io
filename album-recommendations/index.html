@@ -393,10 +393,12 @@
   function freshnessMultiplier(a) {
     const now = Date.now() / 1000;
     const lp = lastPlayedTs(a) ?? 0;
-    if (lp > now - 7   * 24 * 60 * 60) return 0;
-    if (lp > now - 90  * 24 * 60 * 60) return 0.25;
-    if (lp > now - 180 * 24 * 60 * 60) return 0.5;
-    return 1;
+    if (lp > now - 14  * 24 * 60 * 60) return 0;    //   0–14d:  just listened
+    if (lp > now - 60  * 24 * 60 * 60) return 0.15;  //  14–60d:  very recent
+    if (lp > now - 180 * 24 * 60 * 60) return 0.4;   //  60–180d: recent
+    if (lp > now - 365 * 24 * 60 * 60) return 0.65;  // 180d–1yr: heard last year
+    if (lp > now - 730 * 24 * 60 * 60) return 0.85;  //  1yr–2yr: a while back
+    return 1;                                          //     2yr+: full weight
   }
 
   function effectiveWeight(a) {
