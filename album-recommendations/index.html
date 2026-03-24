@@ -378,7 +378,12 @@
   }
 
   function lastPlayedTs(a) {
-    const key = normaliseKey(a.cacheKey || (a.artist + '|||' + a.album));
+    let key;
+    if (a.artist === 'Various Artists') {
+      key = '|||' + normaliseKey(a.album);
+    } else {
+      key = normaliseKey(a.cacheKey || (a.artist + '|||' + a.album));
+    }
     return cache[key];
   }
 
