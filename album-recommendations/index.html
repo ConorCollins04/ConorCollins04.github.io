@@ -303,7 +303,7 @@
     <summary class="diag-summary">All albums &nbsp;·&nbsp; <a href="edit-weights.html" style="color:inherit;text-decoration:none;opacity:0.6" title="Edit weights">edit weights ↗</a></summary>
     <table class="diag-table">
       <thead>
-        <tr><th data-col="date">Date</th><th data-col="artist">Artist</th><th data-col="album">Album</th><th data-col="weight">Weight</th><th data-col="effectiveWeight">Effective</th><th data-col="flags">Flags</th><th data-col="lastPlayed">Last Played</th></tr>
+        <tr><th data-col="date">Date</th><th data-col="artist">Artist</th><th data-col="album">Album</th><th data-col="weight">Weight</th><th data-col="effectiveWeight">Effective</th><th data-col="flags">Flags</th><th data-col="lastPlayed">Last Played</th><th data-col="scrobbles">Scrobbles</th></tr>
       </thead>
       <tbody id="diag-body"></tbody>
     </table>
@@ -377,7 +377,7 @@
     return str.toLowerCase().replace(/[\u2018\u2019]/g, "'");
   }
 
-  function lastPlayedTs(a) {
+  function cacheEntry(a) {
     let key;
     if (a.artist === 'Various Artists') {
       key = '|||' + normaliseKey(a.album);
@@ -386,6 +386,9 @@
     }
     return cache[key];
   }
+
+  function lastPlayedTs(a)   { const e = cacheEntry(a); return e ? e[0] : undefined; }
+  function scrobbleCount(a)  { const e = cacheEntry(a); return e ? e[1] : 0; }
 
   function freshnessMultiplier(a) {
     const now = Date.now() / 1000;
@@ -469,11 +472,13 @@
              : col === 'date'            ? (a.date ?? '')
              : col === 'lastPlayed'      ? (lastPlayedTs(a) ?? 0)
              : col === 'effectiveWeight' ? effectiveWeight(a)
+             : col === 'scrobbles'       ? scrobbleCount(a)
              : (a[col] ?? '');
       let bv = col === 'flags'           ? (b.unlistened ? 'unlistened' : '')
              : col === 'date'            ? (b.date ?? '')
              : col === 'lastPlayed'      ? (lastPlayedTs(b) ?? 0)
              : col === 'effectiveWeight' ? effectiveWeight(b)
+             : col === 'scrobbles'       ? scrobbleCount(b)
              : (b[col] ?? '');
       if (av < bv) return -diagSort.dir;
       if (av > bv) return  diagSort.dir;
@@ -486,6 +491,7 @@
       const lpDisplay = lp ? formatDate(new Date(lp * 1000).toISOString().slice(0, 10)) : '—';
       const ew = effectiveWeight(a);
       const ewDisplay = Number.isInteger(ew) ? ew : ew.toFixed(2);
+      const sc = scrobbleCount(a);
       return `<tr>
         <td>${a.date ?? '—'}</td>
         <td>${a.artist}</td>
@@ -494,6 +500,7 @@
         <td>${ewDisplay}</td>
         <td>${flags}</td>
         <td>${lpDisplay}</td>
+        <td>${sc || '—'}</td>
       </tr>`;
     }).join('');
 

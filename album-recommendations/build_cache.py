@@ -67,26 +67,42 @@ def build():
         if run_count == 5:
             last_played[key] = ts
 
-    # Merge aliases: fold variant keys into canonical, keeping most recent timestamp
+    # Count all scrobbles per key (no consecutiveness requirement)
+    counts = {}
+    for s in scrobbles:
+        artist = s.get("artist", "").strip()
+        album  = s.get("album",  "").strip()
+        if not artist or not album:
+            continue
+        norm_album = normalize(album)
+        if norm_album in va_albums:
+            key = "|||" + norm_album
+        else:
+            key = normalize(artist) + "|||" + norm_album
+        counts[key] = counts.get(key, 0) + 1
+
+    # Merge aliases: fold variant keys into canonical, keeping most recent timestamp and summing counts
     if os.path.exists(ALIASES_FILE):
         with open(ALIASES_FILE) as f:
             aliases = json.load(f)
         for entry in aliases:
-            artist       = normalize(entry["artist"])
+            artist        = normalize(entry["artist"])
             canonical_key = artist + "|||" + normalize(entry["canonical"])
-            timestamps   = []
+            timestamps    = []
             if canonical_key in last_played:
                 timestamps.append(last_played[canonical_key])
             for alias in entry["aliases"]:
                 alias_key = artist + "|||" + normalize(alias)
                 if alias_key in last_played:
                     timestamps.append(last_played.pop(alias_key))
+                if alias_key in counts:
+                    counts[canonical_key] = counts.get(canonical_key, 0) + counts.pop(alias_key)
             if timestamps:
                 last_played[canonical_key] = max(timestamps)
 
-    # Write JS file
+    # Write JS file — each entry is [timestamp, scrobble_count]
     entries = ",\n  ".join(
-        f'"{k.replace(chr(34), chr(92)+chr(34))}": {v}'
+        f'"{k.replace(chr(34), chr(92)+chr(34))}": [{v},{counts.get(k, 0)}]'
         for k, v in sorted(last_played.items())
     )
 
