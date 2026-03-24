@@ -309,6 +309,7 @@
       const byArtist = {};
       allAlbums.forEach(a => {
         const key = a.artist.toLowerCase();
+        if (key === 'various artists') return;
         if (!byArtist[key]) byArtist[key] = [];
         byArtist[key].push(a);
       });
