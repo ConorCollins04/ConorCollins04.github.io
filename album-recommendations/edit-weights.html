@@ -265,7 +265,7 @@
           <th data-col="album">Album</th>
           <th data-col="weight">Weight</th>
           <th data-col="lastPlayed">Last Played</th>
-          <th data-col="listened">Listened</th>
+          <th data-col="scrobbles">Scrobbles</th>
         </tr>
       </thead>
       <tbody id="table-body">
@@ -282,14 +282,12 @@ const REPO      = 'ConorCollins04/ConorCollins04.github.io';
 const FILE_PATH = 'album-recommendations/albums.js';
 const LS_KEY    = 'gh_pat_album_editor';
 
-let albums           = [];
-let originalWeights  = {};   // albumKey -> original weight
-let currentWeights   = {};   // albumKey -> current weight
-let originalListened = {};   // albumKey -> bool (true = listened)
-let currentListened  = {};   // albumKey -> bool
-let rawContent       = '';   // raw JS file text
-let fileSha          = '';   // GitHub file SHA (required for PUT)
-let cache            = {};   // Last.fm cache: normalised key -> unix timestamp
+let albums          = [];
+let originalWeights = {};   // albumKey -> original weight
+let currentWeights  = {};   // albumKey -> current weight
+let rawContent      = '';   // raw JS file text
+let fileSha         = '';   // GitHub file SHA (required for PUT)
+let cache           = {};   // Last.fm cache: normalised key -> [unix timestamp, scrobble count]
 
 let sortState   = { col: 'date', dir: -1 };
 let filterText  = '';
@@ -312,10 +310,15 @@ function coverSrc(a) {
 
 function normaliseKey(str) { return str.toLowerCase().replace(/[\u2018\u2019]/g, "'"); }
 
-function lastPlayedTs(a) {
-  const key = normaliseKey(a.cacheKey || (a.artist + '|||' + a.album));
+function cacheEntry(a) {
+  const key = a.artist === 'Various Artists'
+    ? '|||' + normaliseKey(a.album)
+    : normaliseKey(a.cacheKey || (a.artist + '|||' + a.album));
   return cache[key];
 }
+
+function lastPlayedTs(a)  { const e = cacheEntry(a); return e ? e[0] : undefined; }
+function scrobbleCount(a) { const e = cacheEntry(a); return e ? e[1] : 0; }
 
 function formatDate(dateStr) {
   const d = new Date(dateStr);
@@ -424,15 +427,6 @@ async function commitChanges() {
         if (currentWeights[key] !== originalWeights[key]) {
           lines[i] = lines[i].replace(/\bweight:\s*-?\d+/, `weight: ${currentWeights[key]}`);
         }
-        if (currentListened[key] !== originalListened[key]) {
-          if (!currentListened[key]) {
-            // Marking as unlistened — add unlistened: true before closing brace
-            lines[i] = lines[i].replace(/(},?\s*)$/, ', unlistened: true$1');
-          } else {
-            // Marking as listened — remove unlistened: true
-            lines[i] = lines[i].replace(/,\s*unlistened:\s*true|unlistened:\s*true,?\s*/, '');
-          }
-        }
         found = true;
         break;
       }
@@ -470,8 +464,7 @@ async function commitChanges() {
     fileSha    = data.content.sha;
     rawContent = newContent;
     for (const k of changed) {
-      originalWeights[k]  = currentWeights[k];
-      originalListened[k] = currentListened[k];
+      originalWeights[k] = currentWeights[k];
     }
     setStatus(`Committed ${changed.length} change${changed.length !== 1 ? 's' : ''}.`, 'ok');
     renderTable();
@@ -486,16 +479,12 @@ async function commitChanges() {
 function parseAndRender() {
   const fn = new Function(rawContent + '; return typeof ALBUMS !== "undefined" ? ALBUMS : [];');
   albums = fn();
-  originalWeights  = {};
-  currentWeights   = {};
-  originalListened = {};
-  currentListened  = {};
+  originalWeights = {};
+  currentWeights  = {};
   for (const a of albums) {
     const k = albumKey(a);
-    originalWeights[k]  = a.weight;
-    currentWeights[k]   = a.weight;
-    originalListened[k] = !a.unlistened;
-    currentListened[k]  = !a.unlistened;
+    originalWeights[k] = a.weight;
+    currentWeights[k]  = a.weight;
   }
   renderTable();
 }
@@ -514,19 +503,17 @@ function getVisibleAlbums() {
   list.sort((a, b) => {
     const col = sortState.col;
     let av, bv;
-    if      (col === 'weight') { av = currentWeights[albumKey(a)] ?? 0; bv = currentWeights[albumKey(b)] ?? 0; }
-    else if (col === 'lastPlayed') { av = lastPlayedTs(a) ?? 0; bv = lastPlayedTs(b) ?? 0; }
-    else if (col === 'listened')   { av = currentListened[albumKey(a)] ? 1 : 0; bv = currentListened[albumKey(b)] ? 1 : 0; }
-    else                       { av = a[col] ?? '';                     bv = b[col] ?? ''; }
+    if      (col === 'weight')    { av = currentWeights[albumKey(a)] ?? 0; bv = currentWeights[albumKey(b)] ?? 0; }
+    else if (col === 'lastPlayed') { av = lastPlayedTs(a) ?? 0;  bv = lastPlayedTs(b) ?? 0; }
+    else if (col === 'scrobbles')  { av = scrobbleCount(a);       bv = scrobbleCount(b); }
+    else                           { av = a[col] ?? '';           bv = b[col] ?? ''; }
     return av < bv ? -sortState.dir : av > bv ? sortState.dir : 0;
   });
   return list;
 }
 
 function getChangedKeys() {
-  return Object.keys(currentWeights).filter(k =>
-    currentWeights[k] !== originalWeights[k] || currentListened[k] !== originalListened[k]
-  );
+  return Object.keys(currentWeights).filter(k => currentWeights[k] !== originalWeights[k]);
 }
 
 // ── Render ───────────────────────────────────────────────────────────────��────
@@ -556,7 +543,7 @@ function renderTable() {
       <td>${esc(a.album)}</td>
       <td><select class="weight-select${isChg ? ' changed' : ''}" data-key="${esc(k)}">${options}</select></td>
       <td>${(() => { const lp = lastPlayedTs(a); return lp ? formatDate(new Date(lp * 1000).toISOString().slice(0, 10)) : '—'; })()}</td>
-      <td><input type="checkbox" class="listened-cb"${currentListened[k] ? ' checked' : ''} data-key="${esc(k)}" /></td>
+      <td>${scrobbleCount(a) || '—'}</td>
     </tr>`;
   }).join('');
 
@@ -564,19 +551,9 @@ function renderTable() {
     sel.addEventListener('change', e => {
       const k = e.target.dataset.key;
       currentWeights[k] = parseInt(e.target.value, 10);
-      const isChg = currentWeights[k] !== originalWeights[k] || currentListened[k] !== originalListened[k];
+      const isChg = currentWeights[k] !== originalWeights[k];
       e.target.closest('tr').classList.toggle('changed', isChg);
       e.target.classList.toggle('changed', isChg);
-      updateControls();
-    });
-  });
-
-  tbody.querySelectorAll('.listened-cb').forEach(cb => {
-    cb.addEventListener('change', e => {
-      const k = e.target.dataset.key;
-      currentListened[k] = e.target.checked;
-      const isChg = currentWeights[k] !== originalWeights[k] || currentListened[k] !== originalListened[k];
-      e.target.closest('tr').classList.toggle('changed', isChg);
       updateControls();
     });
   });
@@ -612,8 +589,7 @@ document.getElementById('btn-load').addEventListener('click', fetchAlbums);
 document.getElementById('btn-save').addEventListener('click', commitChanges);
 
 document.getElementById('btn-reset').addEventListener('click', () => {
-  for (const k of Object.keys(currentWeights))  currentWeights[k]  = originalWeights[k];
-  for (const k of Object.keys(currentListened)) currentListened[k] = originalListened[k];
+  for (const k of Object.keys(currentWeights)) currentWeights[k] = originalWeights[k];
   renderTable();
 });
 
