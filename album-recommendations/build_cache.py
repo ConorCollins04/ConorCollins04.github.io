@@ -5,6 +5,7 @@ import re
 SCRIPT_DIR     = os.path.dirname(os.path.abspath(__file__))
 SCROBBLES_FILE = os.path.join(SCRIPT_DIR, "scrobbles.json")
 ALBUMS_FILE    = os.path.join(SCRIPT_DIR, "albums.js")
+ALIASES_FILE   = os.path.join(SCRIPT_DIR, "album-aliases.json")
 CACHE_FILE     = os.path.join(SCRIPT_DIR, "lastfm-cache.js")
 
 
@@ -65,6 +66,23 @@ def build():
             run_count = 1
         if run_count == 5:
             last_played[key] = ts
+
+    # Merge aliases: fold variant keys into canonical, keeping most recent timestamp
+    if os.path.exists(ALIASES_FILE):
+        with open(ALIASES_FILE) as f:
+            aliases = json.load(f)
+        for entry in aliases:
+            artist       = normalize(entry["artist"])
+            canonical_key = artist + "|||" + normalize(entry["canonical"])
+            timestamps   = []
+            if canonical_key in last_played:
+                timestamps.append(last_played[canonical_key])
+            for alias in entry["aliases"]:
+                alias_key = artist + "|||" + normalize(alias)
+                if alias_key in last_played:
+                    timestamps.append(last_played.pop(alias_key))
+            if timestamps:
+                last_played[canonical_key] = max(timestamps)
 
     # Write JS file
     entries = ",\n  ".join(

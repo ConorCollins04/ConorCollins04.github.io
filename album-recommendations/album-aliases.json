@@ -1,0 +1,447 @@
+[
+  {
+    "artist": "Alanis Morissette",
+    "canonical": "Jagged Little Pill",
+    "aliases": ["Jagged Little Pill (2015 Remaster)"]
+  },
+  {
+    "artist": "Aly & AJ",
+    "canonical": "A Touch of the Beat Gets You Up on Your Feet Gets You Out and Then Into the Sun",
+    "aliases": ["A Touch of the Beat Gets You Up on Your Feet Gets You Out and Then Into the Sun (Deluxe)"]
+  },
+  {
+    "artist": "Amy Winehouse",
+    "canonical": "Back to Black",
+    "aliases": ["Back to Black (Deluxe Edition)"]
+  },
+  {
+    "artist": "Anne-Marie",
+    "canonical": "Speak Your Mind",
+    "aliases": ["Speak Your Mind (Deluxe)"]
+  },
+  {
+    "artist": "AURORA",
+    "canonical": "All My Demons Greeting Me as a Friend",
+    "aliases": ["All My Demons Greeting Me as a Friend (Deluxe)"]
+  },
+  {
+    "artist": "Avril Lavigne",
+    "canonical": "The Best Damn Thing",
+    "aliases": ["The Best Damn Thing (Expanded Edition)"]
+  },
+  {
+    "artist": "Baby Queen",
+    "canonical": "Quarter Life Crisis",
+    "aliases": ["Quarter Life Crisis (Deluxe)"]
+  },
+  {
+    "artist": "Beyoncé",
+    "canonical": "Beyoncé",
+    "aliases": ["Beyoncé [Platinum Edition]"]
+  },
+  {
+    "artist": "Bilal Hassani",
+    "canonical": "Kingdom",
+    "aliases": ["Kingdom (Rééditon)"]
+  },
+  {
+    "artist": "Blondie",
+    "canonical": "Parallel Lines",
+    "aliases": ["Parallel Lines (Remastered)"]
+  },
+  {
+    "artist": "Bridgit Mendler",
+    "canonical": "Hello My Name Is...",
+    "aliases": ["Hello My Name Is... (Deluxe)"]
+  },
+  {
+    "artist": "Britney Spears",
+    "canonical": "...Baby One More Time",
+    "aliases": ["...Baby One More Time (Digital Deluxe Version)"]
+  },
+  {
+    "artist": "Britney Spears",
+    "canonical": "Britney",
+    "aliases": ["Britney (Digital Deluxe Version)"]
+  },
+  {
+    "artist": "Britney Spears",
+    "canonical": "Britney Jean",
+    "aliases": ["Britney Jean (Deluxe Version)"]
+  },
+  {
+    "artist": "Britney Spears",
+    "canonical": "Circus",
+    "aliases": ["Circus (Deluxe Version)"]
+  },
+  {
+    "artist": "Britney Spears",
+    "canonical": "Femme Fatale",
+    "aliases": ["Femme Fatale (Deluxe Version)"]
+  },
+  {
+    "artist": "Britney Spears",
+    "canonical": "Glory",
+    "aliases": ["Glory (Deluxe)"]
+  },
+  {
+    "artist": "Carly Rae Jepsen",
+    "canonical": "Emotion",
+    "aliases": ["Emotion (Deluxe)"]
+  },
+  {
+    "artist": "Charli xcx",
+    "canonical": "CRASH",
+    "aliases": ["Crash (Deluxe)"]
+  },
+  {
+    "artist": "Chloe x Halle",
+    "canonical": "Ungodly Hour",
+    "aliases": ["Ungodly Hour (Chrome Edition)"]
+  },
+  {
+    "artist": "CHVRCHES",
+    "canonical": "The Bones of What You Believe",
+    "aliases": ["The Bones of What You Believe (Special Edition)"]
+  },
+  {
+    "artist": "Demi Lovato",
+    "canonical": "Dancing with the Devil\u2026the Art of Starting Over",
+    "aliases": ["Dancing with the Devil\u2026the Art of Starting Over (Expanded Edition)"]
+  },
+  {
+    "artist": "Doja Cat",
+    "canonical": "Planet Her",
+    "aliases": ["Planet Her (Deluxe)"]
+  },
+  {
+    "artist": "Dua Lipa",
+    "canonical": "Dua Lipa",
+    "aliases": ["Dua Lipa (Complete Edition)", "Dua Lipa (Deluxe)"]
+  },
+  {
+    "artist": "Dua Lipa",
+    "canonical": "Future Nostalgia",
+    "aliases": ["Future Nostalgia (The Moonlight Edition)"]
+  },
+  {
+    "artist": "Ed Sheeran",
+    "canonical": "-",
+    "aliases": ["- (Deluxe)"]
+  },
+  {
+    "artist": "Ed Sheeran",
+    "canonical": "x",
+    "aliases": ["x (Deluxe Edition)"]
+  },
+  {
+    "artist": "Ellie Goulding",
+    "canonical": "Higher Than Heaven",
+    "aliases": ["Higher Than Heaven (Deluxe)"]
+  },
+  {
+    "artist": "Fifth Harmony",
+    "canonical": "Reflection",
+    "aliases": ["Reflection (Deluxe)"]
+  },
+  {
+    "artist": "Fiona Apple",
+    "canonical": "The Idler Wheel Is Wiser Than the Driver of the Screw and Whipping Cords Will Serve You More Than Ropes Will Ever Do",
+    "aliases": ["The Idler Wheel Is Wiser Than the Driver of the Screw and Whipping Cords Will Serve You More Than Ropes Will Ever Do (Expanded Edition)"]
+  },
+  {
+    "artist": "FLETCHER",
+    "canonical": "Girl of My Dreams",
+    "aliases": ["Girl of My Dreams (Deluxe)"]
+  },
+  {
+    "artist": "Florence + the Machine",
+    "canonical": "Lungs",
+    "aliases": ["Lungs (Deluxe Edition)"]
+  },
+  {
+    "artist": "Frankie Grande",
+    "canonical": "Hotel Rock Bottom",
+    "aliases": ["Hotel Rock Bottom (Deluxe)"]
+  },
+  {
+    "artist": "Halsey",
+    "canonical": "BADLANDS",
+    "aliases": ["BADLANDS (Deluxe)"]
+  },
+  {
+    "artist": "Halsey",
+    "canonical": "hopeless fountain kingdom",
+    "aliases": ["hopeless fountain kingdom (Deluxe)"]
+  },
+  {
+    "artist": "JADE",
+    "canonical": "THAT'S SHOWBIZ BABY!",
+    "aliases": ["That's Showbiz Baby! The Encore"]
+  },
+  {
+    "artist": "Jessie J",
+    "canonical": "Sweet Talker",
+    "aliases": ["Sweet Talker (Deluxe Version)"]
+  },
+  {
+    "artist": "Jessie Ware",
+    "canonical": "What's Your Pleasure?",
+    "aliases": ["What's Your Pleasure? (The Platinum Pleasure Edition)"]
+  },
+  {
+    "artist": "Katy Perry",
+    "canonical": "PRISM",
+    "aliases": ["PRISM (Deluxe)"]
+  },
+  {
+    "artist": "Katy Perry",
+    "canonical": "Witness",
+    "aliases": ["Witness (Deluxe)"]
+  },
+  {
+    "artist": "Ke$ha",
+    "canonical": "Animal",
+    "aliases": ["Animal (Expanded Edition)"]
+  },
+  {
+    "artist": "Kylie Minogue",
+    "canonical": "DISCO",
+    "aliases": ["DISCO (Deluxe)"]
+  },
+  {
+    "artist": "Kylie Minogue",
+    "canonical": "Tension",
+    "aliases": ["Tension (Deluxe)"]
+  },
+  {
+    "artist": "Lady Gaga",
+    "canonical": "Born This Way",
+    "aliases": ["Born This Way (International Special Edition Version)", "Born This Way The Tenth Anniversary"]
+  },
+  {
+    "artist": "Lady Gaga",
+    "canonical": "Joanne",
+    "aliases": ["Joanne (Deluxe)"]
+  },
+  {
+    "artist": "Lady Gaga",
+    "canonical": "The Fame Monster",
+    "aliases": ["The Fame Monster (Deluxe Edition)"]
+  },
+  {
+    "artist": "Lana Del Rey",
+    "canonical": "Ultraviolence",
+    "aliases": ["Ultraviolence (Deluxe)"]
+  },
+  {
+    "artist": "Lena",
+    "canonical": "Only Love, L",
+    "aliases": ["Only Love, L (More Love Edition)"]
+  },
+  {
+    "artist": "Little Mix",
+    "canonical": "Between Us",
+    "aliases": ["Between Us (Deluxe Version)"]
+  },
+  {
+    "artist": "Little Mix",
+    "canonical": "Get Weird",
+    "aliases": ["Get Weird (Deluxe)"]
+  },
+  {
+    "artist": "Little Mix",
+    "canonical": "Glory Days",
+    "aliases": ["Glory Days (Deluxe)"]
+  },
+  {
+    "artist": "Little Mix",
+    "canonical": "LM5",
+    "aliases": ["LM5 (Deluxe)"]
+  },
+  {
+    "artist": "Loreen",
+    "canonical": "Heal",
+    "aliases": ["Heal (2013 Edition)"]
+  },
+  {
+    "artist": "Lorde",
+    "canonical": "Solar Power",
+    "aliases": ["Solar Power (Deluxe Edition)"]
+  },
+  {
+    "artist": "Maisie Peters",
+    "canonical": "The Good Witch",
+    "aliases": ["The Good Witch (Deluxe)"]
+  },
+  {
+    "artist": "MARINA",
+    "canonical": "Ancient Dreams in a Modern Land",
+    "aliases": ["Ancient Dreams in a Modern Land (Deluxe Edition)"]
+  },
+  {
+    "artist": "Marina",
+    "canonical": "Electra Heart",
+    "aliases": ["Electra Heart (Deluxe)"]
+  },
+  {
+    "artist": "Meghan Trainor",
+    "canonical": "Title",
+    "aliases": ["Title (Deluxe)"]
+  },
+  {
+    "artist": "Melanie Martinez",
+    "canonical": "Cry Baby",
+    "aliases": ["Cry Baby (Deluxe Edition)"]
+  },
+  {
+    "artist": "Miley Cyrus",
+    "canonical": "Bangerz",
+    "aliases": ["Bangerz (Deluxe Version)"]
+  },
+  {
+    "artist": "Miss Saigon Original Cast",
+    "canonical": "Miss Saigon: The Definitive Live Recording (Original Cast Recording)",
+    "aliases": ["Miss Saigon: The Definitive Live Recording (Original Cast Recording / Deluxe)"]
+  },
+  {
+    "artist": "One Direction",
+    "canonical": "FOUR",
+    "aliases": ["FOUR (Deluxe)"]
+  },
+  {
+    "artist": "Phoebe Bridgers",
+    "canonical": "Stranger in the Alps",
+    "aliases": ["Stranger in the Alps (Deluxe Edition)"]
+  },
+  {
+    "artist": "Reneé Rapp",
+    "canonical": "Snow Angel",
+    "aliases": ["Snow Angel (Deluxe)"]
+  },
+  {
+    "artist": "Rihanna",
+    "canonical": "ANTI",
+    "aliases": ["ANTI (Deluxe)"]
+  },
+  {
+    "artist": "Rihanna",
+    "canonical": "Good Girl Gone Bad",
+    "aliases": ["Good Girl Gone Bad: Reloaded"]
+  },
+  {
+    "artist": "Rina Sawayama",
+    "canonical": "SAWAYAMA",
+    "aliases": ["SAWAYAMA (Deluxe Edition)"]
+  },
+  {
+    "artist": "Sabrina Carpenter",
+    "canonical": "emails i can't send",
+    "aliases": ["emails i can't send fwd:"]
+  },
+  {
+    "artist": "Selena Gomez",
+    "canonical": "Rare",
+    "aliases": ["Rare (Deluxe)"]
+  },
+  {
+    "artist": "Shawn Mendes",
+    "canonical": "Wonder",
+    "aliases": ["Wonder (Deluxe)"]
+  },
+  {
+    "artist": "Sia",
+    "canonical": "Everyday Is Christmas",
+    "aliases": ["Everyday Is Christmas (Deluxe Edition)"]
+  },
+  {
+    "artist": "St. Vincent",
+    "canonical": "St. Vincent",
+    "aliases": ["St. Vincent (Deluxe Edition)"]
+  },
+  {
+    "artist": "Stephen Schwartz",
+    "canonical": "Wicked (Original Broadway Cast Recording)",
+    "aliases": ["Wicked (Original Broadway Cast Recording / Deluxe Edition)"]
+  },
+  {
+    "artist": "Stephen Sondheim",
+    "canonical": "Into the Woods (Original Motion Picture Soundtrack)",
+    "aliases": ["Into the Woods (Original Motion Picture Soundtrack/Deluxe Edition)"]
+  },
+  {
+    "artist": "Tate McRae",
+    "canonical": "So Close To What",
+    "aliases": ["so close to what??? (Deluxe)"]
+  },
+  {
+    "artist": "Taylor Swift",
+    "canonical": "THE TORTURED POETS DEPARTMENT",
+    "aliases": ["The Tortured Poets Department: The Anthology"]
+  },
+  {
+    "artist": "Taylor Swift",
+    "canonical": "Midnights",
+    "aliases": ["Midnights (3am Edition)", "Midnights (The Til Dawn Edition)"]
+  },
+  {
+    "artist": "Taylor Swift",
+    "canonical": "1989 (Taylor's Version)",
+    "aliases": ["1989 (Deluxe)", "1989 (Taylor's Version) [Deluxe]"]
+  },
+  {
+    "artist": "Taylor Swift",
+    "canonical": "Red (Taylor's Version)",
+    "aliases": ["Red (Deluxe Edition)"]
+  },
+  {
+    "artist": "Taylor Swift",
+    "canonical": "Fearless (Taylor's Version)",
+    "aliases": ["Fearless (Platinum Edition)"]
+  },
+  {
+    "artist": "Taylor Swift",
+    "canonical": "Speak Now (Taylor's Version)",
+    "aliases": ["Speak Now", "Speak Now (Deluxe Package)"]
+  },
+  {
+    "artist": "Taylor Swift",
+    "canonical": "evermore",
+    "aliases": ["evermore (deluxe version)"]
+  },
+  {
+    "artist": "Taylor Swift",
+    "canonical": "folklore",
+    "aliases": ["folklore (deluxe version)"]
+  },
+  {
+    "artist": "The Pussycat Dolls",
+    "canonical": "Doll Domination",
+    "aliases": ["Doll Domination (Deluxe)"]
+  },
+  {
+    "artist": "Troye Sivan",
+    "canonical": "Blue Neighbourhood",
+    "aliases": ["Blue Neighbourhood (Deluxe)"]
+  },
+  {
+    "artist": "VICTORIA",
+    "canonical": "a little dramatic",
+    "aliases": ["a little dramatic (Deluxe Edition)"]
+  },
+  {
+    "artist": "Zara Larsson",
+    "canonical": "Poster Girl",
+    "aliases": ["Poster Girl (Summer Edition)"]
+  },
+  {
+    "artist": "Zoë",
+    "canonical": "Debut",
+    "aliases": ["Debut (Deluxe)"]
+  },
+  {
+    "artist": "Сергей Лазарев",
+    "canonical": "The Best",
+    "aliases": ["The Best (English Edition)"]
+  }
+]
