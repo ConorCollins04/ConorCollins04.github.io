@@ -422,7 +422,7 @@ async function commitChanges() {
     for (let i = 0; i < lines.length; i++) {
       if (lines[i].includes(`artist: "${artist}"`) && lines[i].includes(`album: "${album}"`)) {
         if (currentWeights[key] !== originalWeights[key]) {
-          lines[i] = lines[i].replace(/\bweight:\s*\d+/, `weight: ${currentWeights[key]}`);
+          lines[i] = lines[i].replace(/\bweight:\s*-?\d+/, `weight: ${currentWeights[key]}`);
         }
         if (currentListened[key] !== originalListened[key]) {
           if (!currentListened[key]) {
