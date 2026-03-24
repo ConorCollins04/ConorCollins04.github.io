@@ -65,6 +65,11 @@ const ALBUMS = [
   { date: "2025-01-10", weight: -1, artist: "Sissal",           album: "Hear Me Now",             spotify: "https://open.spotify.com/album/6qms8tG1zRNPqUmiT0DpgU?si=WxziCOCKSH6C7rSINeHKpw" },
   { date: "2025-10-17", weight: -1, artist: "Sudan Archives",   album: "THE BPM",                 spotify: "https://open.spotify.com/album/6xuXmpSyh7WqIct3bvsSfg?si=ZNNX72_pTwG0O7QCEaIFtQ" },
   { date: "2025-06-27", weight: -1, artist: "Various Artists",  album: "F1 The Album",            cacheKey: "madison beer|||f1 the album", spotify: "https://open.spotify.com/album/2HwRKkEp7jXbxXwcGyZYHK?si=7X0J-1X_T9SUOhMCJdDK8A" },
+  { date: "2025-06-06", weight: -1, artist: "Little Simz",      album: "Lotus",                   spotify: "https://open.spotify.com/album/0ofdTvYtx4LpsVjemJt71X?si=YWO8rG07STOkrANnhg0CHA" },
+  { date: "2025-08-08", weight: -1, artist: "Amaarae",          album: "BLACK STAR",              spotify: "https://open.spotify.com/album/59PktWhvg6nGZJaxW0mVVV?si=B0EJtAxGSUyq4NW047qsKQ" },
+  { date: "2025-11-14", weight: -1, artist: "FKA twigs",        album: "EUSEXUA Afterglow",       spotify: "https://open.spotify.com/album/1Y7jYSdijDpWF5hCbfLc9K?si=j5bBE0sCSSS8iUgDMXx-Zg" },
+  { date: "2025-05-08", weight: -1, artist: "Erika de Casier",  album: "Lifetime",                spotify: "https://open.spotify.com/album/5FheaW3Id8fdXnezRcgQ6Z?si=trUzGF9fQT64SIL7jYIh6Q" },
+  { date: "2025-02-28", weight: -1, artist: "Shygirl",          album: "Club Shy Room 2",         spotify: "https://open.spotify.com/album/1wk3qcMvPAOMTw3W75ymSX?si=6SNJ6Wi1Sda8u9k-c0dhow" },
 
   { date: "2024-07-12", rank:  1, weight: 5, artist: "Griff",            album: "Vertigo",                                songs: ["Miss Me Too", "Anything", "Cycles"],                                spotify: "https://open.spotify.com/album/3VA9PnquCzG4E2GHgBzFQE?si=7YZScpvOQsubu9yguUKmiA" },
   { date: "2024-05-03", rank:  2, weight: 5, artist: "Rachel Chinouriri", album: "What A Devastating Turn of Events",     songs: ["Garden of Eden", "The Hills", "Never Need Me"],                     spotify: "https://open.spotify.com/album/1Td1oiZTQFYR7N1QX00uhr?si=BNrf8j4ASACXMG33X0jSxQ" },
