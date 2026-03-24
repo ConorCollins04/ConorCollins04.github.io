@@ -303,7 +303,7 @@
     <summary class="diag-summary">All albums &nbsp;·&nbsp; <a href="edit-weights.html" style="color:inherit;text-decoration:none;opacity:0.6" title="Edit weights">edit weights ↗</a></summary>
     <table class="diag-table">
       <thead>
-        <tr><th data-col="date">Date</th><th data-col="artist">Artist</th><th data-col="album">Album</th><th data-col="weight">Weight</th><th data-col="effectiveWeight">Effective</th><th data-col="flags">Flags</th><th data-col="lastPlayed">Last Played</th><th data-col="scrobbles">Scrobbles</th></tr>
+        <tr><th data-col="date">Date</th><th data-col="artist">Artist</th><th data-col="album">Album</th><th data-col="weight">Weight</th><th data-col="effectiveWeight">Effective</th><th data-col="lastPlayed">Last Played</th><th data-col="scrobbles">Scrobbles</th></tr>
       </thead>
       <tbody id="diag-body"></tbody>
     </table>
@@ -412,8 +412,8 @@
     setTimeout(function () {
       const today      = new Date().toISOString().slice(0, 10);
       const released   = ALBUMS.filter(a => a.date <= today);
-      const listened   = released.filter(a => !a.unlistened);
-      const unlistened = released.filter(a => a.unlistened);
+      const listened   = released.filter(a => cacheEntry(a));
+      const unlistened = released.filter(a => !cacheEntry(a));
       const years      = [...new Set(listened.map(a => a.date.slice(0, 4)))].sort((a, b) => b - a);
       const latestYear = years[0];
 
@@ -468,14 +468,12 @@
   function renderDiag() {
     const sorted = [...ALBUMS].sort((a, b) => {
       const col = diagSort.col;
-      let av = col === 'flags'           ? (a.unlistened ? 'unlistened' : '')
-             : col === 'date'            ? (a.date ?? '')
+      let av = col === 'date'            ? (a.date ?? '')
              : col === 'lastPlayed'      ? (lastPlayedTs(a) ?? 0)
              : col === 'effectiveWeight' ? effectiveWeight(a)
              : col === 'scrobbles'       ? scrobbleCount(a)
              : (a[col] ?? '');
-      let bv = col === 'flags'           ? (b.unlistened ? 'unlistened' : '')
-             : col === 'date'            ? (b.date ?? '')
+      let bv = col === 'date'            ? (b.date ?? '')
              : col === 'lastPlayed'      ? (lastPlayedTs(b) ?? 0)
              : col === 'effectiveWeight' ? effectiveWeight(b)
              : col === 'scrobbles'       ? scrobbleCount(b)
@@ -486,7 +484,6 @@
     });
 
     document.getElementById('diag-body').innerHTML = sorted.map(a => {
-      const flags = a.unlistened ? 'unlistened' : '';
       const lp = lastPlayedTs(a);
       const lpDisplay = lp ? formatDate(new Date(lp * 1000).toISOString().slice(0, 10)) : '—';
       const ew = effectiveWeight(a);
@@ -498,7 +495,6 @@
         <td>${a.album}</td>
         <td>${a.weight}</td>
         <td>${ewDisplay}</td>
-        <td>${flags}</td>
         <td>${lpDisplay}</td>
         <td>${sc || '—'}</td>
       </tr>`;
