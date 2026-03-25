@@ -2,11 +2,12 @@ import json
 import os
 import re
 
-SCRIPT_DIR     = os.path.dirname(os.path.abspath(__file__))
-SCROBBLES_FILE = os.path.join(SCRIPT_DIR, "scrobbles.json")
-ALBUMS_FILE    = os.path.join(SCRIPT_DIR, "albums.js")
-ALIASES_FILE   = os.path.join(SCRIPT_DIR, "album-aliases.json")
-CACHE_FILE     = os.path.join(SCRIPT_DIR, "lastfm-cache.js")
+SCRIPT_DIR         = os.path.dirname(os.path.abspath(__file__))
+SCROBBLES_FILE     = os.path.join(SCRIPT_DIR, "scrobbles.json")
+ALBUMS_FILE        = os.path.join(SCRIPT_DIR, "albums.js")
+ALIASES_FILE       = os.path.join(SCRIPT_DIR, "album-aliases.json")
+EXCLUSIONS_FILE    = os.path.join(SCRIPT_DIR, "album-exclusions.json")
+CACHE_FILE         = os.path.join(SCRIPT_DIR, "lastfm-cache.js")
 
 
 def normalize(s):
@@ -99,6 +100,15 @@ def build():
                     counts[canonical_key] = counts.get(canonical_key, 0) + counts.pop(alias_key)
             if timestamps:
                 last_played[canonical_key] = max(timestamps)
+
+    # Remove excluded entries (singles, EPs, etc.)
+    if os.path.exists(EXCLUSIONS_FILE):
+        with open(EXCLUSIONS_FILE) as f:
+            exclusions = json.load(f)
+        for entry in exclusions:
+            key = normalize(entry["artist"]) + "|||" + normalize(entry["album"])
+            last_played.pop(key, None)
+            counts.pop(key, None)
 
     # Write JS file — each entry is [timestamp, scrobble_count]
     entries = ",\n  ".join(
