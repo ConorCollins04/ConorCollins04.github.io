@@ -266,6 +266,11 @@
   },
   {
     "artist": "Lorde",
+    "canonical": "Pure Heroine",
+    "aliases": ["Pure Heroine (Extended)"]
+  },
+  {
+    "artist": "Lorde",
     "canonical": "Solar Power",
     "aliases": ["Solar Power (Deluxe Edition)"]
   },
