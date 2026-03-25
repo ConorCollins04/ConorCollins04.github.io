@@ -18,5 +18,7 @@
   { "artist": "Alexa",              "album": "American Song Contest: Episode 1" },
   { "artist": "Charli xcx",        "album": "Beg for You (feat. Rina Sawayama)" },
   { "artist": "Sabrina Carpenter", "album": "Espresso" },
-  { "artist": "Ava Max",           "album": "Who's Laughing Now" }
+  { "artist": "Ava Max",           "album": "Who's Laughing Now" },
+  { "artist": "Famke Louise",      "album": "Vieren (feat. Vanessa van Cartier, My Little Puny & Vivaldi)" },
+  { "artist": "Taylor Swift",     "album": "This Love (Taylor's Version)" }
 ]
