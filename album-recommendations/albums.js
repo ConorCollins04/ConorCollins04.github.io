@@ -1,4 +1,5 @@
 const ALBUMS = [
+  { date: "2026-04-17", weight: 3, artist: "Jessie Ware",          album: "Superbloom", spotify: "https://open.spotify.com/prerelease/3Fykh6dYTmcKxSH3LfHYRZ?si=91a059bf168b45aa"},
   { date: "2026-03-27", weight: 3, artist: "RAYE",          album: "THIS MUSIC MAY CONTAIN HOPE.", spotify: "https://open.spotify.com/prerelease/69ljfG87eaHzAn8togDgb5?si=3c6ee5ab0cf946f3"},
   { date: "2026-03-27", weight: 3, artist: "Loreen",        album: "WILDFIRE",                    spotify: "https://open.spotify.com/prerelease/1MdTyZWmvsYHzTobclGXp5?si=1af1b8d1b8574426"},
   { date: "2026-03-27", weight: 3, artist: "Slayyyter",    album: "WOR$T GIRL IN AMERICA",       cover: "worst-girl-in-america.jpg", spotify: "https://open.spotify.com/prerelease/6rnWqesr01t8Q6UWcR0riY?si=68029a4513194e63"},
