@@ -96,6 +96,7 @@ const ALBUMS = [
   { date: "2024-03-29", rank: 22, weight: 0, artist: "Beyoncé",          album: "COWBOY CARTER",                          songs: ["TEXAS HOLD 'EM", "II MOST WANTED", "YA YA"],                        spotify: "https://open.spotify.com/album/6BzxX6zkDsYKFJ04ziU5xQ?si=sl6XrED6QMiDO6lTF9Y3rg" },
   { date: "2024-06-07", rank: 23, weight: 1, artist: "AURORA",           album: "What Happened To The Heart?",            songs: ["Your Blood", "Some Type Of Skin", "When The Dark Dresses Lightly"], spotify: "https://open.spotify.com/album/0bI3iaA6A68DTRcUoOyQx5?si=kNeSPpGJSeuqNNPZRjVWRw" },
   { date: "2024-02-16", rank: 24, weight: 1, artist: "Alessandra",       album: "Best Year Of My Life",                   songs: ["Pretty Devil", "Bad Bitch", "Queen Of Kings"],                      spotify: "https://open.spotify.com/album/5FhhSgLoO7YC6nYZtsZ1bc?si=Wy7YHZ-BQ8i4WuD4-8JzVA" },
+  { date: "2024-10-11", weight: -1, artist: "Charli xcx",     album: "Brat and It's Completely Different but Also Still Brat", spotify: "https://open.spotify.com/album/36P07bti6xD99o7S1acmin?si=a8zdU0aERGqIRl5GILjE4g" },
   { date: "2024-02-09", weight: 1, artist: "Jessica Mauboy", album: "Yours Forever", spotify: "https://open.spotify.com/album/2L08li5KwgPx7BZO354BlK?si=WTbpekj2TRCxohuNkdVFJw" },
 
   { date: "2023-09-08", rank:  1, weight: 5, artist: "Olivia Rodrigo",   album: "GUTS",                                   songs: ["bad idea right?", "get him back!", "love is embarrassing"],          spotify: "https://open.spotify.com/album/1xJHno7SmdVtZAtXbdbDZp?si=0uirTSatQ9KjlAXUIa8XaA" },
@@ -147,6 +148,7 @@ const ALBUMS = [
   { date: "2022-07-29", rank: 22, weight: 1, artist: "Hayley Kiyoko",    album: "PANORAMA",                               songs: ["sugar at the bottom", "for the girls", "found my friends"],         spotify: "https://open.spotify.com/album/2TJlASpVb5tgcEY0RMyZjQ?si=ANN2mwTRRZudDJ2FiG7_tw" },
   { date: "2022-05-27", rank: 23, weight: 1, artist: "Tate McRae",       album: "i used to think i could fly",            songs: ["she's all i wanna be", "you're so cool", "feel like shit"],         spotify: "https://open.spotify.com/album/5fhTetHew6Eph6HfQ9O5gJ?si=Mg29BH0fQDK1DT9JDrLWWw" },
   { date: "2022-03-25", rank: 24, weight: 1, artist: "Sofia Carson",     album: "Sofia Carson",                           songs: ["It's Only Love Nobody Dies", "LOUD", "Fool's Gold"],                spotify: "https://open.spotify.com/album/5Y63nlA6F7z3yaqHjF7suD?si=-n4zgIngRE6j7HdzEdrpWA" },
+  { date: "2022-12-09", weight: -1, artist: "SZA",               album: "SOS",                                    spotify: "https://open.spotify.com/album/07w0rG5TETcyihsEIZR3qG?si=ZMWUjla9RBKWjY3CnEessA" },
 
   { date: "2021-11-12", rank:  1, weight: 5, artist: "Taylor Swift",     album: "Red (Taylor's Version)",                 songs: ["Nothing New", "The Very First Night", "All Too Well (10 Minute Version)"], spotify: "https://open.spotify.com/album/6kZ42qRrzov54LcAk4onW9?si=Oy-FEKTxTaylqTmdhfXANA" },
   { date: "2021-11-12", rank:  2, weight: 5, artist: "Little Mix",       album: "Between Us",                             songs: ["No", "Love (Sweet Love)", "Kiss My (Uh Oh)"],                       spotify: "https://open.spotify.com/album/6XNrM2YkzSXyQ9hekFOgLN?si=ai3fUCRwQ_-ArdcTX7E-Gg" },
@@ -172,12 +174,17 @@ const ALBUMS = [
   { date: "2021-05-21", rank: 22, weight: 0, artist: "salem ilese",      album: "(L)only Child",            cover: "lonly-child.jpg", songs: ["(L)only Child", "Romeo & Juliet", "Dinosaurs (S4E7)"], spotify: "https://open.spotify.com/album/6w82uxCIU8XAOkaQH1fIeT?si=xbqncg0WSAGOs1y8O99WXw" },
   { date: "2021-04-01", rank: 23, weight: 1, artist: "Foxes",            album: "Friends In The Corner", cacheKey: "foxes|||friends in the corner ep",                  songs: ["Friends In The Corner", "Love Not Loving You", "Courage"],          spotify: "https://open.spotify.com/album/4HgR3HFuMXAEXF8gT2xa6B?si=SbnSz9ToS4SaXHDo6hfVMw" },
   { date: "2021-04-30", rank: 24, weight: 1, artist: "girl in red",      album: "if i could make it go quiet",            songs: ["Serotonin", "hornylovesickmess", "You Stupid Bitch"],               spotify: "https://open.spotify.com/album/10nQ1u8Y1zlOb61zwZavDk?si=25iBl1yeSJ2aC5RKnC9Ggg" },
+  { date: "2021-12-10", weight: -1, artist: "Clara Klingenström", album: "Claras Dagbok",       spotify: "https://open.spotify.com/album/3U4LDho4X3lDdgZV0O5gwV?si=W1M9HyOqR86BRagPjStOEQ" },
   { date: "2021-09-10", weight: 1, artist: "Kacey Musgraves",   album: "Star-Crossed",  spotify: "https://open.spotify.com/album/6y9LbrjY2TpaLvtbE7FTkc?si=HubGSl0TT1iHKJ4ZitWHFA" },
+  { date: "2021-09-03", weight: -1, artist: "Lady Gaga",        album: "Dawn of Chromatica", spotify: "https://open.spotify.com/album/3OevODyllQCrhudfLLnV3y?si=l_fmGzkHT0KbsIj5nOs_GA" },
   { date: "2021-08-27", weight: 3, artist: "CHVRCHES",          album: "Screen Violence",  spotify: "https://open.spotify.com/album/0QVGIcTbPFeiArrgwRKKtG?si=IeRPBU06RWmi3TJ7ZnOhvQ" },
   { date: "2021-08-20", weight: 3,  artist: "Lorde",             album: "Solar Power",   spotify: "https://open.spotify.com/album/3lK2JRwfIOn2NaYtgEGTmZ?si=QE8V9AnQQmaRmM8N3imiww" },
   { date: "2021-06-25", weight: 0, artist: "Doja Cat",           album: "Planet Her",    spotify: "https://open.spotify.com/album/1nAQbHeOWTfQzbOoFrvndW?si=sys2cLE3Q2utnU3rLEjeUA" },
+  { date: "2021-06-18", weight: -1, artist: "Griff",             album: "One Foot in Front of the Other", spotify: "https://open.spotify.com/album/6CR4ozv4yOdaA3f6PPQepA?si=3qqFDeBlS1ud_9bF71zG1A" },
+  { date: "2021-06-08", weight: -1, artist: "Todrick Hall",      album: "FEMULINE",                       spotify: "https://open.spotify.com/album/5HMKe2aSQafz0Oix7nePGT?si=rgfWYewERmSGU615d17qow" },
   { date: "2021-06-04", weight: 4, artist: "Japanese Breakfast", album: "Jubilee",       spotify: "https://open.spotify.com/album/1uD1kdwTWH1DZQZqGKz6rY?si=Fi9RWEMXQ7S0p1eIgk2XWg" },
   { date: "2021-05-12", weight: 0,  artist: "Elena Tsagrinou",    album: "El Diablo",     spotify: "https://open.spotify.com/album/2sLQCDxWeYgznre4aCtX4r?si=gTAyv8zYSR-qSPZ2ERi8rA" },
+  { date: "2021-03-19", weight: -1, artist: "Måneskin",           album: "Teatro d'ira - Vol. I", spotify: "https://open.spotify.com/album/7KF1Ain9mYYlg5M46g0i4A?si=m92GA8sESvaxqQAEcpvd_w" },
   { date: "2021-02-12", weight: 0, artist: "Sia",               album: "Music (Songs from and Inspired by the Motion Picture)", spotify: "https://open.spotify.com/album/7nA0EdSRuxzUqkA7kMSer7?si=kt28SxY-T3Ga9_IrhVS_bg" },
 
   { date: "2020-12-11", weight: 0, artist: "Frock Destroyers", album: "FROCK4LIFE",           spotify: "https://open.spotify.com/album/42Qw6E4F6QExaXW52C2tyO?si=VEZmIs-QTIaXNeMpJMPoLw" },
@@ -185,9 +192,11 @@ const ALBUMS = [
   { date: "2020-11-27", weight: 5,  artist: "Miley Cyrus",     album: "Plastic Hearts",        spotify: "https://open.spotify.com/album/5BRhg6NSEZOj0BR6Iz56fR?si=mJX1pcjvSVWGRCbqDz-hBw" },
   { date: "2020-11-27", weight: 1,  artist: "Steps",           album: "What the Future Holds", spotify: "https://open.spotify.com/album/1DcWbwQxPayKv0pcpbNEbA?si=3JPiWypgSM6DyNyXLdzFbg" },
   { date: "2020-11-13", weight: 1,  artist: "Paloma Faith",    album: "Infinite Things",       spotify: "https://open.spotify.com/album/4ynl3QNO1lnfJWqWDJmb1A?si=L0R8Bg_XRq-b8QdMbN9z7A" },
+  { date: "2020-11-13", weight: -1, artist: "Duncan Laurence", album: "Small Town Boy",        spotify: "https://open.spotify.com/album/3mSrMuAvI7GNxaxhrTx4ry?si=-KTJ42TYQ9qqkkgVUFqXvw" },
   { date: "2020-11-06", weight: 1, artist: "Kylie Minogue",    album: "Disco",    spotify: "https://open.spotify.com/album/7EBIA9cqbuqkyWfp3UCitD?si=uuuWt72TTLKbi7Xq1yXI_w" },
   { date: "2020-11-06", weight: 4,  artist: "Little Mix",      album: "Confetti",              spotify: "https://open.spotify.com/album/33a8Ha3pE7fo2o4T4xLabF?si=eMl19ystQoWMAIZSxuPjYQ" },
   { date: "2020-10-30", weight: 1,  artist: "Ariana Grande",   album: "Positions",             spotify: "https://open.spotify.com/album/3euz4vS7ezKGnNSwgyvKcd?si=zAVs1HacR6m8lw4tKRllfQ" },
+  { date: "2020-10-30", weight: -1, artist: "Sam Smith",       album: "Love Goes",             spotify: "https://open.spotify.com/album/5XCBX16KNYsAe7V5hQV9mC?si=fgzFrZIiRmys8-H6xaxlng" },
   { date: "2020-10-09", weight: 1,  artist: "Anna Bergendahl", album: "Vera",                  spotify: "https://open.spotify.com/album/0rTkHTjTyDhNQpH0c9WShW?si=ti3U5YLuRy6XuxYIv6NzWg" },
   { date: "2020-10-02", weight: 4,  artist: "Seemone",         album: "Seemone",               spotify: "https://open.spotify.com/album/5N7jHKxIybcTqo2Krhms4S?si=ZEeKMimHSx6oD-jQKNpiDw" },
   { date: "2020-10-02", weight: 1,  artist: "BLACKPINK",       album: "THE ALBUM",             spotify: "https://open.spotify.com/album/71O60S5gIJSIAhdnrDIh3N?si=aYWkqLJ3TpmyMYk4q0erUw" },
@@ -203,8 +212,10 @@ const ALBUMS = [
   { date: "2020-05-15", weight: 4,  artist: "KEiiNO",          album: "OKTA",                  spotify: "https://open.spotify.com/album/4aYLNUrkHzYLnq9pdFEHyT?si=xYfAUKdZSp2qAWfD7Ntxyw" },
   { date: "2020-04-17", weight: 5,  artist: "Rina Sawayama",   album: "SAWAYAMA",              spotify: "https://open.spotify.com/album/3stadz88XVpHcXnVYMHc4J?si=bpB5iuLCQDKI8dOy7fcBgw" },
   { date: "2020-03-27", weight: 5,  artist: "Dua Lipa",        album: "Future Nostalgia",      spotify: "https://open.spotify.com/album/7fJJK56U9fHixgO0HQkhtI?si=liegxhSGSQCvCHghzy19qg" },
-  { date: "2020-03-13", weight: 0, artist: "Niall Horan",      album: "Heartbreak Weather", spotify: "https://open.spotify.com/album/5gdoRB1AUsGnScCuZ8gmPp?si=LsG_KiajTneEC_rU6dQwAQ" },
+  { date: "2020-03-13", weight: 0, artist: "Niall Horan",      album: "Heartbreak Weather",           spotify: "https://open.spotify.com/album/5gdoRB1AUsGnScCuZ8gmPp?si=LsG_KiajTneEC_rU6dQwAQ" },
+  { date: "2020-03-13", weight: -1, artist: "Magdalena Bay",   album: "A Little Rhythm and a Wicked Feeling", spotify: "https://open.spotify.com/album/5OsXAPcYYYNTtkFuuB8TDc?si=mSZpS8uUSueruUYgxlm1sg" },
   { date: "2020-03-20", weight: 1,  artist: "Conan Gray",      album: "Kid Krow",              spotify: "https://open.spotify.com/album/2CMlkzFI2oDAy5MbyV7OV5?si=IsWWjjYcTH6ZaKsH4n_1rg" },
+  { date: "2020-03-20", weight: -1, artist: "The Weeknd",      album: "After Hours",           spotify: "https://open.spotify.com/album/4yP0hdKOZPNshxUOjY0cZj?si=fxsoLSc4TsGPLuCOeNbyxQ" },
   { date: "2020-03-06", weight: 0,  artist: "Lauv",            album: "~how i'm feeling~",     spotify: "https://open.spotify.com/album/3ZuE680xhR1A4bCFGvL8mi?si=p8zaTxUZTi2KYhLrhF-bng" },
   { date: "2020-02-21", weight: 2, artist: "Allie X",         album: "Cape God",              spotify: "https://open.spotify.com/album/47wRFo2As9zFmg6E5VVa8H?si=xpAJ2DeNSLSn7Y7mjp8-jw" },
   { date: "2020-01-31", weight: 1,  artist: "Kesha",           album: "High Road",             spotify: "https://open.spotify.com/album/4HZ195qaMlhiKebUtF36ni?si=Qn2EedrSQpy3LZba0vqmhg" },
@@ -220,9 +231,13 @@ const ALBUMS = [
   { date: "2019-10-09", weight: 3,  artist: "SUGR?",           album: "Oh, Death",             spotify: "https://open.spotify.com/album/5LuBFgpIu2aWKhfnfw2SHV?si=KFSwWu6iQwKNXQPWOrkOoA" },
   { date: "2019-09-20", weight: 3,  artist: "Gabriella",       album: "Etrangère",             spotify: "https://open.spotify.com/album/6wtpGsjzXzgJDElPh8FOu3?si=pw4CJdBbQXihGMvHAlIQcA" },
   { date: "2019-09-13", weight: 2, artist: "Charli XCX",     album: "Charli",                spotify: "https://open.spotify.com/album/386IqvSuljaZsMjwDGGdLj?si=F9JpUPAaRGSXc42Te89BqA" },
+  { date: "2019-08-30", weight: -1, artist: "Montaigne",      album: "Complex",               spotify: "https://open.spotify.com/album/0m678DxMgp4FNzSFicTq4t?si=IDrzdg8SRKSTkm1MJhdceg" },
   { date: "2019-08-23", weight: 4,  artist: "Taylor Swift",    album: "Lover",                 spotify: "https://open.spotify.com/album/1NAmidJlEaVgA3MpcPFYGq?si=5VLmOLGjTMWQc_wukL53qA" },
   { date: "2019-03-08", weight: 4,  artist: "Sigrid",          album: "Sucker Punch",          spotify: "https://open.spotify.com/album/4OaTrPkuAYkelxCnm92njS?si=OdhfMcQaRxSqeJRSQZOYgg" },
+  { date: "2019-02-22", weight: -1, artist: "Mahmood",         album: "Gioventù Bruciata",     spotify: "https://open.spotify.com/album/66vkclmRoFqj4IYEnKGKPU?si=xuMbE2GNTGWGvnTe8pjc_w" },
 
+  { date: "2018-11-16", weight: -1, artist: "Little Mix",           album: "LM5",                                    spotify: "https://open.spotify.com/album/7Ho8gAx4haSxv1eFLQwvTj?si=oSxBu49KQxiYnGRRIE-GNw" },
+  { date: "2018-10-29", weight: -1, artist: "Allie X",              album: "Super Sunset",                           spotify: "https://open.spotify.com/album/46tqZIHK7vudgW0NCYW4y9?si=4MOatDPbQleyMu_-6KdjGw" },
   { date: "2018-08-31", weight: 2,  artist: "SIX",                   album: "Six: The Musical (Studio Cast Recording)", spotify: "https://open.spotify.com/album/5jTDaLFNQovRyjNcWe4cZh?si=vWVcLrKVSeingRNxqT-KDw" },
   { date: "2018-06-22", weight: 1, artist: "Panic! at the Disco", album: "Pray for the Wicked",               spotify: "https://open.spotify.com/album/6ApYSpXF8GxZAgBTHDzYge?si=ZKkZixrOQiKU9ojZn3OoQQ" },
 
@@ -240,16 +255,22 @@ const ALBUMS = [
   { date: "2016-08-26", weight: 1, artist: "AURORA",                  album: "All My Demons Greeting Me As A Friend", spotify: "https://open.spotify.com/album/69YLD3zIxQt55bHjVlhLTP?si=SpnuU5o7RUKmxropFG4Mtw" },
   { date: "2016-08-26", weight: 0, artist: "Britney Spears",         album: "Glory",              spotify: "https://open.spotify.com/album/4Dx1H8qhJ2hFkChgfZuqQV?si=dh6BoZ3LT-Od8bJMdAT-mg" },
   { date: "2016-05-20", weight: 3,  artist: "Ariana Grande",          album: "Dangerous Woman",    spotify: "https://open.spotify.com/album/3OZgEywV4krCZ814pTJWr7?si=YOkc_aFTRmK7IbjnL44uDQ" },
+  { date: "2016-01-28", weight: -1, artist: "Rihanna",               album: "ANTI",               spotify: "https://open.spotify.com/album/4UlGauD7ROb3YbVOFMgW5u?si=dd2KRsBlQTefqmP8-jPPIA" },
   { date: "2016-01-15", weight: 1,  artist: "Panic! at the Disco",    album: "Death of a Bachelor", spotify: "https://open.spotify.com/album/6twKQ0EsUJHVlAr6XBylrj?si=zjiaH7d-SRKxTpTwMF_ZrA" },
 
   { date: "2015-12-04", weight: 5,  artist: "Allie X",             album: "CollXtion I",                         spotify: "https://open.spotify.com/album/6i2wkAsjqQ9CUc7g9dSGbS?si=GqCSKYHZTqmUfp4poOBiuQ" },
   { date: "2015-11-20", weight: 5,  artist: "Adele",               album: "25",                                  spotify: "https://open.spotify.com/album/7uwTHXmFa1Ebi5flqBosig?si=F_rUFVUUT6WaCQgyxJ-RJA" },
   { date: "2015-11-06", weight: 2, artist: "Little Mix",          album: "Get Weird",                           spotify: "https://open.spotify.com/album/4bzVI1FElc13HQagFR7S1W?si=TmZ51QagQBKuFoetQRMSTw" },
   { date: "2015-09-25", weight: 5,  artist: "Carly Rae Jepsen",    album: "Emotion",                             spotify: "https://open.spotify.com/album/1DFixLWuPkv3KT3TnV35m3?si=o5vcccVnQtqDzPhpq12pNg" },
-  { date: "2015-09-25", weight: 1,  artist: "Lin-Manuel Miranda",  album: "Hamilton (Original Broadway Cast Recording)", spotify: "https://open.spotify.com/album/1kCHru7uhxBUdzkm4gzRQc?si=hPZpmNevSIW46PjtwX9tnQ" },
+  { date: "2015-09-25", weight: 1,  artist: "Various Artists",     album: "Hamilton (Original Broadway Cast Recording)", spotify: "https://open.spotify.com/album/1kCHru7uhxBUdzkm4gzRQc?si=hPZpmNevSIW46PjtwX9tnQ" },
+  { date: "2015-09-25", weight: -1, artist: "CHVRCHES",            album: "Every Open Eye",                              spotify: "https://open.spotify.com/album/6TEN694l8ifhIRfknsG8DX?si=GNYpB_nFSfWe4Vw7we9wOA" },
   { date: "2015-08-28", weight: 1,  artist: "Halsey",              album: "Badlands",                            spotify: "https://open.spotify.com/album/5OZJflQcQCdZLQjtUudCin?si=tRfAKww8RIyUZuc3Ga48Fg" },
+  { date: "2015-08-21", weight: -1, artist: "Jess Glynne",         album: "I Cry When I Laugh",                  spotify: "https://open.spotify.com/album/7BEPVoBcHuTLWpcdj8FhM8?si=Q3iiMC0BS2KjIdLE_qEEhA" },
+  { date: "2015-01-16", weight: -1, artist: "Fall Out Boy",         album: "American Beauty/American Psycho",     spotify: "https://open.spotify.com/album/022DrG7Wp2PSCwzuD0bSzT?si=sKmqmzw0QM-f5OACgFWN5Q" },
+  { date: "2015-01-12", weight: -1, artist: "Meghan Trainor",      album: "Title",                               spotify: "https://open.spotify.com/album/5W98Ab4VvQEuFEE4TIe5fE?si=M9bZMf5eTdGcy_FTi0WD_w" },
 
   { date: "2014-10-10", weight: 0, artist: "Jessie J",        album: "Sweet Talker", spotify: "https://open.spotify.com/album/2rDIivxBafNKpgRqlzIRSb?si=4TNGjYKGQrKbb-1EIa1kvw" },
+  { date: "2014-01-01", weight: -1, artist: "Stephen Sondheim", album: "Into the Woods (Original Motion Picture Soundtrack)", spotify: "https://open.spotify.com/album/7lWMvhvTB4H9TWZM1IX12Q?si=Udbl82kaQ12-rGaprM5XCg" },
 
   { date: "2013-11-11", weight: 3, artist: "Lady Gaga",      album: "ARTPOP",  spotify: "https://open.spotify.com/album/2eRJUtI7nXrQ5uYQ7tzTo9?si=SpSfSJjQQIy2aEN3GabNUQ" },
   { date: "2013-09-27", weight: 4, artist: "Lorde",          album: "Pure Heroine", spotify: "https://open.spotify.com/album/0rmhjUgoVa17LZuS8xWQ3v?si=W0Keb7bYTQOeivKlXj3RpA" },
@@ -258,6 +279,7 @@ const ALBUMS = [
   { date: "2013-01-01", weight: 0, artist: "OneRepublic",    album: "Native",  spotify: "https://open.spotify.com/album/20lOt6G8MHv8ZO7ViOmiP7?si=feYnjeq7R9K3UFgV3G2qLg" },
 
   { date: "2012-04-27", weight: 1, artist: "Marina",         album: "Electra Heart",  spotify: "https://open.spotify.com/album/3LsZ6ggAetZSzxl4hWOB3S?si=WY_6ZxvLQ_Kn3bOdMrUkug" },
+  { date: "2012-01-01", weight: -1, artist: "Carly Rae Jepsen", album: "Kiss",        spotify: "https://open.spotify.com/album/6SSSF9Y6MiPdQoxqBptrR2?si=uIoQ-Ep6TEKoIqCVfKAh5Q" },
 
   { date: "2011-10-13", weight: 0, artist: "Matilda the Musical Original Cast", album: "Matilda the Musical (Original London Cast Recording)", spotify: "https://open.spotify.com/album/4TMFJM8OsgA2RwwYySNhmU?si=TvTirXc3QPWv5IqkDaKFZg" },
   { date: "2011-05-23", weight: 3, artist: "Lady Gaga",      album: "Born This Way",  spotify: "https://open.spotify.com/album/6LY3AerY6KNGOPsNPL63Kk?si=vnYXK2QJQWSsoUcCQHCMUA" },
@@ -269,16 +291,29 @@ const ALBUMS = [
 
   { date: "2009-11-05", weight: 5,  artist: "Lady Gaga",      album: "The Fame Monster", spotify: "https://open.spotify.com/album/6rePArBMb5nLWEaY9aQqL4?si=lH5-XTIMRz2G7Am1TLoRsw" },
 
+  { date: "2008-12-02", weight: -1, artist: "Britney Spears", album: "Circus",           spotify: "https://open.spotify.com/album/2tve5DGwub1TtbX1khPX5j?si=EhAIuSvtTNOaIRkuOhTt_A" },
   { date: "2008-06-17", weight: 1, artist: "Katy Perry",     album: "One of the Boys",  spotify: "https://open.spotify.com/album/3OALgjCs6Lqw41853v4wEQ?si=r-xno9v6RAi-tbXvEY2wwA" },
   { date: "2008-01-27", weight: 1, artist: "Adele",          album: "19",               spotify: "https://open.spotify.com/album/5awrJZBt3rP9RO5hlYdZB0?si=rpRTVlGSQfSHB1R7C1ACng" },
 
+  { date: "2006-10-27", weight: -1, artist: "Amy Winehouse",  album: "Back to Black",  spotify: "https://open.spotify.com/album/0E4xv5gPjykrwBgBZzI8XG?si=7-7iQIdRSGiCuk7TsE_gzg" },
   { date: "2006-10-24", weight: 2,  artist: "Taylor Swift",   album: "Taylor Swift",   spotify: "https://open.spotify.com/album/5eyZZoQEFQWRHkV2xgAeBw?si=NJ3cL6cFSQeo1cya4XJyZg" },
 
   { date: "2004-11-30", weight: 1,  artist: "Kelly Clarkson", album: "Breakaway",      spotify: "https://open.spotify.com/album/20jYcJane0oI7VoMNoEOJU?si=Z5NGyJI2RAGw47orcJixKg" },
+  { date: "2004-09-11", weight: -1, artist: "Bowling for Soup", album: "A Hangover You Don't Deserve", spotify: "https://open.spotify.com/album/7JST4gPYSXFegyuk9nKFb0?si=ZX4Bd9fHS7-D1sFpbKKAnA" },
 
   { date: "2003-11-13", weight: 1,  artist: "Britney Spears", album: "In the Zone",    spotify: "https://open.spotify.com/album/0z7pVBGOD7HCIB7S8eLkLI?si=zlBLl7-1QR6injnEU7CEgA" },
 
+  { date: "2002-06-04", weight: -1, artist: "Avril Lavigne",  album: "Let Go",         spotify: "https://open.spotify.com/album/3zXjR3y2dUWklKmmp6lEhy?si=jfqpncY6TaCOqPnolDywvA" },
+
   { date: "2000-05-16", weight: 1, artist: "Britney Spears", album: "Oops!... I Did It Again", spotify: "https://open.spotify.com/album/5PmgtkodFl2Om3hMXONDll?si=8M53RlepQtewyaf07eKFyw" },
 
+  { date: "1999-01-01", weight: -1, artist: "Various Artists", album: "Annie Get Your Gun: The New Broadway Cast Recording", spotify: "https://open.spotify.com/album/2SxCtvFthZqPOkja0lo6yh?si=cW22fEWRQeW8jb-CLTtO8A" },
+
+  { date: "1992-01-01", weight: -1, artist: "Richard Rodgers", album: "The King and I (The New Broadway Cast Recording)", spotify: "https://open.spotify.com/album/09ZYK1FEiNabi61JK5gfkA?si=n-L1_XtPQu27F23DOFXh0A" },
+
   { date: "1978-09-23", weight: 0, artist: "Blondie",        album: "Parallel Lines", spotify: "https://open.spotify.com/album/4M6s2jbhKWEcOdXZ8WiHts?si=MvrqKuArQze2BOLb0iy-VQ" },
+
+  { date: "1977-09-29", weight: -1, artist: "Billy Joel",     album: "The Stranger",   spotify: "https://open.spotify.com/album/3IILMjMMnoN2sKzgesX8KV?si=xiWiWpq5SoKkP7uMdMu-Iw" },
+
+  { date: "1968-04-30", weight: -1, artist: "The Zombies",    album: "Odessey and Oracle", spotify: "https://open.spotify.com/album/1Rad3I77vbl5L65DjbSIzJ?si=nt5m4GDTRxyjWsF0Hwff_g" },
 ];
