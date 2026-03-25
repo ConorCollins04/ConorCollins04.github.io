@@ -303,7 +303,7 @@ const ALBUMS = [
   { date: "2018-04-01", weight: 0, artist: "Sergey Lazarev",    album: "The One",                           spotify: "https://open.spotify.com/album/1gKYilxh4go3gKDikTH1ZO?si=amQXuqaKTSutvK-A4BUotg" },
   { date: "2018-02-14", weight: -1, artist: "Kevin Penkin", album: "Florence (Original Soundtrack)", spotify: "https://open.spotify.com/album/7uwHUvVHDAEKxyXCoZYFIF?si=mfy04zVjSYWbjsMyTqIExg" },
   { date: "2018-02-09", weight: -1, artist: "The Wombats",  album: "Beautiful People Will Ruin Your Life", spotify: "https://open.spotify.com/album/6APrFw7uAsqi0vXaQTtSYi?si=h3jWmpX_SiqZVEkupm6tYg" },
-  { date: "2018-01-19", weight: -1, artist: "Fall Out Boy",  album: "Mania",                                  spotify: "https://open.spotify.com/album/16xtTZvPH6PXcwSqYqJHHG?si=-U9eWSsHSZ2DTMDZnOub-g" },
+  { date: "2018-01-19", weight: -1, artist: "Fall Out Boy",  album: "MANIA",                                  spotify: "https://open.spotify.com/album/16xtTZvPH6PXcwSqYqJHHG?si=-U9eWSsHSZ2DTMDZnOub-g" },
 
   { date: "2017-11-17", weight: 0,  artist: "Sia",             album: "Everyday Is Christmas", spotify: "https://open.spotify.com/album/2vcGYJcPfXUmCdcXXqqukg?si=4VFmws3rT0eMZTxldY9vSg" },
   { date: "2017-11-10", weight: 5,  artist: "Taylor Swift",    album: "reputation",            spotify: "https://open.spotify.com/album/6DEjYFkNZh67HP7R9PSZvv?si=hI1wUQOTT6WRThwx2Bgynw" },
