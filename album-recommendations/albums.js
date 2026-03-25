@@ -310,7 +310,7 @@ const ALBUMS = [
   { date: "2009-07-03", weight: -1, artist: "Florence + the Machine", album: "Lungs",  spotify: "https://open.spotify.com/album/1rLLyY5p6HXNl2lKzINWp5?si=VgrVmmbQQ5as_cBjv4HIaA" },
 
   { date: "2008-12-02", weight: -1, artist: "Britney Spears",       album: "Circus",                    spotify: "https://open.spotify.com/album/2tve5DGwub1TtbX1khPX5j?si=EhAIuSvtTNOaIRkuOhTt_A" },
-  { date: "2008-11-14", weight: -1, artist: "Beyoncé",              album: "I Am...Sasha Fierce",       spotify: "https://open.spotify.com/album/23Y5wdyP5byMFktZf8AcWU?si=-YRCfEEIQkClNLlH5sD_Sg" },
+  { date: "2008-11-14", weight: -1, artist: "Beyoncé",              album: "I Am...Sasha Fierce",       cover: "i-am-sasha-fierce.jpg", spotify: "https://open.spotify.com/album/23Y5wdyP5byMFktZf8AcWU?si=-YRCfEEIQkClNLlH5sD_Sg" },
   { date: "2008-09-23", weight: -1, artist: "The Pussycat Dolls",   album: "Doll Domination",           spotify: "https://open.spotify.com/album/7mDkWKTghwBDuHCJmH6qR5?si=Ey67KodOQd-VOC-FRZrh6Q" },
   { date: "2008-06-17", weight: 1, artist: "Katy Perry",     album: "One of the Boys",  spotify: "https://open.spotify.com/album/3OALgjCs6Lqw41853v4wEQ?si=r-xno9v6RAi-tbXvEY2wwA" },
   { date: "2008-01-27", weight: 1, artist: "Adele",          album: "19",               spotify: "https://open.spotify.com/album/5awrJZBt3rP9RO5hlYdZB0?si=rpRTVlGSQfSHB1R7C1ACng" },
