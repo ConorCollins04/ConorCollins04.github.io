@@ -224,8 +224,9 @@
 
   // Recommendations stat
   if (typeof ALBUMS !== "undefined") {
+    const activeAlbums = ALBUMS.filter(a => a.weight > 0).length;
     document.getElementById("recommendations-stat").textContent =
-      `${ALBUMS.length} albums`;
+      `${activeAlbums} albums · ${ALBUMS.length} in system`;
   }
 
   // Calbumdar stat
