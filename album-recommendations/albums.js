@@ -236,7 +236,7 @@ const ALBUMS = [
 
   { date: "2016-11-18", weight: -1, artist: "Little Mix",             album: "Glory Days",         spotify: "https://open.spotify.com/album/2GJLzxAajkFeyDPVH7X4Cs?si=7XWlQHB9TIWmdgQeRq6hbA" },
   { date: "2016-10-21", weight: 3,  artist: "Lady Gaga",              album: "Joanne",             spotify: "https://open.spotify.com/album/2ZUwFxlWo0gwTsvZ6L4Meh?si=tTqZBmF0QiWmLZbcDa7Awg" },
-  { date: "2016-08-26", weight: -1, artist: "AURORA",                  album: "All My Demons Greeting Me as a Friend", spotify: "https://open.spotify.com/album/69YLD3zIxQt55bHjVlhLTP?si=SpnuU5o7RUKmxropFG4Mtw" },
+  { date: "2016-08-26", weight: -1, artist: "AURORA",                  album: "All My Demons Greeting Me As A Friend", spotify: "https://open.spotify.com/album/69YLD3zIxQt55bHjVlhLTP?si=SpnuU5o7RUKmxropFG4Mtw" },
   { date: "2016-08-26", weight: -1, artist: "Britney Spears",         album: "Glory",              spotify: "https://open.spotify.com/album/4Dx1H8qhJ2hFkChgfZuqQV?si=dh6BoZ3LT-Od8bJMdAT-mg" },
   { date: "2016-05-20", weight: 3,  artist: "Ariana Grande",          album: "Dangerous Woman",    spotify: "https://open.spotify.com/album/3OZgEywV4krCZ814pTJWr7?si=YOkc_aFTRmK7IbjnL44uDQ" },
   { date: "2016-01-15", weight: 1,  artist: "Panic! at the Disco",    album: "Death of a Bachelor", spotify: "https://open.spotify.com/album/6twKQ0EsUJHVlAr6XBylrj?si=zjiaH7d-SRKxTpTwMF_ZrA" },
