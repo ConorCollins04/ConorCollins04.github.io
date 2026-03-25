@@ -16,5 +16,7 @@
   { "artist": "Adele",               "album": "Easy On Me" },
   { "artist": "Cast of High School Musical: The Musical: The Series", "album": "High School Musical: The Musical: The Series (Original Soundtrack)" },
   { "artist": "Alexa",              "album": "American Song Contest: Episode 1" },
-  { "artist": "Charli xcx",        "album": "Beg for You (feat. Rina Sawayama)" }
+  { "artist": "Charli xcx",        "album": "Beg for You (feat. Rina Sawayama)" },
+  { "artist": "Sabrina Carpenter", "album": "Espresso" },
+  { "artist": "Ava Max",           "album": "Who's Laughing Now" }
 ]
