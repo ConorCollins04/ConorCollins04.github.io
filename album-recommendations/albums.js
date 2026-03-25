@@ -331,7 +331,7 @@ const ALBUMS = [
 
   { date: "1999-01-01", weight: -1, artist: "Various Artists", album: "Annie Get Your Gun: The New Broadway Cast Recording", spotify: "https://open.spotify.com/album/2SxCtvFthZqPOkja0lo6yh?si=cW22fEWRQeW8jb-CLTtO8A" },
 
-  { date: "1992-01-01", weight: -1, artist: "Richard Rodgers", album: "The King and I (The New Broadway Cast Recording)", spotify: "https://open.spotify.com/album/09ZYK1FEiNabi61JK5gfkA?si=n-L1_XtPQu27F23DOFXh0A" },
+  { date: "1996-01-01", weight: -1, artist: "Richard Rodgers", album: "The King and I (The New Broadway Cast Recording)", spotify: "https://open.spotify.com/album/5LI7KSOpbFkbar8rdAhW5r?si=RPmeDQQTRZifzejbODFJdA" },
 
   { date: "1978-09-23", weight: 0, artist: "Blondie",        album: "Parallel Lines", spotify: "https://open.spotify.com/album/4M6s2jbhKWEcOdXZ8WiHts?si=MvrqKuArQze2BOLb0iy-VQ" },
 
