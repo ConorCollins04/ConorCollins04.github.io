@@ -226,7 +226,7 @@ const ALBUMS = [
   { date: "2020-03-06", weight: 0,  artist: "Lauv",            album: "~how i'm feeling~",     spotify: "https://open.spotify.com/album/3ZuE680xhR1A4bCFGvL8mi?si=p8zaTxUZTi2KYhLrhF-bng" },
   { date: "2020-02-21", weight: 2, artist: "Allie X",         album: "Cape God",              spotify: "https://open.spotify.com/album/47wRFo2As9zFmg6E5VVa8H?si=xpAJ2DeNSLSn7Y7mjp8-jw" },
   { date: "2020-01-31", weight: 1,  artist: "Kesha",           album: "High Road",             spotify: "https://open.spotify.com/album/4HZ195qaMlhiKebUtF36ni?si=Qn2EedrSQpy3LZba0vqmhg" },
-  { date: "2020-01-31", weight: 1,  artist: "Meghan Trainor",  album: "Treat Myself",          spotify: "https://open.spotify.com/album/766Hr0WDvATeOSIo41JvNs?si=1CSN-iVxStmRzrI9Iff_5Q" },
+  { date: "2020-01-31", weight: 1,  artist: "Meghan Trainor",  album: "TREAT MYSELF",          spotify: "https://open.spotify.com/album/766Hr0WDvATeOSIo41JvNs?si=1CSN-iVxStmRzrI9Iff_5Q" },
   { date: "2020-01-17", weight: 3,  artist: "Halsey",          album: "Manic",                 spotify: "https://open.spotify.com/album/68enXe5XcJdciSDAZr0Alr?si=oXbH-dRVRhyFrJr606nRSQ" },
   { date: "2020-01-10", weight: 3,  artist: "Selena Gomez",    album: "Rare",                  spotify: "https://open.spotify.com/album/3YPFaTR7WMi1Hd4NVKdCJx?si=pabxo5eHTrqgrPQmdZZAaQ" },
 
