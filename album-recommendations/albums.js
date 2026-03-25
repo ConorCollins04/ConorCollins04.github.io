@@ -221,7 +221,7 @@ const ALBUMS = [
 
   { date: "2020-12-11", weight: 0, artist: "Frock Destroyers", album: "FROCK4LIFE",           spotify: "https://open.spotify.com/album/42Qw6E4F6QExaXW52C2tyO?si=VEZmIs-QTIaXNeMpJMPoLw" },
   { date: "2020-12-11", weight: 5,  artist: "Taylor Swift",    album: "evermore",              spotify: "https://open.spotify.com/album/6AORtDjduMM3bupSWzbTSG?si=XpS8SwBWSGeQmnCTpf2H9w" },
-  { date: "2020-12-04", weight: -1, artist: "Grandson",      album: "Death of an Optimist",                   spotify: "https://open.spotify.com/album/0n5LA95QYWAs9wwkkA8Sji?si=yNZw0r0_StWKQqUIGMZc-A" },
+  { date: "2020-12-04", weight: -1, artist: "Grandson",      album: "Death Of An Optimist",                   spotify: "https://open.spotify.com/album/0n5LA95QYWAs9wwkkA8Sji?si=yNZw0r0_StWKQqUIGMZc-A" },
   { date: "2020-12-04", weight: -1, artist: "Shawn Mendes", album: "Wonder", spotify: "https://open.spotify.com/album/3Lp4JKk2ZgNkybMRS3eZR5?si=jrlczqB1Qva8HRROsW6Hkw" },
   { date: "2020-11-27", weight: 5,  artist: "Miley Cyrus",     album: "Plastic Hearts",        spotify: "https://open.spotify.com/album/5BRhg6NSEZOj0BR6Iz56fR?si=mJX1pcjvSVWGRCbqDz-hBw" },
   { date: "2020-11-27", weight: 1,  artist: "Steps",           album: "What the Future Holds", spotify: "https://open.spotify.com/album/1DcWbwQxPayKv0pcpbNEbA?si=3JPiWypgSM6DyNyXLdzFbg" },
