@@ -160,9 +160,19 @@
     "aliases": ["Lungs (Deluxe Edition)"]
   },
   {
+    "artist": "Foxes",
+    "canonical": "Friends In The Corner",
+    "aliases": ["Friends In The Corner EP"]
+  },
+  {
     "artist": "Frankie Grande",
     "canonical": "Hotel Rock Bottom",
     "aliases": ["Hotel Rock Bottom (Deluxe)"]
+  },
+  {
+    "artist": "Griff",
+    "canonical": "Vertigo",
+    "aliases": ["Ver2igo Vol. 2"]
   },
   {
     "artist": "Halsey",
@@ -443,11 +453,6 @@
     "artist": "Zoë",
     "canonical": "Debut",
     "aliases": ["Debut (Deluxe)"]
-  },
-  {
-    "artist": "Foxes",
-    "canonical": "Friends In The Corner",
-    "aliases": ["Friends In The Corner EP"]
   },
   {
     "artist": "Сергей Лазарев",
