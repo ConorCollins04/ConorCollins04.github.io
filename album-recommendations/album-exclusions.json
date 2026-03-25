@@ -20,5 +20,6 @@
   { "artist": "Sabrina Carpenter", "album": "Espresso" },
   { "artist": "Ava Max",           "album": "Who's Laughing Now" },
   { "artist": "Famke Louise",      "album": "Vieren (feat. Vanessa van Cartier, My Little Puny & Vivaldi)" },
-  { "artist": "Taylor Swift",     "album": "This Love (Taylor's Version)" }
+  { "artist": "Taylor Swift",     "album": "This Love (Taylor's Version)" },
+  { "artist": "Brooke",          "album": "Tongues" }
 ]
