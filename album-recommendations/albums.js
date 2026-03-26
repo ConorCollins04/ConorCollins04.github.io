@@ -387,6 +387,7 @@ const ALBUMS = [
   { date: "2017-06-02", weight: 0, artist: "Halsey",          album: "hopeless fountain kingdom", spotify: "https://open.spotify.com/album/5ZvnIKEq0HAwDHNR8f2yIx?si=w4DboguXRPiV_cPdTXVjUQ" },
   { date: "2017-05-12", weight: 2,  artist: "Paramore",        album: "After Laughter",        spotify: "https://open.spotify.com/album/1c9Sx7XdXuMptGyfCB6hHs?si=n-igpUhtSD2qRI4fqIEUcw" },
   { date: "2017-05-05", weight: 0, artist: "Alma",            album: "Ma Peau Aime",                           spotify: "https://open.spotify.com/album/1u065zHgf8lezs0ZW1D0IH?si=NnCH1NJdQduv-BHXq_fEbQ" },
+  { date: "2017-04-14", weight: -1, artist: "Jeangu Macrooy", album: "High On You",                            spotify: "https://open.spotify.com/album/1wtPKN1ppxjJT7ywdcnvzy?si=EqPG-eYPSd2U6VxhCPTfiw" },
   { date: "2017-03-17", weight: 1, artist: "Zara Larsson",    album: "So Good",               spotify: "https://open.spotify.com/album/3ciEcHv8axaPC5YHTJ72Bg?si=dSFpkAazRHKcRmg0z3LDQw" },
 
   { date: "2016-11-18", weight: 2, artist: "Little Mix",             album: "Glory Days",         spotify: "https://open.spotify.com/album/2GJLzxAajkFeyDPVH7X4Cs?si=7XWlQHB9TIWmdgQeRq6hbA" },
@@ -415,6 +416,7 @@ const ALBUMS = [
   { date: "2015-08-28", weight: 1,  artist: "Halsey",              album: "Badlands",                            spotify: "https://open.spotify.com/album/5OZJflQcQCdZLQjtUudCin?si=tRfAKww8RIyUZuc3Ga48Fg" },
   { date: "2015-08-21", weight: 1, artist: "Jess Glynne",         album: "I Cry When I Laugh",                  spotify: "https://open.spotify.com/album/7BEPVoBcHuTLWpcdj8FhM8?si=Q3iiMC0BS2KjIdLE_qEEhA" },
   { date: "2015-08-14", weight: 0, artist: "Melanie Martinez",   album: "Cry Baby",                            spotify: "https://open.spotify.com/album/4DhwPZXdLy4LjoHqJxz8DM?si=Q90ZtcBRQ_SCtRzVe9utLg" },
+  { date: "2015-06-23", weight: -1, artist: "Kacey Musgraves", album: "Pageant Material",                       spotify: "https://open.spotify.com/album/16OVlXWsTKjUkhkPxkgUVa?si=ZvtLAUrxSHukYXYkr08--w" },
   { date: "2015-03-16", weight: -1, artist: "Kendrick Lamar",   album: "To Pimp a Butterfly",                    spotify: "https://open.spotify.com/album/7ycBtnsMtyVbbwTfJwRjSP?si=QDx1YtQOT8O3Xosl6kt8TA" },
   { date: "2015-03-13", weight: -1, artist: "MARINA",           album: "Froot",                                  spotify: "https://open.spotify.com/album/1u2ACTYzVNK3vSLG0Ah4H3?si=T7fNM7qNSjy0n33rWoZVYQ" },
   { date: "2015-02-17", weight: 0, artist: "Against the Current", album: "Gravity",                             spotify: "https://open.spotify.com/album/5kQ5WsiDb3wzKOVCvvuaVr?si=sRvPMFF-QyyoLZUvlVI7Yw" },
