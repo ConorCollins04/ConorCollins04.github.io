@@ -143,6 +143,7 @@ const ALBUMS = [
   { date: "2023-04-10", weight: 0, artist: "IVE",                album: "I've IVE",                               spotify: "https://open.spotify.com/album/38VzP4yWfHdHafITKKRHEB?si=WDD5bK0lQJefnmDwBnRTmQ" },
   { date: "2023-04-07", weight: 0, artist: "Ellie Goulding",   album: "Higher Than Heaven",                     spotify: "https://open.spotify.com/album/6FL3GfTcb8cf4xwMJlcynq?si=iQbn0GcZTquBS3BubAE-Ug" },
   { date: "2023-03-31", weight: 0, artist: "boygenius",          album: "the record",                             spotify: "https://open.spotify.com/album/0e9GjrztzBw8oMC6n2CDeI?si=H_Xy-X5zRRuH-vpDCqq4zQ" },
+  { date: "2023-03-24", weight: -1, artist: "Caroline Rose",    album: "The Art of Forgetting",                  spotify: "https://open.spotify.com/album/5Mp4C3BHi9AxPkgexCT8sg?si=WIv1r0D6T6KK8abYvH3Ifg" },
   { date: "2023-03-24", weight: 0, artist: "Lana Del Rey",      album: "Did you know that there's a tunnel under Ocean Blvd", spotify: "https://open.spotify.com/album/5HOHne1wzItQlIYmLXLYfZ?si=qFjy1bK_QqaoGYcNGK20Vw" },
   { date: "2023-03-15", weight: 0, artist: "Aly & AJ",          album: "With Love From",                         spotify: "https://open.spotify.com/album/3oFIKpX63uWlFve7BaVK1r?si=pdzg0B_ZTM2mwb-JTo5IOQ" },
   { date: "2023-03-03", weight: 0, artist: "Kali Uchis",        album: "Red Moon In Venus",                      spotify: "https://open.spotify.com/album/5OZ44LaqZbpP3m9B3oT8br?si=jEEGeno9TdSgtndopKq7dA" },
@@ -240,6 +241,7 @@ const ALBUMS = [
   { date: "2021-08-27", weight: 3, artist: "CHVRCHES",          album: "Screen Violence",  spotify: "https://open.spotify.com/album/0QVGIcTbPFeiArrgwRKKtG?si=IeRPBU06RWmi3TJ7ZnOhvQ" },
   { date: "2021-08-27", weight: 0, artist: "Halsey",           album: "If I Can't Have Love, I Want Power",     spotify: "https://open.spotify.com/album/3sq0hRtlT2SYeYajr5Cx22?si=SpcecArMTzmealLLs7Z1Jg" },
   { date: "2021-08-20", weight: 3,  artist: "Lorde",             album: "Solar Power",   spotify: "https://open.spotify.com/album/3lK2JRwfIOn2NaYtgEGTmZ?si=QE8V9AnQQmaRmM8N3imiww" },
+  { date: "2021-08-13", weight: -1, artist: "Ben Platt",        album: "Reverie",                                spotify: "https://open.spotify.com/album/7LUMQHRWTTILN7yR6LJwHR?si=m19VjhMfQnePF2o9AMVsYw" },
   { date: "2021-08-06", weight: 0, artist: "Tinashe",          album: "333",                                    spotify: "https://open.spotify.com/album/7zP5gW9QuwC9nKTIPk2CjD?si=QrV9t29oRDmp_bkN5ZSaRQ" },
   { date: "2021-07-09", weight: -1, artist: "Andrew Lloyd Webber", album: "Andrew Lloyd Webber's Cinderella", spotify: "https://open.spotify.com/album/3rtC6Cp8eRW9hrDnfkGKb3?si=u5LfwgFARSS-D4Lxig5Q4Q" },
   { date: "2021-06-25", weight: 0, artist: "Doja Cat",           album: "Planet Her",    spotify: "https://open.spotify.com/album/1nAQbHeOWTfQzbOoFrvndW?si=sys2cLE3Q2utnU3rLEjeUA" },
@@ -432,6 +434,8 @@ const ALBUMS = [
   { date: "2013-11-11", weight: 3, artist: "Lady Gaga",      album: "ARTPOP",  spotify: "https://open.spotify.com/album/2eRJUtI7nXrQ5uYQ7tzTo9?si=SpSfSJjQQIy2aEN3GabNUQ" },
   { date: "2013-09-27", weight: 4, artist: "Lorde",          album: "Pure Heroine", spotify: "https://open.spotify.com/album/0rmhjUgoVa17LZuS8xWQ3v?si=W0Keb7bYTQOeivKlXj3RpA" },
   { date: "2013-10-04", weight: 0, artist: "Miley Cyrus", album: "Bangerz", spotify: "https://open.spotify.com/album/3RDqXDc1bAETps54MSSOW0?si=G71w4j0GTBquX_6dYObLgQ" },
+  { date: "2013-09-16", weight: -1, artist: "Avicii",         album: "True",                                   spotify: "https://open.spotify.com/album/2H6i2CrWgXE1HookLu8Au0?si=bUibQ91bSaOhXanJZ6CHYg" },
+  { date: "2013-09-09", weight: -1, artist: "Arctic Monkeys", album: "AM",                                    spotify: "https://open.spotify.com/album/78bpIziExqiI9qztvNFlQu?si=wA4q-RZ7QeedFiEZ2FCoOg" },
   { date: "2013-04-05", weight: 1, artist: "Paramore",      album: "Paramore", spotify: "https://open.spotify.com/album/4sgYpkIASM1jVlNC8Wp9oF?si=5ngC_bymSZacGgxOAEZXtA" },
   { date: "2013-05-20", weight: -1, artist: "The National",  album: "Trouble Will Find Me",                   spotify: "https://open.spotify.com/album/4OI9hKTm1QMRQunqHCfSSL?si=s8TQTbPkTfyFk_vwnUU4Yg" },
   { date: "2013-02-19", weight: 0, artist: "Starfucker",   album: "Miracle Mile",                           spotify: "https://open.spotify.com/album/1bvGSdxElbk5CTTPIrWO2L?si=Y58q5T-KTY-Ceh5C_1-qgw" },
@@ -489,6 +493,7 @@ const ALBUMS = [
   { date: "2004-02-16", weight: -1, artist: "Franz Ferdinand", album: "Franz Ferdinand",                        spotify: "https://open.spotify.com/album/0vi5ePiEHrGZJF7QhnDW2z?si=ar4PyHeMThuDiWJM13mVQw" },
 
   { date: "2003-11-13", weight: 0,  artist: "Britney Spears", album: "In the Zone",    spotify: "https://open.spotify.com/album/0z7pVBGOD7HCIB7S8eLkLI?si=zlBLl7-1QR6injnEU7CEgA" },
+  { date: "2003-06-17", weight: -1, artist: "Brand New",       album: "Deja Entendu",                           spotify: "https://open.spotify.com/album/6vDiMhyfSnTn18OY99BSQX?si=oe0Lb4NFRH-LhkhVKUeNhw" },
 
   { date: "2002-06-04", weight: 1, artist: "Avril Lavigne",  album: "Let Go",         spotify: "https://open.spotify.com/album/3zXjR3y2dUWklKmmp6lEhy?si=jfqpncY6TaCOqPnolDywvA" },
 
