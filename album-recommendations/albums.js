@@ -142,7 +142,6 @@ const ALBUMS = [
   { date: "2023-03-03", weight: -1, artist: "Kali Uchis",        album: "Red Moon In Venus",                      spotify: "https://open.spotify.com/album/5OZ44LaqZbpP3m9B3oT8br?si=jEEGeno9TdSgtndopKq7dA" },
   { date: "2023-02-24", weight: 0, artist: "Gracie Abrams", album: "Good Riddance",                          spotify: "https://open.spotify.com/album/5ZCIbfKnv3GF5h5h8MiRzQ?si=d6pPPxApRZW2DuUH9sIAhw" },
   { date: "2023-02-17", weight: -1, artist: "P!nk",          album: "TRUSTFALL",                              spotify: "https://open.spotify.com/album/1GIWJs7mEdzKym3tQ8QScJ?si=WbRsqsS2SfaouET5e2Y2NA" },
-  { date: "2023-01-27", weight: -1, artist: "Samia",          album: "Honey",                                  spotify: "https://open.spotify.com/album/6xQIAbfKyR8HaoJmxTnOHv?si=RPIaixWdRuy69NfykXH2Sw" },
   { date: "2023-01-20", weight: -1, artist: "Måneskin",        album: "Rush!",                                  spotify: "https://open.spotify.com/album/2KUaR4K36tSliwAoUA1gcs?si=3qcOa5dAT46tBIAjbQx9hw" },
 
   { date: "2022-09-16", rank:  1, weight: 5, artist: "Rina Sawayama",    album: "Hold The Girl",                          songs: ["This Hell", "Imagining", "Frankenstein"],                           spotify: "https://open.spotify.com/album/0JO5WJ19NtFRtVYOnw24xS?si=SNjlVt36QjOosDlFakYx2Q" },
@@ -179,7 +178,6 @@ const ALBUMS = [
   { date: "2022-06-24", weight: 0, artist: "Soccer Mommy",      album: "Sometimes, Forever",                     spotify: "https://open.spotify.com/album/3VXLdJpzeaAyX9Tbm0i0zn?si=sZEUXxhySk2y4Mf4lcn9XQ" },
   { date: "2022-06-24", weight: 0, artist: "Conan Gray",       album: "Superache",                              spotify: "https://open.spotify.com/album/5hIOd0FvjlgG4uLjXHkFWI?si=7lCt9nBkRMa3j0ZV-NQD1g" },
   { date: "2022-05-20", weight: 0, artist: "Harry Styles",      album: "Harry's House",                          spotify: "https://open.spotify.com/album/5r36AJ6VOJtp00oxSkBZ5h?si=gkyoz3SAQkqY0hu8K5jIFw" },
-  { date: "2022-05-13", weight: -1, artist: "Kendrick Lamar",   album: "Mr. Morale & the Big Steppers",          spotify: "https://open.spotify.com/album/79ONNoS4M9tfIA1mYLBYVX?si=x9NJd33_TOOSjVGrk59N6Q" },
   { date: "2022-05-12", weight: -1, artist: "Ethel Cain",       album: "Preacher's Daughter",                    spotify: "https://open.spotify.com/album/3WmujGwOS0ANHkJRnMH6n8?si=pghTn_2ARdyeDrpAIxDjxg" },
   { date: "2022-05-06", weight: 0, artist: "Bad Bunny",         album: "Un Verano Sin Ti",                       spotify: "https://open.spotify.com/album/3RQQmkQEvNCY4prGKE6oc5?si=rWlqhwo5RNSUb918aCDU-A" },
   { date: "2022-04-08", weight: -1, artist: "Lizzy McAlpine",  album: "five seconds flat",                      spotify: "https://open.spotify.com/album/68L5xVV9wydotfDXEik7eD?si=EZMq8fNtTjmOPrpNpOoidw" },
