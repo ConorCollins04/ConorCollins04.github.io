@@ -241,6 +241,7 @@ const ALBUMS = [
   { date: "2021-08-27", weight: 0, artist: "Halsey",           album: "If I Can't Have Love, I Want Power",     spotify: "https://open.spotify.com/album/3sq0hRtlT2SYeYajr5Cx22?si=SpcecArMTzmealLLs7Z1Jg" },
   { date: "2021-08-20", weight: 3,  artist: "Lorde",             album: "Solar Power",   spotify: "https://open.spotify.com/album/3lK2JRwfIOn2NaYtgEGTmZ?si=QE8V9AnQQmaRmM8N3imiww" },
   { date: "2021-08-06", weight: 0, artist: "Tinashe",          album: "333",                                    spotify: "https://open.spotify.com/album/7zP5gW9QuwC9nKTIPk2CjD?si=QrV9t29oRDmp_bkN5ZSaRQ" },
+  { date: "2021-07-09", weight: -1, artist: "Andrew Lloyd Webber", album: "Andrew Lloyd Webber's Cinderella", spotify: "https://open.spotify.com/album/3rtC6Cp8eRW9hrDnfkGKb3?si=u5LfwgFARSS-D4Lxig5Q4Q" },
   { date: "2021-06-25", weight: 0, artist: "Doja Cat",           album: "Planet Her",    spotify: "https://open.spotify.com/album/1nAQbHeOWTfQzbOoFrvndW?si=sys2cLE3Q2utnU3rLEjeUA" },
   { date: "2021-06-25", weight: -1, artist: "The Marías",        album: "Cinema",                                 spotify: "https://open.spotify.com/album/5TkaDC4mYSLBvdG6UrIB0v?si=FhiT4RQhSHavVSpGjzgLyQ" },
   { date: "2021-06-18", weight: 3, artist: "Griff",             album: "One Foot in Front of the Other", spotify: "https://open.spotify.com/album/6CR4ozv4yOdaA3f6PPQepA?si=3qqFDeBlS1ud_9bF71zG1A" },
@@ -506,6 +507,7 @@ const ALBUMS = [
   { date: "1996-01-01", weight: 0, artist: "Richard Rodgers", album: "The King and I (The New Broadway Cast Recording)", spotify: "https://open.spotify.com/album/5LI7KSOpbFkbar8rdAhW5r?si=RPmeDQQTRZifzejbODFJdA" },
 
   { date: "1995-10-01", weight: 0, artist: "The Herbaliser", album: "Remedies",                               spotify: "https://open.spotify.com/album/6pEiSu3D6LY8lrxSIFbdfu?si=VMnK8-OMRxOStD9_GFvuCA" },
+  { date: "1995-01-01", weight: -1, artist: "Alanis Morissette", album: "Jagged Little Pill",                 spotify: "https://open.spotify.com/album/5Ap3F8CxjjsQKZGASDcHNA?si=L8437MGZSeO_dOTJm3JE7w" },
 
   { date: "1989-09-19", weight: -1, artist: "Janet Jackson",  album: "Rhythm Nation 1814",                     spotify: "https://open.spotify.com/album/7jtBAkD6DL5yn7komrFTxE?si=oDNhy8NLQjiDWIE8OXqeOw" },
 
