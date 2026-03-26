@@ -158,6 +158,7 @@ const ALBUMS = [
   { date: "2023-02-03", weight: -1, artist: "Vylet Pony",   album: "Carousel (An Examination of the Shadow, Creekflow, and its Life as an Afterthought)",                               spotify: "https://open.spotify.com/album/2uiBNQHyU4fxn1kZlHUF2d?si=1cBj9QeUR36RKCAwk79Ttg" },
   { date: "2023-01-27", weight: -1, artist: "Lil Yachty",   album: "Let's Start Here.",                      spotify: "https://open.spotify.com/album/6Per97deaWqrJlKQNX8RGK?si=st_TxyJ3RA--VhDsNrBTdA" },
   { date: "2023-01-20", weight: 0, artist: "Måneskin",        album: "Rush!",                                  spotify: "https://open.spotify.com/album/2KUaR4K36tSliwAoUA1gcs?si=3qcOa5dAT46tBIAjbQx9hw" },
+  { date: "2023-01-06", weight: -1, artist: "RuPaul",         album: "Black Butta",                            spotify: "https://open.spotify.com/album/5STotQGUXPZGyEj8Qr38Dv?si=Hyb8ASujSj2NQXJJ_sIahg" },
 
   { date: "2022-09-16", rank:  1, weight: 5, artist: "Rina Sawayama",    album: "Hold The Girl",                          songs: ["This Hell", "Imagining", "Frankenstein"],                           spotify: "https://open.spotify.com/album/0JO5WJ19NtFRtVYOnw24xS?si=SNjlVt36QjOosDlFakYx2Q" },
   { date: "2022-10-21", rank:  2, weight: 3, artist: "Taylor Swift",     album: "Midnights",                              songs: ["Lavender Haze", "Maroon", "The Great War"],                         spotify: "https://open.spotify.com/album/3lS1y25WAhcqJDATJK70Mq?si=k7wHXnwfQAWgBnwbeUaXhQ" },
@@ -183,6 +184,7 @@ const ALBUMS = [
   { date: "2022-07-29", rank: 22, weight: 1, artist: "Hayley Kiyoko",    album: "PANORAMA",                               songs: ["sugar at the bottom", "for the girls", "found my friends"],         spotify: "https://open.spotify.com/album/2TJlASpVb5tgcEY0RMyZjQ?si=ANN2mwTRRZudDJ2FiG7_tw" },
   { date: "2022-05-27", rank: 23, weight: 1, artist: "Tate McRae",       album: "i used to think i could fly",            songs: ["she's all i wanna be", "you're so cool", "feel like shit"],         spotify: "https://open.spotify.com/album/5fhTetHew6Eph6HfQ9O5gJ?si=Mg29BH0fQDK1DT9JDrLWWw" },
   { date: "2022-03-25", rank: 24, weight: 1, artist: "Sofia Carson",     album: "Sofia Carson",                           songs: ["It's Only Love Nobody Dies", "LOUD", "Fool's Gold"],                spotify: "https://open.spotify.com/album/5Y63nlA6F7z3yaqHjF7suD?si=-n4zgIngRE6j7HdzEdrpWA" },
+  { date: "2022-12-09", weight: -1, artist: "Sam Ryder",        album: "There's Nothing But Space, Man!",        spotify: "https://open.spotify.com/album/2n0ez0hSIrItwkVxDKXHlO?si=geocbWs7Rziqhnc41bEcvw" },
   { date: "2022-12-09", weight: 1, artist: "SZA",               album: "SOS",                                    spotify: "https://open.spotify.com/album/07w0rG5TETcyihsEIZR3qG?si=ZMWUjla9RBKWjY3CnEessA" },
   { date: "2022-10-14", weight: -1, artist: "Tove Lo",           album: "Dirt Femme",                             spotify: "https://open.spotify.com/album/0HO9NtwyP7ZqB1jZ70MJL6?si=H_lav3n8Q9W_dTbrFrJxlQ" },
   { date: "2022-10-07", weight: 0, artist: "Alvvays", album: "Blue Rev", spotify: "https://open.spotify.com/album/5ifRlHZX33kTfE5kb1Cpf1?si=QIPsIJ4oTD2wKBl9x1IHSA" },
@@ -265,6 +267,7 @@ const ALBUMS = [
   { date: "2021-03-19", weight: -1, artist: "Lana Del Rey",     album: "Chemtrails Over The Country Club",        spotify: "https://open.spotify.com/album/6QeosPQpJckkW0Obir5RT8?si=tizu55IvTOGo1lPU9vtWew" },
   { date: "2021-03-19", weight: 0, artist: "Måneskin",           album: "Teatro d'ira - Vol. I", spotify: "https://open.spotify.com/album/7KF1Ain9mYYlg5M46g0i4A?si=m92GA8sESvaxqQAEcpvd_w" },
   { date: "2021-02-15", weight: 0, artist: "Chung Ha",         album: "Querencia",                              spotify: "https://open.spotify.com/album/3ZifpmJjOEkpYCNSIq352p?si=USlAkM7AQKivyBRYQyuR6w" },
+  { date: "2021-02-12", weight: -1, artist: "Rita Ora",         album: "Bang",                                   spotify: "https://open.spotify.com/album/4xeVBTBwaVNQhUdIRC4G9s?si=l1gKqHz8R1aH3kRbVksZ1w" },
   { date: "2021-02-12", weight: 0, artist: "Sia",               album: "Music (Songs from and Inspired by the Motion Picture)", spotify: "https://open.spotify.com/album/7nA0EdSRuxzUqkA7kMSer7?si=kt28SxY-T3Ga9_IrhVS_bg" },
   { date: "2021-01-15", weight: 0, artist: "Zayn",            album: "Nobody Is Listening",                    spotify: "https://open.spotify.com/album/2yuQqhSklmfWgn8lmJNk5t?si=REHeKTBpQ7SXz6JdqmbJIQ" },
   { date: "2021-01-08", weight: -1, artist: "Jazmine Sullivan", album: "Heaux Tales",                          spotify: "https://open.spotify.com/album/5g9YhHW8tE7Tcslgxsk5u9?si=c8WvNJGETRaRfFUAXrBLBA" },
@@ -372,6 +375,7 @@ const ALBUMS = [
   { date: "2018-04-01", weight: 0, artist: "Sergey Lazarev",    album: "The One",                           spotify: "https://open.spotify.com/album/1gKYilxh4go3gKDikTH1ZO?si=amQXuqaKTSutvK-A4BUotg" },
   { date: "2018-02-14", weight: 0, artist: "Kevin Penkin", album: "Florence (Original Soundtrack)", spotify: "https://open.spotify.com/album/7uwHUvVHDAEKxyXCoZYFIF?si=mfy04zVjSYWbjsMyTqIExg" },
   { date: "2018-02-09", weight: 0, artist: "The Wombats",  album: "Beautiful People Will Ruin Your Life", spotify: "https://open.spotify.com/album/6APrFw7uAsqi0vXaQTtSYi?si=h3jWmpX_SiqZVEkupm6tYg" },
+  { date: "2018-02-02", weight: -1, artist: "PAENDA",         album: "Evolution I",                            spotify: "https://open.spotify.com/album/53acv2xUCOalQnnQEcpM1s?si=7lfibISATyqqTfIAz1wg4w" },
   { date: "2018-01-19", weight: 1, artist: "Fall Out Boy",  album: "MANIA",                                  spotify: "https://open.spotify.com/album/16xtTZvPH6PXcwSqYqJHHG?si=-U9eWSsHSZ2DTMDZnOub-g" },
 
   { date: "2017-12-15", weight: 1, artist: "Charli XCX",      album: "Pop 2",                                  spotify: "https://open.spotify.com/album/2HIwUmdxEl7SeWa1ndH5wC?si=WzIdcuEGRbmdPciAcqmCLQ" },
@@ -452,6 +456,7 @@ const ALBUMS = [
   { date: "2013-01-01", weight: 1,  artist: "Katy Perry",     album: "PRISM",   spotify: "https://open.spotify.com/album/5MQBzs5YlZlE28mD9yUItn?si=bWHVxOKXSkG8lBlYLDooIA" },
   { date: "2013-01-01", weight: 0, artist: "OneRepublic",    album: "Native",  spotify: "https://open.spotify.com/album/20lOt6G8MHv8ZO7ViOmiP7?si=feYnjeq7R9K3UFgV3G2qLg" },
   { date: "2013-01-01", weight: 0, artist: "Sky Ferreira",  album: "Night Time, My Time",                    spotify: "https://open.spotify.com/album/0DucmDrdJM4evPXMbFJXBS?si=C-xOI_PyTFa4R7jBgcMFMg" },
+  { date: "2013-01-01", weight: -1, artist: "Stephen Schwartz", album: "Wicked (Original Broadway Cast Recording)", spotify: "https://open.spotify.com/album/1woCvthHJakakroP6dXNxs?si=nZhEsb11Tx-jc_uGj1MeMQ" },
 
   { date: "2012-10-22", weight: 1, artist: "Bridgit Mendler", album: "Hello My Name Is...", spotify: "https://open.spotify.com/album/114sumrk5wTeMWHVin86QC?si=7xMyDt5JRK-1wLexvlkfpg" },
   { date: "2012-10-19", weight: 1, artist: "Loreen",         album: "Heal",                                   spotify: "https://open.spotify.com/album/73FYKSgOypVgghYr8GsEGl?si=-bujht3TSjK27Mm5rZIXcg" },
@@ -523,6 +528,10 @@ const ALBUMS = [
 
   { date: "1995-10-01", weight: 0, artist: "The Herbaliser", album: "Remedies",                               spotify: "https://open.spotify.com/album/6pEiSu3D6LY8lrxSIFbdfu?si=VMnK8-OMRxOStD9_GFvuCA" },
   { date: "1995-01-01", weight: -1, artist: "Alanis Morissette", album: "Jagged Little Pill",                 spotify: "https://open.spotify.com/album/5Ap3F8CxjjsQKZGASDcHNA?si=L8437MGZSeO_dOTJm3JE7w" },
+
+  { date: "1994-09-13", weight: -1, artist: "Sinéad O'Connor", album: "Universal Mother",                      spotify: "https://open.spotify.com/album/7u20BJTgQrowjyaTEgE46p?si=3RYnJujoSeeY6OaV3uV_Lw" },
+
+  { date: "1993-03-01", weight: -1, artist: "The Cranberries", album: "Everybody Else Is Doing It, So Why Can't We?", spotify: "https://open.spotify.com/album/0AP5O47kJWlaKVnnybKvQI?si=47O37cLqTleAqD29CE8y4g" },
 
   { date: "1989-09-19", weight: -1, artist: "Janet Jackson",  album: "Rhythm Nation 1814",                     spotify: "https://open.spotify.com/album/7jtBAkD6DL5yn7komrFTxE?si=oDNhy8NLQjiDWIE8OXqeOw" },
 
