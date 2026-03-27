@@ -300,7 +300,6 @@ const ALBUMS = [
   { date: "2021-08-13", weight: 0, artist: "Ben Platt",        album: "Reverie",                                spotify: "https://open.spotify.com/album/7LUMQHRWTTILN7yR6LJwHR?si=m19VjhMfQnePF2o9AMVsYw" },
   { date: "2021-08-06", weight: 0, artist: "Tinashe",          album: "333",                                    spotify: "https://open.spotify.com/album/7zP5gW9QuwC9nKTIPk2CjD?si=QrV9t29oRDmp_bkN5ZSaRQ" },
   { date: "2021-07-09", weight: 0, artist: "Andrew Lloyd Webber", album: "Andrew Lloyd Webber's “Cinderella”", spotify: "https://open.spotify.com/album/3rtC6Cp8eRW9hrDnfkGKb3?si=u5LfwgFARSS-D4Lxig5Q4Q" },
-  { date: "2021-07-02", weight: -1, artist: "Alessia Cara",     album: "Not Another Love Song",                  spotify: "https://open.spotify.com/album/0wLPeFub9tioiUveG5xHEl?si=B6dks2nLR9ymaTSyPuHl7g" },
   { date: "2021-06-25", weight: 0, artist: "Doja Cat",           album: "Planet Her",    spotify: "https://open.spotify.com/album/1nAQbHeOWTfQzbOoFrvndW?si=sys2cLE3Q2utnU3rLEjeUA" },
   { date: "2021-06-25", weight: 0, artist: "The Marías",        album: "CINEMA",                                 spotify: "https://open.spotify.com/album/5TkaDC4mYSLBvdG6UrIB0v?si=FhiT4RQhSHavVSpGjzgLyQ" },
   { date: "2021-06-18", weight: 3, artist: "Griff",             album: "One Foot in Front of the Other", spotify: "https://open.spotify.com/album/6CR4ozv4yOdaA3f6PPQepA?si=3qqFDeBlS1ud_9bF71zG1A" },
