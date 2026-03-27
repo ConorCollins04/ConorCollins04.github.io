@@ -471,6 +471,7 @@ const ALBUMS = [
   { date: "2017-10-27", weight: 2, artist: "Rina Sawayama",   album: "RINA",                                   spotify: "https://open.spotify.com/album/0rYXZCRBEsRBc4ZyRo8Y6w?si=PUZY_QwVQyKHUy47F7ChIQ" },
   { date: "2017-10-13", weight: 0, artist: "St. Vincent", album: "MASSEDUCTION", spotify: "https://open.spotify.com/album/4RoOGpdrgfiIUyv0kLaC4e?si=MqMm5olXRpKhzp2JG6PEyg" },
   { date: "2017-10-13", weight: 0, artist: "THE ROOP",      album: "Ghosts",                                         spotify: "https://open.spotify.com/album/37bs1NY8OwkpoJnPfTxLcQ?si=mSnVDVmVTiOUCt0ABLUB7g" },
+  { date: "2017-09-22", weight: -1, artist: "Phoebe Bridgers", album: "Stranger in the Alps",                   spotify: "https://open.spotify.com/album/5rcJ5xCMYYLCgGilFDKRZl?si=OtwXyvfvRkmwqp1mfNl0QQ" },
   { date: "2017-08-11", weight: 1,  artist: "Kesha",           album: "Rainbow",               spotify: "https://open.spotify.com/album/1IYVB8NfiRqhdZlTxjspNh?si=4XcmykcKS-i4I6Vf_QMXzQ" },
   { date: "2017-06-30", weight: 0, artist: "Senhit",           album: "Hey Buddy",                              spotify: "https://open.spotify.com/album/0m0JXhJXAnqIX8tOH9YFeE?si=vOYz4_SeRPiy5TD2idyR-w" },
   { date: "2017-06-16", weight: 5,  artist: "Lorde",           album: "Melodrama",             spotify: "https://open.spotify.com/album/2B87zXm9bOWvAJdkJBTpzF?si=jkFPPTu3TT2PS5btc9sTQw" },
