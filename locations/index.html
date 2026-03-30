@@ -23,7 +23,7 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
-      padding: 0 0 60px; /* leave room for nav pill */
+      padding: 0 0 60px;
     }
 
     /* ── Header ── */
@@ -32,7 +32,7 @@
       align-items: baseline;
       justify-content: space-between;
       gap: 20px;
-      padding: 40px 5vw 24px;
+      padding: 40px 5vw 20px;
       flex-shrink: 0;
     }
 
@@ -51,6 +51,80 @@
       letter-spacing: 0.03em;
       color: var(--muted);
       line-height: 1.6;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 5vw 16px;
+      flex-shrink: 0;
+    }
+
+    .view-btn {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      padding: 5px 13px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.12s;
+      white-space: nowrap;
+    }
+    .view-btn:hover { border-color: var(--border-hover); color: var(--text); }
+    .view-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    .divider {
+      width: 1px;
+      height: 16px;
+      background: var(--border);
+    }
+
+    .year-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .year-display {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.03em;
+      color: var(--text);
+      min-width: 26px;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 120px;
+      height: 4px;
+      background: var(--border-hover);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    input[type="range"].dimmed { opacity: 0.3; }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--text);
+      cursor: pointer;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--text);
+      border: none;
+      cursor: pointer;
     }
 
     /* ── Map ── */
@@ -85,6 +159,12 @@
       color: var(--muted);
       margin-top: 3px;
     }
+    .popup-cities {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 3px;
+      line-height: 1.4;
+    }
     .popup-visits {
       margin-top: 8px;
       display: flex;
@@ -106,6 +186,15 @@
     <h1>Locations</h1>
     <div class="page-subtitle" id="stats">—</div>
   </div>
+  <div class="controls">
+    <button class="view-btn" id="country-toggle">Country view</button>
+    <div class="divider"></div>
+    <div class="year-control">
+      <span class="year-display" id="year-display">All</span>
+      <input type="range" id="year-slider" class="dimmed">
+      <button class="view-btn active" id="year-all">All</button>
+    </div>
+  </div>
   <div id="map"></div>
 </div>
 
@@ -114,7 +203,26 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="data.js"></script>
 <script>
-  // Stats
+  // ── Country centroids ──
+  const COUNTRY_CENTROIDS = {
+    "Belgium":        [50.5039,  4.4699],
+    "Czech Republic": [49.8175, 15.4730],
+    "France":         [46.2276,  2.2137],
+    "Germany":        [51.1657, 10.4515],
+    "Greece":         [39.0742, 21.8243],
+    "Ireland":        [53.1424, -7.6921],
+    "Italy":          [41.8719, 12.5674],
+    "Netherlands":    [52.1326,  5.2913],
+    "Spain":          [40.4637, -3.7492],
+    "Sweden":         [62.0,    15.0   ],
+    "United Kingdom": [52.3555, -1.1743],
+  };
+
+  // ── State ──
+  let countryMode = false;
+  let yearFilter = null; // null = all years
+
+  // ── Helpers ──
   function formatDate(str) {
     if (!str) return "unknown";
     const [y, m, d] = str.split("-");
@@ -123,15 +231,34 @@
     return `${d ? parseInt(d) + " " : ""}${months[parseInt(m) - 1]} ${y}`;
   }
 
-  // Stats (null visits count as visits, just undated)
+  function visitsForYear(visits, year) {
+    if (!year) return visits;
+    return visits.filter(v => v.date && v.date.startsWith(String(year)));
+  }
+
+  function sortedVisitRows(visits) {
+    return [...visits]
+      .sort((a, b) => {
+        if (!a.date && !b.date) return 0;
+        if (!a.date) return 1;
+        if (!b.date) return -1;
+        return b.date.localeCompare(a.date);
+      })
+      .map(v => `<div class="popup-visit-date">${formatDate(v.date)}</div>`)
+      .join("");
+  }
+
+  // ── Stats ──
   if (typeof LOCATIONS !== "undefined" && LOCATIONS.length > 0) {
     const countries = new Set(LOCATIONS.map(l => l.country)).size;
     const totalVisits = LOCATIONS.reduce((sum, l) => sum + (l.visits ? l.visits.length : 0), 0);
     document.getElementById("stats").textContent =
-      `${LOCATIONS.length} ${LOCATIONS.length === 1 ? "city" : "cities"} · ${countries} ${countries === 1 ? "country" : "countries"} · ${totalVisits} ${totalVisits === 1 ? "visit" : "visits"}`;
+      `${LOCATIONS.length} ${LOCATIONS.length === 1 ? "city" : "cities"} · ` +
+      `${countries} ${countries === 1 ? "country" : "countries"} · ` +
+      `${totalVisits} ${totalVisits === 1 ? "visit" : "visits"}`;
   }
 
-  // Map
+  // ── Map ──
   const map = L.map("map", { zoomControl: true });
 
   L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
@@ -139,49 +266,122 @@
     maxZoom: 19,
   }).addTo(map);
 
-  if (typeof LOCATIONS !== "undefined" && LOCATIONS.length > 0) {
-    const markers = LOCATIONS.map(loc => {
-      const visits = loc.visits || [];
-      const count = visits.length;
-      const radius = count <= 1 ? 7 : count <= 3 ? 9 : 11;
+  let activeMarkers = [];
+  let initialFitDone = false;
 
-      const isCountry = loc.city === loc.country;
-      const marker = L.circleMarker([loc.lat, loc.lng], {
-        radius,
-        fillColor: isCountry ? "#6b6278" : "#1a1624",
-        color: "#f3f1f8",
-        weight: 2,
-        opacity: 1,
-        fillOpacity: 0.85,
-      });
-
-      // Sort: dated visits newest first, nulls at the end
-      const sortedVisits = [...visits].sort((a, b) => {
-        const ad = a.date, bd = b.date;
-        if (!ad && !bd) return 0;
-        if (!ad) return 1;
-        if (!bd) return -1;
-        return bd.localeCompare(ad);
-      });
-      const visitRows = sortedVisits.map(v =>
-        `<div class="popup-visit-date">${formatDate(v.date)}</div>`
-      ).join("");
-
-      marker.bindPopup(
-        `<div class="popup-city">${loc.city}</div>` +
-        `<div class="popup-country">${loc.country}</div>` +
-        (visitRows ? `<div class="popup-visits">${visitRows}</div>` : ""),
-        { maxWidth: 220 }
-      );
-
-      return marker.addTo(map);
-    });
-
-    const group = L.featureGroup(markers);
-    map.fitBounds(group.getBounds().pad(0.25));
-  } else {
-    map.setView([20, 0], 2);
+  function clearMarkers() {
+    activeMarkers.forEach(m => map.removeLayer(m));
+    activeMarkers = [];
   }
+
+  function addMarker(lat, lng, isCountryPin, visits, popupHtml) {
+    const count = visits.length;
+    const radius = count <= 1 ? 7 : count <= 3 ? 9 : 11;
+    const marker = L.circleMarker([lat, lng], {
+      radius,
+      fillColor: isCountryPin ? "#6b6278" : "#1a1624",
+      color: "#f3f1f8",
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.85,
+    });
+    marker.bindPopup(popupHtml, { maxWidth: 220 });
+    marker.addTo(map);
+    activeMarkers.push(marker);
+  }
+
+  function renderMarkers() {
+    if (typeof LOCATIONS === "undefined") return;
+    clearMarkers();
+
+    if (countryMode) {
+      const byCountry = new Map();
+      for (const loc of LOCATIONS) {
+        if (!byCountry.has(loc.country)) byCountry.set(loc.country, []);
+        byCountry.get(loc.country).push(loc);
+      }
+
+      for (const [country, locs] of byCountry) {
+        const allVisits = locs.flatMap(l => visitsForYear(l.visits || [], yearFilter));
+        if (allVisits.length === 0) continue;
+
+        const centroid = COUNTRY_CENTROIDS[country] || (() => {
+          const avgLat = locs.reduce((s, l) => s + l.lat, 0) / locs.length;
+          const avgLng = locs.reduce((s, l) => s + l.lng, 0) / locs.length;
+          return [avgLat, avgLng];
+        })();
+
+        const cities = locs
+          .filter(l => visitsForYear(l.visits || [], yearFilter).length > 0 && l.city !== l.country)
+          .map(l => l.city);
+
+        const popup =
+          `<div class="popup-city">${country}</div>` +
+          (cities.length ? `<div class="popup-cities">${cities.join(", ")}</div>` : "") +
+          `<div class="popup-visits">${sortedVisitRows(allVisits)}</div>`;
+
+        addMarker(centroid[0], centroid[1], true, allVisits, popup);
+      }
+    } else {
+      for (const loc of LOCATIONS) {
+        const visits = visitsForYear(loc.visits || [], yearFilter);
+        if (visits.length === 0) continue;
+
+        const isCountryPin = loc.city === loc.country;
+        const popup =
+          `<div class="popup-city">${loc.city}</div>` +
+          `<div class="popup-country">${loc.country}</div>` +
+          `<div class="popup-visits">${sortedVisitRows(visits)}</div>`;
+
+        addMarker(loc.lat, loc.lng, isCountryPin, visits, popup);
+      }
+    }
+
+    if (activeMarkers.length > 0 && !initialFitDone) {
+      map.fitBounds(L.featureGroup(activeMarkers).getBounds().pad(0.25));
+      initialFitDone = true;
+    }
+  }
+
+  renderMarkers();
+
+  // ── Controls setup ──
+  const allYears = (LOCATIONS || [])
+    .flatMap(l => (l.visits || []).map(v => v.date ? parseInt(v.date) : null))
+    .filter(Boolean);
+  const minYear = Math.min(...allYears);
+  const maxYear = Math.max(...allYears);
+
+  const slider = document.getElementById("year-slider");
+  const yearDisplay = document.getElementById("year-display");
+  const yearAllBtn = document.getElementById("year-all");
+  const countryBtn = document.getElementById("country-toggle");
+
+  slider.min = minYear;
+  slider.max = maxYear;
+  slider.value = maxYear;
+
+  slider.addEventListener("input", () => {
+    yearFilter = parseInt(slider.value);
+    yearDisplay.textContent = slider.value;
+    yearAllBtn.classList.remove("active");
+    slider.classList.remove("dimmed");
+    renderMarkers();
+  });
+
+  yearAllBtn.addEventListener("click", () => {
+    yearFilter = null;
+    yearDisplay.textContent = "All";
+    yearAllBtn.classList.add("active");
+    slider.classList.add("dimmed");
+    renderMarkers();
+  });
+
+  countryBtn.addEventListener("click", () => {
+    countryMode = !countryMode;
+    countryBtn.classList.toggle("active", countryMode);
+    renderMarkers();
+  });
 </script>
 <script src="../nav.js"></script>
 </body>
