@@ -145,9 +145,10 @@
       const count = visits.length;
       const radius = count <= 1 ? 7 : count <= 3 ? 9 : 11;
 
+      const isCountry = loc.city === loc.country;
       const marker = L.circleMarker([loc.lat, loc.lng], {
         radius,
-        fillColor: "#1a1624",
+        fillColor: isCountry ? "#6b6278" : "#1a1624",
         color: "#f3f1f8",
         weight: 2,
         opacity: 1,
