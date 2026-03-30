@@ -2,6 +2,7 @@
   var NAV = [
     { label: 'Home',      href: '/index.html' },
     { label: 'Concerts',  href: '/concerts/' },
+    { label: 'Locations', href: '/locations/' },
     { label: 'Oscars',    href: '/oscars/' },
     {
       label: 'Survivor',
