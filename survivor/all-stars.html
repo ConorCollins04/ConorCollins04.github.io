@@ -551,6 +551,41 @@
   .tag-btn:hover:not(.active):not([disabled]) { border-color: var(--border-hover); color: var(--text); }
   .tag-btn.active { color: #fff; border-color: transparent; }
   .tag-btn[disabled] { opacity: 0.25; cursor: not-allowed; }
+
+  /* ── Pool toggle ── */
+  #pool-toggle { margin-bottom: 14px; }
+  .pool-toggle-wrap { display: inline-flex; align-items: center; gap: 9px; cursor: pointer; }
+  .pool-toggle-opt {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--faint);
+    transition: color 0.15s;
+    user-select: none;
+  }
+  .pool-toggle-opt.active { color: var(--text); }
+  .pool-toggle-pill { display: flex; align-items: center; }
+  .pool-toggle-pill input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .pool-toggle-track {
+    display: block;
+    width: 30px;
+    height: 16px;
+    background: var(--border);
+    border-radius: 100px;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .pool-toggle-pill input:checked + .pool-toggle-track { background: var(--text); }
+  .pool-toggle-thumb {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--bg);
+    transition: left 0.2s;
+  }
+  .pool-toggle-pill input:checked + .pool-toggle-track .pool-toggle-thumb { left: 16px; }
   </style>
 </head>
 <body>
@@ -562,6 +597,16 @@
       <p class="pool-subtitle" id="pool-subtitle">Draft your ideal 18-person all-star cast, with 9 men and 9 women</p>
     </div>
     <div class="season-tabs" id="mode-tabs" style="margin-bottom:16px"></div>
+    <div id="pool-toggle" style="display:none">
+      <label class="pool-toggle-wrap">
+        <span class="pool-toggle-opt active" id="toggle-opt-ballot">Ballot pool</span>
+        <span class="pool-toggle-pill">
+          <input type="checkbox" id="pool-toggle-chk">
+          <span class="pool-toggle-track"><span class="pool-toggle-thumb"></span></span>
+        </span>
+        <span class="pool-toggle-opt" id="toggle-opt-seasons">All seasons</span>
+      </label>
+    </div>
     <div class="season-tabs" id="season-tabs"></div>
     <div class="season-heading" id="season-heading"></div>
     <div id="player-pool"></div>

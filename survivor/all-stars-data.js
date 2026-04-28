@@ -1,6 +1,7 @@
 // ─── State ───────────────────────────────────────────────────────────────────
 let currentMode = "allstars";
 let currentSeason = 1;
+let poolOverrideActive = true;
 const castW = [], castM = [];
 let tribeAssignments = {};
 let draggedPlayer = null;
@@ -93,6 +94,7 @@ function renderModeTabs() {
     btn.addEventListener("click", () => {
       if (btn.dataset.mode === currentMode) return;
       currentMode = btn.dataset.mode;
+      poolOverrideActive = true;
       castW.length = 0; castM.length = 0;
       tribeAssignments = buildTribeAssignments();
       tribeDropInitialized = false;
@@ -100,6 +102,7 @@ function renderModeTabs() {
       history.replaceState(null, "", location.pathname);
       updateCastingHeader();
       renderModeTabs();
+      updatePoolToggle();
       renderTabs();
       renderPool();
       renderPanel();
@@ -112,9 +115,20 @@ function updateCastingHeader() {
   document.getElementById("pool-subtitle").textContent = mode().castSubtitle;
 }
 
+function updatePoolToggle() {
+  const el = document.getElementById("pool-toggle");
+  const hasOverride = mode().eligiblePlayers != null;
+  el.style.display = hasOverride ? "" : "none";
+  if (!hasOverride) return;
+  document.getElementById("toggle-opt-ballot").classList.toggle("active", poolOverrideActive);
+  document.getElementById("toggle-opt-seasons").classList.toggle("active", !poolOverrideActive);
+  document.getElementById("pool-toggle-chk").checked = !poolOverrideActive;
+}
+
 // ─── Season tabs ─────────────────────────────────────────────────────────────
 function renderTabs() {
   const el = document.getElementById("season-tabs");
+  if (mode().eligiblePlayers && poolOverrideActive) { el.innerHTML = ""; return; }
   el.innerHTML = eligibleSeasons().map(s =>
     `<button class="season-tab ${s.id === currentSeason ? "active" : ""}" data-season="${s.id}">S${s.id}</button>`
   ).join("");
@@ -124,7 +138,25 @@ function renderTabs() {
 }
 
 // ─── Player pool ─────────────────────────────────────────────────────────────
+function playerCardHtml(name, seasonId, bgColor, fgColor, gender) {
+  const sel  = isSelected(name);
+  const full = !sel && genderFull(gender);
+  const parts = name.split(" ");
+  return `
+    <div class="player-card ${sel ? "selected" : ""} ${full ? "disabled" : ""}"
+         data-name="${name}" data-gender="${gender}">
+      ${avatarHtml(name, seasonId,
+        sel  ? "rgba(255,255,255,0.1)" : bgColor,
+        sel  ? "rgba(243,241,248,0.9)" : fgColor)}
+      <div class="player-name">
+        ${parts[0]}<br><span class="player-name-last">${parts.slice(1).join(" ")}</span>
+      </div>
+      <div class="check-mark">✓ picked</div>
+    </div>`;
+}
+
 function renderPool() {
+  if (mode().eligiblePlayers && poolOverrideActive) { renderPoolOverride(); return; }
   const season = eligibleSeasons().find(s => s.id === currentSeason);
   document.getElementById("season-heading").innerHTML = `
     <h2>${season.name}</h2>
@@ -137,25 +169,39 @@ function renderPool() {
         <span class="tribe-name">${tribe.name}</span>
       </div>
       <div class="player-grid">
-        ${tribe.players.map(p => {
-          const sel  = isSelected(p.name);
-          const full = !sel && genderFull(p.gender);
-          const parts = p.name.split(" ");
-          return `
-            <div class="player-card ${sel ? "selected" : ""} ${full ? "disabled" : ""}"
-                 data-name="${p.name}" data-gender="${p.gender}">
-              ${avatarHtml(p.name, season.id,
-                sel  ? "rgba(255,255,255,0.1)" : `${tribe.color}20`,
-                sel  ? "rgba(243,241,248,0.9)" : tribe.color)}
-              <div class="player-name">
-                ${parts[0]}<br><span class="player-name-last">${parts.slice(1).join(" ")}</span>
-              </div>
-              <div class="check-mark">✓ picked</div>
-            </div>`;
-        }).join("")}
+        ${tribe.players.map(p =>
+          playerCardHtml(p.name, season.id, `${tribe.color}20`, tribe.color, p.gender)
+        ).join("")}
       </div>
     </div>
   `).join("");
+  document.querySelectorAll(".player-card:not(.disabled)").forEach(card => {
+    card.addEventListener("click", () => togglePlayer(card.dataset.name, card.dataset.gender));
+  });
+  loadAvatarImages(document.getElementById("player-pool"));
+}
+
+function renderPoolOverride() {
+  const m = mode();
+  const players = m.eligiblePlayers;
+  document.getElementById("season-heading").innerHTML = `
+    <h2>${m.label}</h2>
+    <p>${players.length} eligible players</p>
+  `;
+  document.getElementById("player-pool").innerHTML = `
+    <div class="player-grid">
+      ${players.map(name => {
+        const { primary } = playerDisplay(name);
+        const gender = PLAYER_INFO[name]?.gender;
+        return playerCardHtml(
+          name,
+          primary?.season?.id,
+          `${primary?.tribe?.color ?? "#888"}20`,
+          primary?.tribe?.color ?? "#888",
+          gender
+        );
+      }).join("")}
+    </div>`;
   document.querySelectorAll(".player-card:not(.disabled)").forEach(card => {
     card.addEventListener("click", () => togglePlayer(card.dataset.name, card.dataset.gender));
   });
@@ -207,6 +253,13 @@ function renderPanel() {
 }
 
 // ─── Casting layout buttons ──────────────────────────────────────────────────
+document.getElementById("pool-toggle-chk").addEventListener("change", e => {
+  poolOverrideActive = !e.target.checked;
+  updatePoolToggle();
+  renderTabs();
+  renderPool();
+});
+
 document.getElementById("reset-btn").addEventListener("click", () => {
   castW.length = 0; castM.length = 0; renderPool(); renderPanel();
 });
@@ -219,15 +272,22 @@ document.getElementById("randomize-cast-btn").addEventListener("click", () => {
     }
     return arr;
   };
-  const seen = new Set();
-  const allWomen = [], allMen = [];
-  eligibleSeasons().forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
-    if (!seen.has(p.name)) {
-      seen.add(p.name);
-      (p.gender === "f" ? allWomen : allMen).push(p.name);
-    }
-  })));
-  const MAX = mode().castMax;
+  const m = mode();
+  let allWomen, allMen;
+  if (m.eligiblePlayers && poolOverrideActive) {
+    allWomen = m.eligiblePlayers.filter(n => PLAYER_INFO[n]?.gender === "f");
+    allMen   = m.eligiblePlayers.filter(n => PLAYER_INFO[n]?.gender === "m");
+  } else {
+    const seen = new Set();
+    allWomen = []; allMen = [];
+    eligibleSeasons().forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
+      if (!seen.has(p.name)) {
+        seen.add(p.name);
+        (p.gender === "f" ? allWomen : allMen).push(p.name);
+      }
+    })));
+  }
+  const MAX = m.castMax;
   castW.length = 0; castM.length = 0;
   shuffle(allWomen).slice(0, MAX).forEach(n => castW.push(n));
   shuffle(allMen).slice(0, MAX).forEach(n => castM.push(n));
@@ -657,6 +717,7 @@ document.getElementById("build-own-btn").addEventListener("click", () => {
   tribeDropInitialized = false;
   updateCastingHeader();
   renderModeTabs();
+  updatePoolToggle();
   renderTabs();
   renderPool();
   renderPanel();
@@ -682,6 +743,7 @@ if (_decoded) {
 } else {
   updateCastingHeader();
   renderModeTabs();
+  updatePoolToggle();
   renderTabs();
   renderPool();
   renderPanel();
