@@ -12,7 +12,11 @@ let tribeDropInitialized = false;
 function mode() { return RETURN_SEASONS.find(r => r.id === currentMode); }
 
 function eligibleSeasons() {
-  return SEASONS.filter(s => mode().eligibleFilter(s) && s.tribes.some(t => t.players.length > 0));
+  const pFilter = mode().playerFilter ?? (() => true);
+  return SEASONS.filter(s =>
+    mode().eligibleFilter(s) &&
+    s.tribes.some(t => t.players.some(p => pFilter(p.name)))
+  );
 }
 
 function buildTribeAssignments() {
