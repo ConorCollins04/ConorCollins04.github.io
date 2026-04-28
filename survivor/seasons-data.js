@@ -459,14 +459,15 @@ const SEASONS = [
     id: 18, name: "Tocantins", year: 2009,
     tribes: [
       { name: "Jalapao", color: "#cc3232", players: [
-      { name: "Carolina Eastwood",   gender: "f" },
-      { name: "J.T. Thomas",         gender: "m" },
-      { name: "Joe Dowdle",          gender: "m" },
       { name: "Sandy Burgin",        gender: "f" },
+      { name: "Joe Dowdle",          gender: "m" },
       { name: "Spencer Duhm",        gender: "m" },
+      { name: "Carolina Eastwood",   gender: "f" },
       { name: "Stephen Fishbach",    gender: "m" },
-      { name: "Sydney Wheeler",      gender: "f" },
       { name: "Taj Johnson-George",  gender: "f" },
+      { name: "J.T. Thomas",         gender: "m" },
+      { name: "Sydney Wheeler",      gender: "f" },
+      
       ]},
       { name: "Timbira", color: "#000000", players: [
       { name: "Tyson Apostol",       gender: "m" },
