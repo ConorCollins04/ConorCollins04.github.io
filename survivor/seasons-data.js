@@ -743,14 +743,14 @@ const SEASONS = [
     tribes: [
       { name: "Dakal", color: "#cc3232", players: [
       { name: "Tony Vlachos",         gender: "m", placement:  1, merge: true,  juror: false },
+      { name: "Sarah Lacina",         gender: "f", placement:  4, merge: true,  juror: true  },
+      { name: "Nick Wilson",          gender: "m", placement:  7, merge: true,  juror: true  },
+      { name: "Kim Spradlin-Wolfe",   gender: "f", placement:  9, merge: true,  juror: true  },
       { name: "Sophie Clarke",        gender: "f", placement: 10, merge: true,  juror: true  },
       { name: "Tyson Apostol",        gender: "m", placement: 11, merge: true,  juror: true  },
       { name: "Wendell Holland",      gender: "m", placement: 13, merge: true,  juror: true  },
       { name: "Yul Kwon",             gender: "m", placement: 14, merge: false, juror: true  },
       { name: "Sandra Diaz-Twine",    gender: "f", placement: 15, merge: false, juror: false },
-      { name: "Kim Spradlin-Wolfe",   gender: "f", placement:  9, merge: true,  juror: true  },
-      { name: "Nick Wilson",          gender: "m", placement:  7, merge: true,  juror: true  },
-      { name: "Sarah Lacina",         gender: "f", placement:  4, merge: true,  juror: true  },
       { name: "Amber Mariano",        gender: "f", placement: 20, merge: false, juror: true  },
       ]},
       { name: "Sele", color: "#013399", players: [
