@@ -350,8 +350,27 @@ const SEASONS = [
     id: 14, name: "Fiji", year: 2007,
     tribes: [
       { name: "Moto", color: "#66ff33", players: [
+      { name: "Alex Angarita",      gender: "m" },
+      { name: "Boo Bernis",         gender: "m" },
+      { name: "Cassandra Franklin", gender: "f" },
+      { name: "Dreamz Herd",        gender: "m" },
+      { name: "Edgardo Rivera",     gender: "m" },
+      { name: "Lisi Linares",       gender: "f" },
+      { name: "Michelle Yi",        gender: "f" },
+      { name: "Stacy Kimball",      gender: "f" },
       ]},
       { name: "Ravu", color: "#ff6632", players: [
+      { name: "Anthony Robinson",   gender: "m" },
+      { name: "Earl Cole",          gender: "m" },
+      { name: "Erica Durousseau",   gender: "f" },
+      { name: "Gary Stritesky",     gender: "m" },
+      { name: "Jessica deBen",      gender: "f" },
+      { name: "Liliana Gomez",      gender: "f" },
+      { name: "Mookie Lee",         gender: "m" },
+      { name: "Rita Verreos",       gender: "f" },
+      { name: "Rocky Reid",         gender: "m" },
+      { name: "Sylvia Kwan",        gender: "f" },
+      { name: "Yau-Man Chan",       gender: "m" },
       ]}
     ]
   },
@@ -359,8 +378,23 @@ const SEASONS = [
     id: 15, name: "China", year: 2007,
     tribes: [
       { name: "Fei Long", color: "#cc0100", players: [
+      { name: "Aaron Reisberger",    gender: "m" },
+      { name: "Amanda Kimmel",       gender: "f" },
+      { name: "Courtney Yates",      gender: "f" },
+      { name: "Frosti Zernow",       gender: "m" },
+      { name: "James Clement",       gender: "m" },
+      { name: "Jean-Robert Bellande",gender: "m" },
+      { name: "Leslie Nease",        gender: "f" },
+      { name: "Todd Herzog",         gender: "m" },
       ]},
       { name: "Zhan Hu", color: "#ffcc33", players: [
+      { name: "Chicken Morris",      gender: "m" },
+      { name: "Dave Cruser",         gender: "m" },
+      { name: "Denise Martin",       gender: "f" },
+      { name: "Erik Huffman",        gender: "m" },
+      { name: "Jaime Dugan",         gender: "f" },
+      { name: "Peih-Gee Law",        gender: "f" },
+      { name: "Sherea Lloyd",        gender: "f" },
       ]}
     ]
   },
@@ -368,8 +402,26 @@ const SEASONS = [
     id: 16, name: "Micronesia", year: 2008,
     tribes: [
       { name: "Airai", color: "#ff9933", players: [
+      { name: "Alexis Jones",        gender: "f" },
+      { name: "Chet Welch",          gender: "m" },
+      { name: "Erik Reichenbach",    gender: "m" },
+      { name: "Jason Siska",         gender: "m" },
+      { name: "Joel Anderson",       gender: "m" },
+      { name: "Kathy Sleckman",      gender: "f" },
+      { name: "Mary Sartain",        gender: "f" },
+      { name: "Mikey Bortone",       gender: "m" },
+      { name: "Natalie Bolton",      gender: "f" },
+      { name: "Tracy Hughes-Wolf",   gender: "f" },
       ]},
       { name: "Malakal", color: "#9966cc", players: [
+      { name: "Ami Cusack",          gender: "f" },
+      { name: "Cirie Fields",        gender: "f" },
+      { name: "Eliza Orlins",        gender: "f" },
+      { name: "James Clement",       gender: "m" },
+      { name: "Jonathan Penner",     gender: "m" },
+      { name: "Ozzy Lusth",          gender: "m" },
+      { name: "Parvati Shallow",     gender: "f" },
+      { name: "Amanda Kimmel",       gender: "f" },
       ]}
     ]
   },
@@ -377,8 +429,26 @@ const SEASONS = [
     id: 17, name: "Gabon", year: 2008,
     tribes: [
       { name: "Fang", color: "#ff3333", players: [
+      { name: "Ace Gordon",          gender: "m" },
+      { name: "Crystal Cox",         gender: "f" },
+      { name: "Dan Kay",             gender: "m" },
+      { name: "G.C. Brown",          gender: "m" },
+      { name: "Kelly Czarnecki",     gender: "f" },
+      { name: "Ken Hoang",           gender: "m" },
+      { name: "Matty Whitmore",      gender: "m" },
+      { name: "Paloma Soto-Castillo",gender: "f" },
+      { name: "Susie Smith",         gender: "f" },
       ]},
       { name: "Kota", color: "#ffff33", players: [
+      { name: "Bob Crowley",         gender: "m" },
+      { name: "Charlie Herschel",    gender: "m" },
+      { name: "Corinne Kaplan",      gender: "f" },
+      { name: "Gillian Larson",      gender: "f" },
+      { name: "Jacquie Berg",        gender: "f" },
+      { name: "Marcus Lehman",       gender: "m" },
+      { name: "Michelle Chase",      gender: "f" },
+      { name: "Randy Bailey",        gender: "m" },
+      { name: "Sugar Kiper",         gender: "f" },
       ]}
     ]
   },
@@ -386,8 +456,24 @@ const SEASONS = [
     id: 18, name: "Tocantins", year: 2009,
     tribes: [
       { name: "Jalapao", color: "#cc3232", players: [
+      { name: "Carolina Eastwood",   gender: "f" },
+      { name: "J.T. Thomas",         gender: "m" },
+      { name: "Joe Dowdle",          gender: "m" },
+      { name: "Sandy Burgin",        gender: "f" },
+      { name: "Spencer Duhm",        gender: "m" },
+      { name: "Stephen Fishbach",    gender: "m" },
+      { name: "Sydney Wheeler",      gender: "f" },
+      { name: "Taj Johnson-George",  gender: "f" },
       ]},
       { name: "Timbira", color: "#000000", players: [
+      { name: "Brendan Synnott",     gender: "m" },
+      { name: "Candace Smith",       gender: "f" },
+      { name: "Coach Wade",          gender: "m" },
+      { name: "Debbie Beebe",        gender: "f" },
+      { name: "Erinn Lobdell",       gender: "f" },
+      { name: "Jerry Sims",          gender: "m" },
+      { name: "Sierra Reed",         gender: "f" },
+      { name: "Tyson Apostol",       gender: "m" },
       ]}
     ]
   },
@@ -395,8 +481,27 @@ const SEASONS = [
     id: 19, name: "Samoa", year: 2009,
     tribes: [
       { name: "Foa Foa", color: "#ffcc33", players: [
+      { name: "Ashley Trainer",      gender: "f" },
+      { name: "Ben Browning",        gender: "m" },
+      { name: "Jaison Robinson",     gender: "m" },
+      { name: "Liz Kim",             gender: "f" },
+      { name: "Marisa Calihan",      gender: "f" },
+      { name: "Mick Trimming",       gender: "m" },
+      { name: "Mike Borassi",        gender: "m" },
+      { name: "Natalie White",       gender: "f" },
+      { name: "Russell Hantz",       gender: "m" },
       ]},
       { name: "Galu", color: "#983399", players: [
+      { name: "Brett Clouser",       gender: "m" },
+      { name: "Dave Ball",           gender: "m" },
+      { name: "Erik Cardona",        gender: "m" },
+      { name: "John Fincher",        gender: "m" },
+      { name: "Kelly Sharbaugh",     gender: "f" },
+      { name: "Laura Morett",        gender: "f" },
+      { name: "Monica Padilla",      gender: "f" },
+      { name: "Russell Swan",        gender: "m" },
+      { name: "Shambo Waters",       gender: "f" },
+      { name: "Yasmin Giles",        gender: "f" },
       ]}
     ]
   },

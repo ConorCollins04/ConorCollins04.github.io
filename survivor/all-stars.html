@@ -419,7 +419,7 @@
     letter-spacing: 0.04em;
   }
 
-  .tribe-columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tribe-columns { display: grid; gap: 14px; }
 
   .tribe-col {
     border: 1.5px solid var(--border);
@@ -463,7 +463,6 @@
 
   .share-player-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
     gap: 1px;
     background: var(--border);
   }
@@ -495,6 +494,65 @@
   .share-player-name { font-size: 0.68rem; font-weight: 500; line-height: 1.3; color: var(--text); }
   .share-player-name-last { font-weight: 300; color: var(--muted); }
   .share-player-season { font-family: var(--mono); font-size: 0.55rem; color: var(--faint); letter-spacing: 0.04em; margin-top: 2px; }
+
+  /* ── Tag phase ── */
+  .tag-tribe-bar {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .tag-tribe-stat { display: flex; align-items: center; gap: 7px; }
+  .tag-tribe-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tag-tribe-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .tag-tribe-label span { color: var(--text); }
+  .tag-tribe-label.full span { color: #5a7a3a; }
+  .tag-tribe-gender { color: var(--faint); font-size: 0.6rem; }
+
+  #tag-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+    gap: 8px;
+  }
+  .tag-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 8px 8px;
+    gap: 6px;
+    text-align: center;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .tag-card-name { font-size: 0.68rem; font-weight: 500; line-height: 1.3; color: var(--text); }
+  .tag-card-name-last { font-weight: 300; color: var(--muted); }
+  .tag-btns { display: flex; gap: 4px; width: 100%; }
+  .tag-btn {
+    flex: 1;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 2px;
+    cursor: pointer;
+    background: none;
+    color: var(--muted);
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tag-btn:hover:not(.active):not([disabled]) { border-color: var(--border-hover); color: var(--text); }
+  .tag-btn.active { color: #fff; border-color: transparent; }
+  .tag-btn[disabled] { opacity: 0.25; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -502,9 +560,10 @@
 <div class="layout" id="casting-layout">
   <div class="pool">
     <div class="pool-header">
-      <h1>All-Stars Casting</h1>
-      <p class="pool-subtitle">Draft your ideal 18-person all-star cast for season 8, with 9 men and 9 women</p>
+      <h1 id="pool-title">All-Stars Casting</h1>
+      <p class="pool-subtitle" id="pool-subtitle">Draft your ideal 18-person all-star cast, with 9 men and 9 women</p>
     </div>
+    <div class="season-tabs" id="mode-tabs" style="margin-bottom:16px"></div>
     <div class="season-tabs" id="season-tabs"></div>
     <div class="season-heading" id="season-heading"></div>
     <div id="player-pool"></div>
@@ -555,12 +614,30 @@
   </div>
 </div>
 
+<div id="tag-phase" style="display:none">
+  <div class="tribes-layout">
+    <div class="tribes-header">
+      <div class="tribes-header-left">
+        <h1>Tribe Draft</h1>
+        <p class="pool-subtitle" id="tag-subtitle">Click a role to assign each castaway</p>
+      </div>
+      <div class="tribes-header-actions">
+        <button class="action-btn" id="tag-back-btn">← back to cast</button>
+        <button class="action-btn" id="tag-randomize-btn">⚂ randomise</button>
+        <button class="action-btn" id="tag-share-btn" disabled>Share →</button>
+      </div>
+    </div>
+    <div class="tag-tribe-bar" id="tag-tribe-bar"></div>
+    <div id="tag-grid"></div>
+  </div>
+</div>
+
 <div id="share-phase" style="display:none">
   <div class="tribes-layout">
     <div class="tribes-header">
       <div class="tribes-header-left">
-        <h1>Survivor: All-Stars</h1>
-        <p class="pool-subtitle">Season 8 · Fan cast</p>
+        <h1 id="share-title">Survivor: All-Stars</h1>
+        <p class="pool-subtitle" id="share-subtitle">Fan cast</p>
       </div>
       <div class="tribes-header-actions">
         <button class="action-btn" id="back-tribes-btn">← edit tribes</button>
