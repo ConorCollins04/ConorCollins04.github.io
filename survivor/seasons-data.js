@@ -1074,5 +1074,5 @@ SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
 const PLAYER_SEASONS = {};
 SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
   if (!PLAYER_SEASONS[p.name]) PLAYER_SEASONS[p.name] = [];
-  PLAYER_SEASONS[p.name].push({ season: s, tribe: t, gender: p.gender });
+  PLAYER_SEASONS[p.name].push({ season: s, tribe: t, gender: p.gender, placement: p.placement });
 })));

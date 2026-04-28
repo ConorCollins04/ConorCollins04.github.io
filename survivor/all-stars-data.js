@@ -162,19 +162,23 @@ function renderPool() {
     <h2>${season.name}</h2>
     <p>${season.year} · ${season.tribes.reduce((n, t) => n + t.players.length, 0)} players</p>
   `;
-  document.getElementById("player-pool").innerHTML = season.tribes.map(tribe => `
-    <div class="tribe-section">
-      <div class="tribe-label">
-        <div class="tribe-swatch" style="background:${tribe.color}"></div>
-        <span class="tribe-name">${tribe.name}</span>
-      </div>
-      <div class="player-grid">
-        ${tribe.players.map(p =>
-          playerCardHtml(p.name, season.id, `${tribe.color}20`, tribe.color, p.gender)
-        ).join("")}
-      </div>
-    </div>
-  `).join("");
+  const pFilter = mode().playerFilter ?? (() => true);
+  document.getElementById("player-pool").innerHTML = season.tribes.map(tribe => {
+    const players = tribe.players.filter(p => pFilter(p.name));
+    if (players.length === 0) return "";
+    return `
+      <div class="tribe-section">
+        <div class="tribe-label">
+          <div class="tribe-swatch" style="background:${tribe.color}"></div>
+          <span class="tribe-name">${tribe.name}</span>
+        </div>
+        <div class="player-grid">
+          ${players.map(p =>
+            playerCardHtml(p.name, season.id, `${tribe.color}20`, tribe.color, p.gender)
+          ).join("")}
+        </div>
+      </div>`;
+  }).join("");
   document.querySelectorAll(".player-card:not(.disabled)").forEach(card => {
     card.addEventListener("click", () => togglePlayer(card.dataset.name, card.dataset.gender));
   });
@@ -279,9 +283,10 @@ document.getElementById("randomize-cast-btn").addEventListener("click", () => {
     allMen   = m.eligiblePlayers.filter(n => PLAYER_INFO[n]?.gender === "m");
   } else {
     const seen = new Set();
+    const pFilter = m.playerFilter ?? (() => true);
     allWomen = []; allMen = [];
     eligibleSeasons().forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
-      if (!seen.has(p.name)) {
+      if (!seen.has(p.name) && pFilter(p.name)) {
         seen.add(p.name);
         (p.gender === "f" ? allWomen : allMen).push(p.name);
       }

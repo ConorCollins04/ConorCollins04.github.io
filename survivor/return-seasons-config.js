@@ -44,6 +44,11 @@ const RETURN_SEASONS = [
     castTitle: "Second Chances Casting",
     castSubtitle: "Draft your ideal 20-person second chances cast, with 10 men and 10 women",
     eligibleFilter: s => s.id >= 1 && s.id <= 30,
+    // In the all-seasons view: exclude winners and anyone who played more than once
+    playerFilter: name => {
+      const apps = (PLAYER_SEASONS[name] || []).filter(a => a.season.id >= 1 && a.season.id <= 30);
+      return apps.length === 1 && apps.every(a => a.placement !== 1);
+    },
     // Only players who made the public ballot for S31 are eligible
     eligiblePlayers: [
       "Kelly Wiglesworth",
