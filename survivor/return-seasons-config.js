@@ -1,7 +1,13 @@
+const SEASON_GROUPS = [
+  { id: "historical",   label: "Historical"   },
+  { id: "theoretical",  label: "Theoretical"  },
+];
+
 const RETURN_SEASONS = [
   {
     id: "allstars",
     label: "All-Stars",
+    group: "historical",
     castTitle: "All-Stars Casting",
     castSubtitle: "Draft your ideal 18-person all-star cast, with 9 men and 9 women",
     eligibleFilter: s => s.id >= 1 && s.id <= 7,
@@ -22,6 +28,7 @@ const RETURN_SEASONS = [
   {
     id: "hvv",
     label: "Heroes vs. Villains",
+    group: "historical",
     castTitle: "Heroes vs. Villains Casting",
     castSubtitle: "Draft your ideal 20-person heroes vs. villains cast, with 10 men and 10 women",
     eligibleFilter: s => s.id >= 1 && s.id <= 19,
@@ -41,6 +48,7 @@ const RETURN_SEASONS = [
   {
     id: "sc",
     label: "Second Chances",
+    group: "historical",
     castTitle: "Second Chances Casting",
     castSubtitle: "Draft your ideal 20-person second chances cast, with 10 men and 10 women",
     eligibleFilter: s => s.id >= 1 && s.id <= 30,
