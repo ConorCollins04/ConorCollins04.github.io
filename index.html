@@ -125,10 +125,10 @@
 
     <a href="survivor/all-stars.html" class="card">
 
-      <div class="card-title">Survivor: All-Stars Cast Builder</div>
-      <div class="card-desc">Tool for creating your ideal survivor all-stars cast</div>
+      <div class="card-title">Survivor: Returnee Cast Builder</div>
+      <div class="card-desc">Tool for drafting your ideal all-stars survivor casts</div>
       <div class="card-footer">
-        <div class="card-stat" id="all-stars-stat">1 format</div>
+        <div class="card-stat" id="all-stars-stat">2 formats</div>
         <div class="card-arrow">→</div>
       </div>
     </a>
@@ -193,6 +193,7 @@
 <script src="drag-shows/data.js"></script>
 <script src="oscars/data.js"></script>
 <script src="survivor/moments-data.js"></script>
+<script src="survivor/return-seasons-config.js"></script>
 <script>
   // Concerts stat
   if (typeof CONCERTS !== "undefined") {
@@ -212,6 +213,13 @@
     const years = Object.keys(OSCARS).length;
     document.getElementById("oscars-stat").textContent =
       `${years} ${years === 1 ? "ceremony" : "ceremonies"}`;
+  }
+
+  // Cast builder stat
+  if (typeof RETURN_SEASONS !== "undefined") {
+    const n = RETURN_SEASONS.length;
+    document.getElementById("all-stars-stat").textContent =
+      `${n} ${n === 1 ? "format" : "formats"}`;
   }
 
   // Moments stat
