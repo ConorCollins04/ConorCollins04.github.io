@@ -1,5 +1,6 @@
 // ─── State ───────────────────────────────────────────────────────────────────
-let currentMode = "allstars";
+let currentGroup = SEASON_GROUPS[0].id;
+let currentMode = RETURN_SEASONS.find(r => r.group === currentGroup)?.id ?? RETURN_SEASONS[0].id;
 let currentSeason = 1;
 let poolOverrideActive = true;
 const castW = [], castM = [];
@@ -84,22 +85,49 @@ function playerDisplay(name) {
   return { primary, seasonLabel };
 }
 
-// ─── Mode tabs ───────────────────────────────────────────────────────────────
+// ─── Group + mode tabs ───────────────────────────────────────────────────────
+function resetModeState() {
+  poolOverrideActive = true;
+  castW.length = 0; castM.length = 0;
+  tribeAssignments = buildTribeAssignments();
+  tribeDropInitialized = false;
+  currentSeason = eligibleSeasons()[0]?.id ?? 1;
+  history.replaceState(null, "", location.pathname);
+}
+
+function renderGroupTabs() {
+  const el = document.getElementById("group-tabs");
+  el.innerHTML = SEASON_GROUPS.map(g =>
+    `<button class="season-tab ${g.id === currentGroup ? "active" : ""}" data-group="${g.id}">${g.label}</button>`
+  ).join("");
+  el.querySelectorAll("[data-group]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (btn.dataset.group === currentGroup) return;
+      currentGroup = btn.dataset.group;
+      currentMode = RETURN_SEASONS.find(r => r.group === currentGroup)?.id ?? currentMode;
+      resetModeState();
+      updateCastingHeader();
+      renderGroupTabs();
+      renderModeTabs();
+      updatePoolToggle();
+      renderTabs();
+      renderPool();
+      renderPanel();
+    });
+  });
+}
+
 function renderModeTabs() {
   const el = document.getElementById("mode-tabs");
-  el.innerHTML = RETURN_SEASONS.map(r =>
+  const inGroup = RETURN_SEASONS.filter(r => r.group === currentGroup);
+  el.innerHTML = inGroup.map(r =>
     `<button class="season-tab ${r.id === currentMode ? "active" : ""}" data-mode="${r.id}">${r.label}</button>`
   ).join("");
   el.querySelectorAll("[data-mode]").forEach(btn => {
     btn.addEventListener("click", () => {
       if (btn.dataset.mode === currentMode) return;
       currentMode = btn.dataset.mode;
-      poolOverrideActive = true;
-      castW.length = 0; castM.length = 0;
-      tribeAssignments = buildTribeAssignments();
-      tribeDropInitialized = false;
-      currentSeason = eligibleSeasons()[0]?.id ?? 1;
-      history.replaceState(null, "", location.pathname);
+      resetModeState();
       updateCastingHeader();
       renderModeTabs();
       updatePoolToggle();
@@ -721,6 +749,7 @@ document.getElementById("build-own-btn").addEventListener("click", () => {
   tribeAssignments = buildTribeAssignments();
   tribeDropInitialized = false;
   updateCastingHeader();
+  renderGroupTabs();
   renderModeTabs();
   updatePoolToggle();
   renderTabs();
@@ -734,6 +763,7 @@ tribeAssignments = buildTribeAssignments();
 const _decoded = decodeShare(location.hash);
 if (_decoded) {
   currentMode = _decoded.modeId;
+  currentGroup = RETURN_SEASONS.find(r => r.id === currentMode)?.group ?? SEASON_GROUPS[0].id;
   tribeAssignments = buildTribeAssignments();
   mode().tribes.forEach(t => {
     tribeAssignments[t.id] = _decoded[t.id];
@@ -747,6 +777,7 @@ if (_decoded) {
   renderShareView(_decoded);
 } else {
   updateCastingHeader();
+  renderGroupTabs();
   renderModeTabs();
   updatePoolToggle();
   renderTabs();
