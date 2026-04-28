@@ -1003,19 +1003,19 @@ const SEASONS = [
     id: 49, name: "Survivor 49", year: 2025,
     tribes: [
       { name: "Hina", color: "#feda47", players: [
-      { name: "MC Chukwujekwu",        gender: "f", placement: 10, merge: true,  juror: true  },
       { name: "Kristina Mills",         gender: "f", placement:  5, merge: true,  juror: true  },
       { name: "Steven Ramm",            gender: "m", placement:  6, merge: true,  juror: true  },
       { name: "Sophie Segreti",         gender: "f", placement:  7, merge: true,  juror: true  },
+      { name: "MC Chukwujekwu",        gender: "f", placement: 10, merge: true,  juror: true  },
       { name: "Jason Treul",            gender: "m", placement: 13, merge: false, juror: false },
       { name: "Matt Williams",          gender: "m", placement: 14, merge: false, juror: false },
       ]},
       { name: "Kele", color: "#32aad6", players: [
       { name: "Sophi Balerdi",          gender: "f", placement:  2, merge: true,  juror: false },
       { name: "Alex Moore",             gender: "m", placement:  9, merge: true,  juror: true  },
-      { name: "Annie Davis",            gender: "f", placement: 17, merge: false, juror: false },
       { name: "Jeremiah Ing",           gender: "m", placement: 15, merge: false, juror: false },
       { name: "Jake Latimer",           gender: "m", placement: 16, merge: false, juror: false },
+      { name: "Annie Davis",            gender: "f", placement: 17, merge: false, juror: false },
       { name: "Nicole Mazullo",         gender: "f", placement: 18, merge: false, juror: false },
       ]},
       { name: "Uli", color: "#f16b52", players: [
