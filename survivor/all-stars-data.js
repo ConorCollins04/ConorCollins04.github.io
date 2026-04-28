@@ -122,7 +122,7 @@ function playerDisplay(name) {
   const primary = eligible.length > 0 ? eligible[eligible.length - 1] : all[all.length - 1];
   const seasonLabel = eligible.length <= 1
     ? `S${primary?.season?.id} · ${primary?.season?.name ?? "?"}`
-    : eligible.map(a => `S${a.season.id}`).join(" · ");
+    : eligible.map(a => `S${a.season.id} · ${a.season.name}`).join("<br>");
   return { primary, seasonLabel };
 }
 
