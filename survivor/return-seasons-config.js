@@ -104,6 +104,34 @@ const RETURN_SEASONS = [
     shareSubtitle: "Theoretical fan cast",
   },
   {
+    id: "firstboots",
+    label: "First Boots",
+    group: "theoretical",
+    castTitle: "First Boots Casting",
+    castSubtitle: "Draft your ideal 20-person first boots cast, with 10 men and 10 women",
+    eligibleFilter: s => s.id >= 1,
+    playerFilter: name => {
+      const apps = PLAYER_SEASONS[name] || [];
+      return apps.some(a => {
+        if (a.placement == null) return false;
+        const seasonSize = a.season.tribes.reduce((n, t) => n + t.players.length, 0);
+        return a.placement === seasonSize;
+      });
+    },
+    castMax: 10,
+    tribes: [
+      { id: "tribeA",   name: "Tribe A",   color: "#CC5500", headerText: "#fff", tagLabel: "Tribe A"  },
+      { id: "tribeB", name: "Tribe B", color: "#BB9900", headerText: "#fff", tagLabel: "Tribe B"  },
+    ],
+    tribeSize: 10,
+    genderPerTribe: 5,
+    tribePhase: "drag",
+    sharePlayerCols: 5,
+    hashPrefix: "fb-t",
+    shareTitle: "Survivor: First Boots",
+    shareSubtitle: "Theoretical fan cast",
+  },
+  {
     id: "sc-theoretical",
     label: "Second Chances",
     group: "theoretical",
