@@ -378,23 +378,24 @@ const SEASONS = [
     id: 15, name: "China", year: 2007,
     tribes: [
       { name: "Fei Long", color: "#cc0100", players: [
-      { name: "Aaron Reisberger",    gender: "m" },
-      { name: "Amanda Kimmel",       gender: "f" },
-      { name: "Courtney Yates",      gender: "f" },
-      { name: "Frosti Zernow",       gender: "m" },
-      { name: "James Clement",       gender: "m" },
       { name: "Jean-Robert Bellande",gender: "m" },
-      { name: "Leslie Nease",        gender: "f" },
+      { name: "James Clement",       gender: "m" },
       { name: "Todd Herzog",         gender: "m" },
+      { name: "Amanda Kimmel",       gender: "f" },
+      { name: "Denise Martin",       gender: "f" },
+      { name: "Leslie Nease",        gender: "f" },
+      { name: "Aaron Reisberger",    gender: "m" },
+      { name: "Courtney Yates",      gender: "f" },
       ]},
       { name: "Zhan Hu", color: "#ffcc33", players: [
-      { name: "Chicken Morris",      gender: "m" },
       { name: "Dave Cruser",         gender: "m" },
-      { name: "Denise Martin",       gender: "f" },
-      { name: "Erik Huffman",        gender: "m" },
       { name: "Jaime Dugan",         gender: "f" },
+      { name: "Erik Huffman",        gender: "m" },
       { name: "Peih-Gee Law",        gender: "f" },
       { name: "Sherea Lloyd",        gender: "f" },
+      { name: "Ashley Massaro",      gender: "f" },
+      { name: "Chicken Morris",      gender: "m" },
+      { name: "Frosti Zernow",       gender: "m" },
       ]}
     ]
   },
