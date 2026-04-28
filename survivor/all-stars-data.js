@@ -24,7 +24,7 @@ const RETURN_SEASONS = [
     id: "hvv",
     label: "Heroes vs. Villains",
     castTitle: "Heroes vs. Villains Casting",
-    castSubtitle: "Draft your ideal 20-person cast, with 10 men and 10 women",
+    castSubtitle: "Draft your ideal 20-person heroes vs. villains cast, with 10 men and 10 women",
     eligibleFilter: s => s.id >= 1 && s.id <= 19,
     castMax: 10,
     tribes: [
