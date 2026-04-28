@@ -176,9 +176,9 @@ function renderTabs() {
 }
 
 // ─── Player pool ─────────────────────────────────────────────────────────────
-function playerCardHtml(name, seasonId, bgColor, fgColor, gender, placement) {
+function playerCardHtml(name, seasonId, bgColor, fgColor, gender, placement, filterDisabled = false) {
   const sel  = isSelected(name);
-  const full = !sel && genderFull(gender);
+  const full = !sel && (genderFull(gender) || filterDisabled);
   const parts = name.split(" ");
   return `
     <div class="player-card ${sel ? "selected" : ""} ${full ? "disabled" : ""}"
@@ -238,8 +238,7 @@ function renderPool() {
   `;
   const pFilter = mode().playerFilter ?? (() => true);
   document.getElementById("player-pool").innerHTML = season.tribes.map(tribe => {
-    const players = tribe.players.filter(p => pFilter(p.name));
-    if (players.length === 0) return "";
+    if (tribe.players.length === 0) return "";
     return `
       <div class="tribe-section">
         <div class="tribe-label">
@@ -247,8 +246,8 @@ function renderPool() {
           <span class="tribe-name">${tribe.name}</span>
         </div>
         <div class="player-grid">
-          ${players.map(p =>
-            playerCardHtml(p.name, season.id, `${tribe.color}20`, tribe.color, p.gender, p.placement)
+          ${tribe.players.map(p =>
+            playerCardHtml(p.name, season.id, `${tribe.color}20`, tribe.color, p.gender, p.placement, !pFilter(p.name))
           ).join("")}
         </div>
       </div>`;
