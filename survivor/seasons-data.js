@@ -907,7 +907,7 @@ const SEASONS = [
       { name: "Austin Li Coon",    gender: "m", placement:  2, merge: true,  juror: false },
       { name: "Julie Allie",       gender: "f", placement:  5, merge: true,  juror: true  },
       { name: "Drew Basile",       gender: "m", placement:  6, merge: true,  juror: true  },
-      { name: "Sifu Alsup",        gender: "m", placement: 12, merge: false, juror: false },
+      { name: "Sifu Alsup",        gender: "m", placement: 12, merge: true, juror: false },
       { name: "J. Maya",           gender: "f", placement: 13, merge: true,  juror: false, mergatory: true },
       ]}
     ]
@@ -965,7 +965,7 @@ const SEASONS = [
       { name: "Caroline Vidmar",    gender: "f", placement:  7, merge: true,  juror: true  },
       { name: "Kyle Ostwald",       gender: "m", placement:  8, merge: true,  juror: true  },
       { name: "Gabe Ortis",         gender: "m", placement:  9, merge: true,  juror: true  },
-      { name: "Tiyana Hallums",     gender: "f", placement: 12, merge: false, juror: false },
+      { name: "Tiyana Hallums",     gender: "f", placement: 12, merge: true, juror: false },
       { name: "TK Foster",          gender: "m", placement: 17, merge: false, juror: false },
       ]}
     ]
@@ -992,7 +992,7 @@ const SEASONS = [
       { name: "Vula", color: "#a8f496", players: [
       { name: "Mary Zheng",         gender: "f", placement:  7, merge: true,  juror: true  },
       { name: "Cedrek McFadden",    gender: "m", placement: 11, merge: true,  juror: true  },
-      { name: "Saiounia Hughley",   gender: "f", placement: 12, merge: false, juror: false },
+      { name: "Saiounia Hughley",   gender: "f", placement: 12, merge: true, juror: false },
       { name: "Justin Pioppi",      gender: "m", placement: 16, merge: false, juror: false },
       { name: "Kevin Leung",        gender: "m", placement: 17, merge: false, juror: false },
       { name: "Stephanie Berger",   gender: "f", placement: 18, merge: false, juror: false },
