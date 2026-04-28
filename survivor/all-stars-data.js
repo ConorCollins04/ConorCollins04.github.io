@@ -166,7 +166,7 @@ function updatePoolToggle() {
 // ─── Season tabs ─────────────────────────────────────────────────────────────
 function renderTabs() {
   const el = document.getElementById("season-tabs");
-  if (mode().eligiblePlayers && poolOverrideActive) { el.innerHTML = ""; return; }
+  if ((mode().eligiblePlayers && poolOverrideActive) || mode().flatPool) { el.innerHTML = ""; return; }
   el.innerHTML = eligibleSeasons().map(s =>
     `<button class="season-tab ${s.id === currentSeason ? "active" : ""}" data-season="${s.id}">S${s.id}</button>`
   ).join("");
@@ -196,7 +196,40 @@ function playerCardHtml(name, seasonId, bgColor, fgColor, gender, placement) {
     </div>`;
 }
 
+function getFlatPoolPlayers() {
+  const pFilter = mode().playerFilter ?? (() => true);
+  const seen = new Set();
+  const result = [];
+  eligibleSeasons().forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
+    if (!seen.has(p.name) && pFilter(p.name)) {
+      seen.add(p.name);
+      result.push({ name: p.name, gender: p.gender, placement: p.placement, season: s, tribe: t });
+    }
+  })));
+  return result;
+}
+
+function renderFlatPool() {
+  const m = mode();
+  const players = getFlatPoolPlayers();
+  document.getElementById("season-heading").innerHTML = `
+    <h2>${m.label}</h2>
+    <p>${players.length} eligible players</p>
+  `;
+  document.getElementById("player-pool").innerHTML = `
+    <div class="player-grid">
+      ${players.map(({ name, gender, placement, season, tribe }) =>
+        playerCardHtml(name, season.id, `${tribe.color}20`, tribe.color, gender, placement)
+      ).join("")}
+    </div>`;
+  document.querySelectorAll(".player-card:not(.disabled)").forEach(card => {
+    card.addEventListener("click", () => togglePlayer(card.dataset.name, card.dataset.gender));
+  });
+  loadAvatarImages(document.getElementById("player-pool"));
+}
+
 function renderPool() {
+  if (mode().flatPool) { renderFlatPool(); return; }
   if (mode().eligiblePlayers && poolOverrideActive) { renderPoolOverride(); return; }
   const season = eligibleSeasons().find(s => s.id === currentSeason);
   document.getElementById("season-heading").innerHTML = `
@@ -320,7 +353,11 @@ document.getElementById("randomize-cast-btn").addEventListener("click", () => {
   };
   const m = mode();
   let allWomen, allMen;
-  if (m.eligiblePlayers && poolOverrideActive) {
+  if (m.flatPool) {
+    const pool = getFlatPoolPlayers();
+    allWomen = pool.filter(p => p.gender === "f").map(p => p.name);
+    allMen   = pool.filter(p => p.gender === "m").map(p => p.name);
+  } else if (m.eligiblePlayers && poolOverrideActive) {
     allWomen = m.eligiblePlayers.filter(n => PLAYER_INFO[n]?.gender === "f");
     allMen   = m.eligiblePlayers.filter(n => PLAYER_INFO[n]?.gender === "m");
   } else {
