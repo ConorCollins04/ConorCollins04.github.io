@@ -469,14 +469,14 @@ const SEASONS = [
       { name: "Taj Johnson-George",  gender: "f" },
       ]},
       { name: "Timbira", color: "#000000", players: [
-      { name: "Brendan Synnott",     gender: "m" },
-      { name: "Candace Smith",       gender: "f" },
-      { name: "Coach Wade",          gender: "m" },
+      { name: "Tyson Apostol",       gender: "m" },
       { name: "Debbie Beebe",        gender: "f" },
       { name: "Erinn Lobdell",       gender: "f" },
-      { name: "Jerry Sims",          gender: "m" },
       { name: "Sierra Reed",         gender: "f" },
-      { name: "Tyson Apostol",       gender: "m" },
+      { name: "Jerry Sims",          gender: "m" },
+      { name: "Candace Smith",       gender: "f" },
+      { name: "Brendan Synnott",     gender: "m" },
+      { name: "Coach Wade",          gender: "m" },
       ]}
     ]
   },
