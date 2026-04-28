@@ -1037,7 +1037,7 @@ const SEASONS = [
       { name: "Emily Flippen",                gender: "f" },
       { name: "Christian Hubicki",            gender: "m" },
       { name: "Joe Hunter",                   gender: "m" },
-      { name: "Jenna Lewis-Dougherty",        gender: "f" },
+      { name: "Jenna Lewis",        gender: "f" },
       { name: "Savannah Louie",               gender: "f" },
       { name: "Ozzy Lusth",                   gender: "m" },
       ]},
@@ -1057,7 +1057,7 @@ const SEASONS = [
       { name: "Colby Donaldson",              gender: "m" },
       { name: "Kyle Fraser",                  gender: "m" },
       { name: "Angelina Keeley",              gender: "f" },
-      { name: "Stephenie LaGrossa Kendrick",  gender: "f" },
+      { name: "Stephenie LaGrossa",  gender: "f" },
       { name: "Genevieve Mushaluk",           gender: "f" },
       { name: "Rizo Velovic",                 gender: "m" },
       ]}
