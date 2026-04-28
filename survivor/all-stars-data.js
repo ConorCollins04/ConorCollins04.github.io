@@ -66,6 +66,12 @@ function slotAvatarHtml(name, seasonId, bgColor, fgColor) {
   </div>`;
 }
 
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function ordinal(n) {
+  const s = ["th","st","nd","rd"], v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
 // ─── Cast state helpers ──────────────────────────────────────────────────────
 function isSelected(name) { return castW.includes(name) || castM.includes(name); }
 function genderFull(g) { return g === "f" ? castW.length >= mode().castMax : castM.length >= mode().castMax; }
@@ -166,7 +172,7 @@ function renderTabs() {
 }
 
 // ─── Player pool ─────────────────────────────────────────────────────────────
-function playerCardHtml(name, seasonId, bgColor, fgColor, gender) {
+function playerCardHtml(name, seasonId, bgColor, fgColor, gender, placement) {
   const sel  = isSelected(name);
   const full = !sel && genderFull(gender);
   const parts = name.split(" ");
@@ -179,7 +185,10 @@ function playerCardHtml(name, seasonId, bgColor, fgColor, gender) {
       <div class="player-name">
         ${parts[0]}<br><span class="player-name-last">${parts.slice(1).join(" ")}</span>
       </div>
-      <div class="check-mark">✓ picked</div>
+      <div class="player-bottom">
+        ${placement != null ? `<span class="player-stat">${ordinal(placement)}</span>` : ""}
+        <span class="check-mark">✓ picked</span>
+      </div>
     </div>`;
 }
 
@@ -202,7 +211,7 @@ function renderPool() {
         </div>
         <div class="player-grid">
           ${players.map(p =>
-            playerCardHtml(p.name, season.id, `${tribe.color}20`, tribe.color, p.gender)
+            playerCardHtml(p.name, season.id, `${tribe.color}20`, tribe.color, p.gender, p.placement)
           ).join("")}
         </div>
       </div>`;
@@ -230,7 +239,8 @@ function renderPoolOverride() {
           primary?.season?.id,
           `${primary?.tribe?.color ?? "#888"}20`,
           primary?.tribe?.color ?? "#888",
-          gender
+          gender,
+          primary?.placement
         );
       }).join("")}
     </div>`;
