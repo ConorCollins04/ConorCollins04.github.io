@@ -83,4 +83,28 @@ const RETURN_SEASONS = [
     shareTitle: "Survivor: Second Chances",
     shareSubtitle: "Fan cast",
   },
+  {
+    id: "sc-theoretical",
+    label: "Second Chances",
+    group: "theoretical",
+    castTitle: "Theoretical Second Chances Casting",
+    castSubtitle: "Draft your ideal 20-person second chances cast from all seasons, with 10 men and 10 women",
+    eligibleFilter: s => s.id >= 1,
+    playerFilter: name => {
+      const apps = PLAYER_SEASONS[name] || [];
+      return apps.length === 1 && apps.every(a => a.placement !== 1);
+    },
+    castMax: 10,
+    tribes: [
+      { id: "ta_keo", name: "Ta Keo", color: "#009999", headerText: "#fff", tagLabel: "TK"  },
+      { id: "bayon",  name: "Bayon",  color: "#cc3266", headerText: "#fff", tagLabel: "Bay" },
+    ],
+    tribeSize: 10,
+    genderPerTribe: 5,
+    tribePhase: "drag",
+    sharePlayerCols: 5,
+    hashPrefix: "sc-t",
+    shareTitle: "Survivor: Second Chances",
+    shareSubtitle: "Theoretical fan cast",
+  },
 ];
