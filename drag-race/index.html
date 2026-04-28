@@ -26,6 +26,7 @@
       --c-top2:       #5a8fd4;
       --c-run:        #d6d2e0;
       --c-btm:        #d97060;
+      --c-tba:        #d6d2e0;
     }
 
     html { font-size: 16px; }
@@ -237,6 +238,7 @@
     .r-runnerup   { background: var(--c-runnerup); }
     .r-elim-final { background: var(--c-elim-final); }
     .r-miss-c     { background: var(--c-miss-c); }
+    .r-tba        { background: var(--c-tba);  color: #7a7090; }
 
     /* even-row tint on sticky cols */
     tbody tr:nth-child(even) .col-queen,
@@ -433,6 +435,7 @@ const RESULT_MAP = {
   "WINNER":     { cls: "r-winner",     label: "Winner" },
   "RUNNER-UP":  { cls: "r-runnerup",   label: "Runner-up" },
   "ELIM FINAL": { cls: "r-elim-final", label: "Eliminated" },
+  "TBA": { cls: "r-tba", label: "TBA" },
 };
 
 // ── CSV parser (handles quoted fields) ──────
@@ -549,6 +552,7 @@ const LEGEND_META = {
   "WINNER":     { color: "var(--c-winner)",     text: "Winner" },
   "RUNNER-UP":  { color: "var(--c-runnerup)",   text: "Runner-up" },
   "ELIM FINAL": { color: "var(--c-elim-final)", text: "Elim (Finale)" },
+  "TBA": { color: "var(--c-tba)", text: "Upcoming" },
 };
 
 function renderLegend(season) {

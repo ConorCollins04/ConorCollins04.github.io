@@ -1,6 +1,7 @@
 {
   "seasons": [
     { "id": "rpdr-us-s18",  "label": "US S18",             "path": "us/s18.csv",         "showPath": "us/s18-show.csv",         "imageDir": "../images/drag race/us/s18" },
-    { "id": "rpdr-ukvw-s3", "label": "UK vs the World S3", "path": "uk-vs-world/s3.csv", "showPath": "uk-vs-world/s3-show.csv", "imageDir": "../images/drag race/uk-vs-world/s3" }
+    { "id": "rpdr-ukvw-s3", "label": "UK vs the World S3", "path": "uk-vs-world/s3.csv", "showPath": "uk-vs-world/s3-show.csv", "imageDir": "../images/drag race/uk-vs-world/s3" },
+    { "id": "rpdr-as-s11", "label": "All Stars S11", "path": "all-stars/s11.csv", "showPath": "all-stars/s11-show.csv", "imageDir": "../images/drag race/all-stars/s11" }
   ]
 }
