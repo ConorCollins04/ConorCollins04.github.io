@@ -195,13 +195,22 @@
     .player-card.selected .player-name { color: var(--bg); }
     .player-card.selected .player-name-last { color: rgba(243,241,248,0.6); }
 
-    .check-mark {
+    .player-bottom {
+      height: 11px;
+      position: relative;
+      width: 100%;
       font-family: var(--mono);
       font-size: 0.55rem;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+    .player-stat { color: var(--faint); }
+    .player-card.selected .player-stat { visibility: hidden; }
+    .check-mark {
       color: rgba(243,241,248,0.5);
       opacity: 0;
-      height: 11px;
-      letter-spacing: 0.04em;
+      position: absolute;
+      inset: 0;
     }
     .player-card.selected .check-mark { opacity: 1; }
 
