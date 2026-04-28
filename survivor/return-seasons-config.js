@@ -110,6 +110,7 @@ const RETURN_SEASONS = [
     castTitle: "First Boots Casting",
     castSubtitle: "Draft your ideal 20-person first boots cast, with 10 men and 10 women",
     eligibleFilter: s => s.id >= 1,
+    flatPool: true,
     playerFilter: name => {
       const apps = PLAYER_SEASONS[name] || [];
       return apps.some(a => {
