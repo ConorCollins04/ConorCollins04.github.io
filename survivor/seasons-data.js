@@ -1064,3 +1064,10 @@ const PLAYER_INFO = {};
 SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
   PLAYER_INFO[p.name] = { season: s, tribe: t, gender: p.gender };
 })));
+
+// All appearances per player, in chronological order
+const PLAYER_SEASONS = {};
+SEASONS.forEach(s => s.tribes.forEach(t => t.players.forEach(p => {
+  if (!PLAYER_SEASONS[p.name]) PLAYER_SEASONS[p.name] = [];
+  PLAYER_SEASONS[p.name].push({ season: s, tribe: t, gender: p.gender });
+})));

@@ -111,6 +111,21 @@ function slotAvatarHtml(name, seasonId, bgColor, fgColor) {
 function isSelected(name) { return castW.includes(name) || castM.includes(name); }
 function genderFull(g) { return g === "f" ? castW.length >= mode().castMax : castM.length >= mode().castMax; }
 
+// Returns the display info for a player constrained to the current mode's eligible seasons.
+// primary: most recent eligible appearance (season + tribe for colours/image lookup)
+// seasonLabel: "S4 · Marquesas" for a single appearance, "S4 · S8" for multiple
+function playerDisplay(name) {
+  const all = PLAYER_SEASONS[name] || [];
+  const eligible = all.filter(a =>
+    mode().eligibleFilter(a.season) && a.season.tribes.some(t => t.players.length > 0)
+  );
+  const primary = eligible.length > 0 ? eligible[eligible.length - 1] : all[all.length - 1];
+  const seasonLabel = eligible.length <= 1
+    ? `S${primary?.season?.id} · ${primary?.season?.name ?? "?"}`
+    : eligible.map(a => `S${a.season.id}`).join(" · ");
+  return { primary, seasonLabel };
+}
+
 // ─── Mode tabs ───────────────────────────────────────────────────────────────
 function renderModeTabs() {
   const el = document.getElementById("mode-tabs");
@@ -212,13 +227,13 @@ function renderPanel() {
     return Array.from({ length: MAX }, (_, i) => {
       const name = arr[i];
       if (!name) return `<div class="cast-slot empty"><span class="cast-slot-empty-label">slot ${i + 1}</span></div>`;
-      const { season, tribe } = PLAYER_INFO[name] || {};
+      const { primary, seasonLabel } = playerDisplay(name);
       return `
         <div class="cast-slot">
-          ${slotAvatarHtml(name, season?.id, `${tribe?.color ?? "#888"}20`, tribe?.color ?? "#888")}
+          ${slotAvatarHtml(name, primary?.season?.id, `${primary?.tribe?.color ?? "#888"}20`, primary?.tribe?.color ?? "#888")}
           <div class="cast-slot-info">
             <div class="cast-slot-name">${name}</div>
-            <div class="cast-slot-sub">S${season?.id} · ${season?.name ?? "?"}</div>
+            <div class="cast-slot-sub">${seasonLabel}</div>
           </div>
           <button class="remove-btn" data-name="${name}" data-gender="${gender}">✕</button>
         </div>`;
@@ -327,12 +342,12 @@ function renderDraft() {
     ? '<span class="tribe-pool-empty">All players assigned ✓</span>'
     : "";
   unassigned.forEach(name => {
-    const { season, tribe } = PLAYER_INFO[name] || {};
+    const { primary } = playerDisplay(name);
     const parts = name.split(" ");
     const card = document.createElement("div");
     card.className = "player-card";
     card.innerHTML = `
-      ${avatarHtml(name, season?.id, `${tribe?.color ?? "#888"}20`, tribe?.color ?? "#888")}
+      ${avatarHtml(name, primary?.season?.id, `${primary?.tribe?.color ?? "#888"}20`, primary?.tribe?.color ?? "#888")}
       <div class="player-name">${parts[0]}<br><span class="player-name-last">${parts.slice(1).join(" ")}</span></div>`;
     loadAvatarImages(card);
     makeDraggable(card, name);
@@ -361,14 +376,14 @@ function renderDraft() {
     for (let i = 0; i < m.tribeSize; i++) {
       const name = members[i];
       if (name) {
-        const { season, tribe } = PLAYER_INFO[name] || {};
+        const { primary, seasonLabel } = playerDisplay(name);
         const row = document.createElement("div");
         row.className = "cast-slot";
         row.innerHTML = `
-          ${slotAvatarHtml(name, season?.id, `${tribe?.color ?? "#888"}20`, tribe?.color ?? "#888")}
+          ${slotAvatarHtml(name, primary?.season?.id, `${primary?.tribe?.color ?? "#888"}20`, primary?.tribe?.color ?? "#888")}
           <div class="cast-slot-info">
             <div class="cast-slot-name">${name}</div>
-            <div class="cast-slot-sub">S${season?.id} · ${season?.name ?? "?"}</div>
+            <div class="cast-slot-sub">${seasonLabel}</div>
           </div>`;
         loadAvatarImages(row);
         makeDraggable(row, name);
@@ -466,7 +481,7 @@ function renderTagPhase() {
   grid.innerHTML = "";
 
   allCast.forEach(name => {
-    const { season, tribe } = PLAYER_INFO[name] || {};
+    const { primary } = playerDisplay(name);
     const parts = name.split(" ");
     const assignedTribe = m.tribes.find(t => tribeAssignments[t.id].includes(name));
 
@@ -477,8 +492,8 @@ function renderTagPhase() {
       card.style.background = `${assignedTribe.color}12`;
     }
 
-    const bgColor = assignedTribe ? `${assignedTribe.color}30` : `${tribe?.color ?? "#888"}20`;
-    const fgColor = assignedTribe ? assignedTribe.color : (tribe?.color ?? "#888");
+    const bgColor = assignedTribe ? `${assignedTribe.color}30` : `${primary?.tribe?.color ?? "#888"}20`;
+    const fgColor = assignedTribe ? assignedTribe.color : (primary?.tribe?.color ?? "#888");
 
     const gender = PLAYER_INFO[name]?.gender;
     const btnsHtml = m.tribes.map(t => {
@@ -493,7 +508,7 @@ function renderTagPhase() {
     }).join("");
 
     card.innerHTML = `
-      ${avatarHtml(name, season?.id, bgColor, fgColor)}
+      ${avatarHtml(name, primary?.season?.id, bgColor, fgColor)}
       <div class="tag-card-name">
         ${parts[0]}<br><span class="tag-card-name-last">${parts.slice(1).join(" ")}</span>
       </div>
@@ -623,20 +638,20 @@ function renderShareView(assignments) {
     grid.className = "share-player-grid";
     grid.style.gridTemplateColumns = `repeat(${m.sharePlayerCols}, 1fr)`;
     members.forEach(name => {
-      const { season, tribe } = PLAYER_INFO[name] || {};
+      const { primary, seasonLabel } = playerDisplay(name);
       const parts = name.split(" ");
       const card = document.createElement("div");
       card.className = "share-player-card";
       card.innerHTML = `
-        <div class="share-player-photo" style="background:${tribe?.color ?? "#888"}22;color:${tribe?.color ?? "#888"}">
+        <div class="share-player-photo" style="background:${primary?.tribe?.color ?? "#888"}22;color:${primary?.tribe?.color ?? "#888"}">
           <img alt="${name}">
           <span class="share-initials">${initials(name)}</span>
         </div>
         <div class="share-player-info">
           <div class="share-player-name">${parts[0]} <span class="share-player-name-last">${parts.slice(1).join(" ")}</span></div>
-          <div class="share-player-season">${season?.name ?? "?"}</div>
+          <div class="share-player-season">${seasonLabel}</div>
         </div>`;
-      tryImage(card.querySelector("img"), name, season?.id);
+      tryImage(card.querySelector("img"), name, primary?.season?.id);
       grid.appendChild(card);
     });
     col.appendChild(grid);
