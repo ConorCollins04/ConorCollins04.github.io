@@ -6,7 +6,7 @@ const UPCOMING = [
   { festival: "All Points East", venue: "Victoria Park", city: "London", date: "2026-08-22", headliners: ["Lorde"], support: ["PinkPantheress", "Zara Larsson", "oklou", "Audrey Hobert", "Rose Gray"], with: ["Oliver"] },
   { artist: "Loreen", venue: "O2 Academy Brixton", city: "London", date: "2026-09-26", openers: [], with: ["Oliver"] },
   { artist: "Slayyyter", venue: "Roundhouse", city: "London", date: "2026-11-05", openers: ["Pearly Drops"], with: ["Oliver"] },
-  { artist: "Olivia Rodrigo", venue: "The O2", city: "London", date: "2027-12-04", openers: [""], with: ["Oliver"] },
+  { artist: "Olivia Rodrigo", venue: "The O2", city: "London", date: "2027-12-04", openers: ["Grace Ives"], with: ["Oliver"] },
 ];
 
 const CONCERTS = [
