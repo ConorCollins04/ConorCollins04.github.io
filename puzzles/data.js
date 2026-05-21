@@ -265,5 +265,10 @@ const PUZZLES = [
   { name: "Connected Cities",     url: "https://www.janestreet.com/connected-cities/",    group: "Jane Street", completed: true },
 
   // ── Other Hunt ───────────────────────────────────────────────────────────
-  // { name: "...", url: "https://...", group: "Other Hunt" },
+  { name: "CtC Hunt 1",           url: "Puzzle Hunts/CtC Hunt 1.pdf",           group: "Other Hunt", completed: false },
+  { name: "JvV Hunt 1",           url: "Puzzle Hunts/JvV Hunt 1.pdf",           group: "Other Hunt", completed: false },
+  { name: "JvV Hunt 2",           url: "Puzzle Hunts/JvV Hunt 2.pdf",           group: "Other Hunt", completed: true },
+  { name: "Overdone",             url: "Puzzle Hunts/Overdone.pdf",             group: "Other Hunt", completed: false },
+  { name: "Puzzlesnacks Sampler", url: "Puzzle Hunts/Puzzlesnacks Sampler.pdf", group: "Other Hunt", completed: false },
+  { name: "Spy Games",            url: "Puzzle Hunts/Spy Games.pdf",            group: "Other Hunt", completed: true },
 ];
