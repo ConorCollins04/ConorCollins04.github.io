@@ -49,9 +49,17 @@
 
     .filters {
       display: flex;
+      align-items: center;
       gap: 8px;
       margin-bottom: 28px;
       flex-wrap: wrap;
+    }
+
+    .filter-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-hover);
+      flex-shrink: 0;
     }
 
     .filter-btn {
@@ -210,7 +218,8 @@
   const grid = document.getElementById("grid");
   const statsEl = document.getElementById("stats");
 
-  let activeFilter = "all";
+  let activeFilter = "Rat Run";
+  let activeCompletion = "all";
 
   const GROUP_ORDER = ["Rat Run", "Puzzled Pint", "Jane Street", "Other Hunt"];
 
@@ -258,10 +267,18 @@
       </a>`;
   }
 
+  function isDone(p) {
+    return p.group === "Rat Run" ? p.completed !== false : p.completed === true;
+  }
+
   function render() {
-    const visible = activeFilter === "all"
-      ? PUZZLES
-      : PUZZLES.filter(p => p.group === activeFilter);
+    let visible = PUZZLES.filter(p => p.group === activeFilter);
+    if (activeCompletion === "done")   visible = visible.filter(p =>  isDone(p));
+    if (activeCompletion === "undone") visible = visible.filter(p => !isDone(p));
+
+    const total = PUZZLES.filter(p => p.group === activeFilter).length;
+    const done  = PUZZLES.filter(p => p.group === activeFilter && isDone(p)).length;
+    statsEl.textContent = `${done} / ${total} done`;
 
     grid.innerHTML = visible.length === 0
       ? '<p class="empty">No puzzles yet.</p>'
@@ -271,22 +288,38 @@
   function buildFilters() {
     const present = new Set(PUZZLES.map(p => p.group));
     const groups = GROUP_ORDER.filter(g => present.has(g));
-    const btns = [{ id: "all", label: "All" }, ...groups.map(g => ({ id: g, label: g }))];
 
-    filters.innerHTML = btns.map(b =>
-      `<button class="filter-btn${b.id === activeFilter ? " active" : ""}" data-type="${b.id}">${b.label}</button>`
+    const groupBtns = groups.map(g =>
+      `<button class="filter-btn${g === activeFilter ? " active" : ""}" data-group="${g}">${g}</button>`
     ).join("");
 
-    filters.querySelectorAll(".filter-btn").forEach(btn => {
+    const completionBtns = [
+      { id: "all",    label: "All"    },
+      { id: "done",   label: "Done"   },
+      { id: "undone", label: "Undone" },
+    ].map(b =>
+      `<button class="filter-btn${b.id === activeCompletion ? " active" : ""}" data-completion="${b.id}">${b.label}</button>`
+    ).join("");
+
+    filters.innerHTML = groupBtns + `<div class="filter-sep"></div>` + completionBtns;
+
+    filters.querySelectorAll("[data-group]").forEach(btn => {
       btn.addEventListener("click", () => {
-        activeFilter = btn.dataset.type;
-        filters.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b === btn));
+        activeFilter = btn.dataset.group;
+        filters.querySelectorAll("[data-group]").forEach(b => b.classList.toggle("active", b === btn));
+        render();
+      });
+    });
+
+    filters.querySelectorAll("[data-completion]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeCompletion = btn.dataset.completion;
+        filters.querySelectorAll("[data-completion]").forEach(b => b.classList.toggle("active", b === btn));
         render();
       });
     });
   }
 
-  statsEl.textContent = `${PUZZLES.length} ${PUZZLES.length === 1 ? "puzzle" : "puzzles"}`;
   buildFilters();
   render();
 </script>
