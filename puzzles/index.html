@@ -89,6 +89,17 @@
       flex-direction: column;
       gap: 0;
       transition: border-color 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+
+    .card-check {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--faint);
+      pointer-events: none;
     }
 
     .card:hover {
@@ -199,11 +210,15 @@
       ? `href="${p.url}" target="_blank" rel="noopener noreferrer"`
       : ``;
 
+    const done = p.completed !== false;
+
     if (p.special) {
       const fg = p.darkText ? "#1a1624" : "#fff";
       const arrowFg = p.darkText ? "rgba(26,22,36,0.3)" : "rgba(255,255,255,0.45)";
+      const checkFg = p.darkText ? "rgba(26,22,36,0.3)" : "rgba(255,255,255,0.45)";
       return `
         <a ${linkAttrs} class="card card--special" style="background:${p.color}">
+          ${done ? `<span class="card-check" style="color:${checkFg}">✓</span>` : ""}
           <div class="card-name" style="color:${fg}">${p.name}</div>
           <div class="card-arrow" style="color:${arrowFg}">→</div>
         </a>`;
@@ -220,6 +235,7 @@
 
     return `
       <a ${linkAttrs} class="card">
+        ${done ? `<span class="card-check">✓</span>` : ""}
         ${expLabel}
         <div class="card-name">${p.name}</div>
         <div class="card-footer">
