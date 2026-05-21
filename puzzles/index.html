@@ -123,16 +123,18 @@
 
     .card--undone { opacity: 0.42; }
 
-    .card:hover {
+    a.card { cursor: pointer; }
+
+    a.card:hover {
       border-color: var(--border-hover);
       box-shadow: 0 4px 20px rgba(26,22,36,0.06);
     }
 
-    .card--done:hover {
+    a.card--done:hover {
       box-shadow: inset 3px 0 0 var(--text), 0 4px 20px rgba(26,22,36,0.06);
     }
 
-    .card:hover .card-arrow { transform: translateX(3px); }
+    a.card:hover .card-arrow { transform: translateX(3px); }
 
     .card-top {
       display: flex;
@@ -261,22 +263,18 @@
   };
 
   function cardHtml(p) {
-    const linkAttrs = p.url
-      ? `href="${p.url}" target="_blank" rel="noopener noreferrer"`
-      : ``;
-
+    const tag = p.url ? "a" : "div";
+    const linkAttrs = p.url ? `href="${p.url}" target="_blank" rel="noopener noreferrer"` : "";
     const done = p.group === "Rat Run" ? p.completed !== false : p.completed === true;
 
     if (p.special) {
       const fg = p.darkText ? "#1a1624" : "#fff";
-      const arrowFg = p.darkText ? "rgba(26,22,36,0.3)" : "rgba(255,255,255,0.45)";
       const checkFg = p.darkText ? "rgba(26,22,36,0.4)" : "rgba(255,255,255,0.6)";
       return `
-        <a ${linkAttrs} class="card card--special${done ? "" : " card--undone"}" style="background:${p.color}">
+        <${tag} ${linkAttrs} class="card card--special${done ? "" : " card--undone"}" style="background:${p.color}">
           ${done ? `<span class="card-check" style="color:${checkFg}">✓</span>` : ""}
           <div class="card-name" style="color:${fg}">${p.name}</div>
-          <div class="card-arrow" style="color:${arrowFg}">→</div>
-        </a>`;
+        </${tag}>`;
     }
 
     const badgeStyle = `background:${p.color};color:${p.darkText ? "#1a1624" : "#fff"}${p.bordered ? ";box-shadow:inset 0 0 0 1px rgba(26,22,36,0.18)" : ""}`;
@@ -290,16 +288,16 @@
           : `<span class="card-type">${p.group}</span>`;
 
     return `
-      <a ${linkAttrs} class="card${done ? " card--done" : " card--undone"}">
+      <${tag} ${linkAttrs} class="card${done ? " card--done" : " card--undone"}">
         <div class="card-top">
           <div class="card-top-left">${topLeft}</div>
           ${done ? `<span class="card-check">✓</span>` : ""}
         </div>
         <div class="card-bottom">
           <div class="card-name">${p.name}</div>
-          <div class="card-arrow">→</div>
+          ${p.url ? `<div class="card-arrow">→</div>` : ""}
         </div>
-      </a>`;
+      </${tag}>`;
   }
 
   function isDone(p) {
