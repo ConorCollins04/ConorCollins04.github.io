@@ -157,12 +157,6 @@
       gap: 8px;
     }
 
-    .card-check {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      color: var(--muted);
-      flex-shrink: 0;
-    }
 
     .card-name {
       font-family: var(--slab);
@@ -269,10 +263,8 @@
 
     if (p.special) {
       const fg = p.darkText ? "#1a1624" : "#fff";
-      const checkFg = p.darkText ? "rgba(26,22,36,0.4)" : "rgba(255,255,255,0.6)";
       return `
         <${tag} ${linkAttrs} class="card card--special${done ? "" : " card--undone"}" style="background:${p.color}">
-          ${done ? `<span class="card-check" style="color:${checkFg}">✓</span>` : ""}
           <div class="card-name" style="color:${fg}">${p.name}</div>
         </${tag}>`;
     }
@@ -289,10 +281,9 @@
 
     return `
       <${tag} ${linkAttrs} class="card${done ? " card--done" : " card--undone"}">
-        ${(topLeft || done) ? `
+        ${topLeft ? `
         <div class="card-top">
-          ${topLeft ? `<div class="card-top-left">${topLeft}</div>` : ""}
-          ${done ? `<span class="card-check">✓</span>` : ""}
+          <div class="card-top-left">${topLeft}</div>
         </div>` : ""}
         <div class="card-bottom">
           <div class="card-name">${p.name}</div>
