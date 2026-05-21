@@ -48,7 +48,7 @@ const PUZZLES = [
 
   { name: "Fruitful",            url: "", group: "Rat Run", experiment: 37, codename: "BURGUNDY",  color: "#6B1030", darkText: false },
   { name: "Synchronicity",       url: "", group: "Rat Run", experiment: 38, codename: "YELLOW",    color: "#EAEA48", darkText: true,  bordered: true },
-  { name: "Together Apart",      url: "", group: "Rat Run", experiment: 39, codename: "VERMILION", color: "#CC4420", darkText: false },
+  { name: "Together Apart",      url: "", group: "Rat Run", experiment: 39, codename: "VERMILION", color: "#CC4420", darkText: false, completed: false },
 
   // ── Puzzled Pint ─────────────────────────────────────────────────────────
   // { name: "...", url: "https://...", group: "Puzzled Pint" },
