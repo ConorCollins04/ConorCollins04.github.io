@@ -285,14 +285,15 @@
         ? `<span class="card-type">Annual Meta · ${p.year}</span>`
         : p.month
           ? `<span class="card-type">${p.month} ${p.year}</span>`
-          : `<span class="card-type">${p.group}</span>`;
+          : ``;
 
     return `
       <${tag} ${linkAttrs} class="card${done ? " card--done" : " card--undone"}">
+        ${(topLeft || done) ? `
         <div class="card-top">
-          <div class="card-top-left">${topLeft}</div>
+          ${topLeft ? `<div class="card-top-left">${topLeft}</div>` : ""}
           ${done ? `<span class="card-check">✓</span>` : ""}
-        </div>
+        </div>` : ""}
         <div class="card-bottom">
           <div class="card-name">${p.name}</div>
           ${p.url ? `<div class="card-arrow">→</div>` : ""}
