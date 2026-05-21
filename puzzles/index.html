@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puzzles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../nav.css" />
+  <link rel="stylesheet" href="../global.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 5vw 120px;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-family: var(--slab);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+
+    .page-subtitle {
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+    .filter-btn:hover { border-color: var(--border-hover); color: var(--text); }
+    .filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 440px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 22px 18px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 4px 20px rgba(26,22,36,0.06);
+    }
+
+    .card:hover .card-arrow { transform: translateX(3px); }
+
+    .card-name {
+      font-family: var(--slab);
+      font-size: 1.15rem;
+      font-weight: 400;
+      line-height: 1.2;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 18px;
+    }
+
+    .card-exp {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--faint);
+      margin-bottom: 10px;
+    }
+
+    .card-type {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--faint);
+      text-transform: uppercase;
+    }
+
+    .codename-badge {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      padding: 3px 10px;
+      border-radius: 4px;
+      display: inline-block;
+      line-height: 1.5;
+    }
+
+    .card-arrow {
+      font-size: 1rem;
+      color: var(--faint);
+      transition: transform 0.15s;
+      line-height: 1;
+    }
+
+    .card--special {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 26px;
+      border-color: transparent;
+    }
+
+    .card--special .card-name {
+      font-size: 1rem;
+      flex: unset;
+    }
+
+    .empty {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <div class="page-header">
+    <h1>Puzzles</h1>
+    <div class="page-subtitle" id="stats">—</div>
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="nav-wrap"></div>
+
+<script src="data.js"></script>
+<script>
+  const filters = document.getElementById("filters");
+  const grid = document.getElementById("grid");
+  const statsEl = document.getElementById("stats");
+
+  let activeFilter = "all";
+
+  const GROUP_ORDER = ["Rat Run", "Puzzled Pint", "Jane Street", "Other Hunt"];
+
+  function cardHtml(p) {
+    const linkAttrs = p.url
+      ? `href="${p.url}" target="_blank" rel="noopener noreferrer"`
+      : ``;
+
+    if (p.special) {
+      const fg = p.darkText ? "#1a1624" : "#fff";
+      const arrowFg = p.darkText ? "rgba(26,22,36,0.3)" : "rgba(255,255,255,0.45)";
+      return `
+        <a ${linkAttrs} class="card card--special" style="background:${p.color}">
+          <div class="card-name" style="color:${fg}">${p.name}</div>
+          <div class="card-arrow" style="color:${arrowFg}">→</div>
+        </a>`;
+    }
+
+    const expLabel = p.experiment != null
+      ? `<div class="card-exp">Exp. ${p.experiment}</div>`
+      : ``;
+
+    const badgeStyle = `background:${p.color};color:${p.darkText ? "#1a1624" : "#fff"}${p.bordered ? ";box-shadow:inset 0 0 0 1px rgba(26,22,36,0.18)" : ""}`;
+    const footerLeft = p.codename
+      ? `<span class="codename-badge" style="${badgeStyle}">${p.codename}</span>`
+      : `<div class="card-type">${p.group}</div>`;
+
+    return `
+      <a ${linkAttrs} class="card">
+        ${expLabel}
+        <div class="card-name">${p.name}</div>
+        <div class="card-footer">
+          ${footerLeft}
+          <div class="card-arrow">→</div>
+        </div>
+      </a>`;
+  }
+
+  function render() {
+    const visible = activeFilter === "all"
+      ? PUZZLES
+      : PUZZLES.filter(p => p.group === activeFilter);
+
+    grid.innerHTML = visible.length === 0
+      ? '<p class="empty">No puzzles yet.</p>'
+      : visible.map(cardHtml).join("");
+  }
+
+  function buildFilters() {
+    const present = new Set(PUZZLES.map(p => p.group));
+    const groups = GROUP_ORDER.filter(g => present.has(g));
+    const btns = [{ id: "all", label: "All" }, ...groups.map(g => ({ id: g, label: g }))];
+
+    filters.innerHTML = btns.map(b =>
+      `<button class="filter-btn${b.id === activeFilter ? " active" : ""}" data-type="${b.id}">${b.label}</button>`
+    ).join("");
+
+    filters.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeFilter = btn.dataset.type;
+        filters.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b === btn));
+        render();
+      });
+    });
+  }
+
+  statsEl.textContent = `${PUZZLES.length} ${PUZZLES.length === 1 ? "puzzle" : "puzzles"}`;
+  buildFilters();
+  render();
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>
