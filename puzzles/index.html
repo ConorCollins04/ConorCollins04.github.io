@@ -210,7 +210,7 @@
       ? `href="${p.url}" target="_blank" rel="noopener noreferrer"`
       : ``;
 
-    const done = p.completed !== false;
+    const done = p.group === "Rat Run" ? p.completed !== false : p.completed === true;
 
     if (p.special) {
       const fg = p.darkText ? "#1a1624" : "#fff";
@@ -231,7 +231,11 @@
     const badgeStyle = `background:${p.color};color:${p.darkText ? "#1a1624" : "#fff"}${p.bordered ? ";box-shadow:inset 0 0 0 1px rgba(26,22,36,0.18)" : ""}`;
     const footerLeft = p.codename
       ? `<span class="codename-badge" style="${badgeStyle}">${p.codename}</span>`
-      : `<div class="card-type">${p.group}</div>`;
+      : p.isMeta
+        ? `<div class="card-type">Annual Meta · ${p.year}</div>`
+        : p.month
+          ? `<div class="card-type">${p.month} ${p.year}</div>`
+          : `<div class="card-type">${p.group}</div>`;
 
     return `
       <a ${linkAttrs} class="card">
