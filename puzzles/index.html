@@ -47,6 +47,23 @@
       color: var(--muted);
     }
 
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+    }
+
+    .archive-link {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.12s;
+    }
+    .archive-link:hover { color: var(--text); }
+
     .filters {
       display: flex;
       align-items: center;
@@ -202,7 +219,10 @@
 <div class="page">
   <div class="page-header">
     <h1>Puzzles</h1>
-    <div class="page-subtitle" id="stats">—</div>
+    <div class="header-right">
+      <div class="page-subtitle" id="stats">—</div>
+      <a class="archive-link" id="archive-link" href="" target="_blank" rel="noopener noreferrer" hidden>Archive →</a>
+    </div>
   </div>
 
   <div class="filters" id="filters"></div>
@@ -222,6 +242,11 @@
   let activeCompletion = "all";
 
   const GROUP_ORDER = ["Rat Run", "Puzzled Pint", "Jane Street", "Other Hunt"];
+
+  const ARCHIVES = {
+    "Rat Run":      "https://logic-masters.de/Raetselportal/Raetsel/zeigen.php?id=000IFI",
+    "Puzzled Pint": "https://puzzledpint.org/puzzle-archive/",
+  };
 
   function cardHtml(p) {
     const linkAttrs = p.url
@@ -279,6 +304,14 @@
     const total = PUZZLES.filter(p => p.group === activeFilter).length;
     const done  = PUZZLES.filter(p => p.group === activeFilter && isDone(p)).length;
     statsEl.textContent = `${done} / ${total} done`;
+
+    const archiveEl = document.getElementById("archive-link");
+    if (ARCHIVES[activeFilter]) {
+      archiveEl.href = ARCHIVES[activeFilter];
+      archiveEl.hidden = false;
+    } else {
+      archiveEl.hidden = true;
+    }
 
     grid.innerHTML = visible.length === 0
       ? '<p class="empty">No puzzles yet.</p>'
