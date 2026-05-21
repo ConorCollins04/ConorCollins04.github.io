@@ -51,7 +51,6 @@ const PUZZLES = [
   { name: "Together Apart",      url: "", group: "Rat Run", experiment: 39, codename: "VERMILION", color: "#CC4420", darkText: false, completed: false },
 
   // ── Puzzled Pint ─────────────────────────────────────────────────────────
-  // completed: true only on packs where the meta was solved
   { name: "Head of the Pints", url: "", group: "Puzzled Pint", year: 2026, month: "May" },
   { name: "The Beetles", url: "", group: "Puzzled Pint", year: 2026, month: "April" },
   { name: "Escape Room", url: "", group: "Puzzled Pint", year: 2026, month: "March" },
@@ -256,7 +255,14 @@ const PUZZLES = [
   { name: "First Puzzled Pint", url: "", group: "Puzzled Pint", year: 2010, month: "July" },
 
   // ── Jane Street ──────────────────────────────────────────────────────────
-  // { name: "...", url: "https://...", group: "Jane Street" },
+  { name: "Postcard Pursuit", url: "https://www.janestreet.com/ctc-postcards/", group: "Jane Street", completed: true },
+  { name: "Oh, Camels!",      url: "https://www.janestreet.com/oh-camels/",     group: "Jane Street", completed: true },
+  { name: "WiSE Words",       url: "https://www.janestreet.com/wise25-puzzle/", group: "Jane Street", completed: true },
+  { name: "Party Planning",   url: "https://www.janestreet.com/party-planning/",  group: "Jane Street", completed: true },
+  { name: "Tricky Treating",  url: "https://www.janestreet.com/tricky-treating/", group: "Jane Street", completed: true },
+  { name: "AMP 24",             url: "https://www.janestreet.com/amp24-puzzle/",         group: "Jane Street", completed: false },
+  { name: "New Year's Solutions", url: "https://www.janestreet.com/new-years-solutions/", group: "Jane Street", completed: true },
+  { name: "Connected Cities",     url: "https://www.janestreet.com/connected-cities/",    group: "Jane Street", completed: true },
 
   // ── Other Hunt ───────────────────────────────────────────────────────────
   // { name: "...", url: "https://...", group: "Other Hunt" },
