@@ -92,13 +92,22 @@
       position: relative;
     }
 
+    .card--done {
+      background: var(--surface2);
+      box-shadow: inset 3px 0 0 var(--text);
+    }
+
+    .card--undone {
+      opacity: 0.42;
+    }
+
     .card-check {
       position: absolute;
       top: 14px;
       right: 16px;
       font-family: var(--mono);
       font-size: 0.6rem;
-      color: var(--faint);
+      color: var(--muted);
       pointer-events: none;
     }
 
@@ -215,9 +224,9 @@
     if (p.special) {
       const fg = p.darkText ? "#1a1624" : "#fff";
       const arrowFg = p.darkText ? "rgba(26,22,36,0.3)" : "rgba(255,255,255,0.45)";
-      const checkFg = p.darkText ? "rgba(26,22,36,0.3)" : "rgba(255,255,255,0.45)";
+      const checkFg = p.darkText ? "rgba(26,22,36,0.4)" : "rgba(255,255,255,0.6)";
       return `
-        <a ${linkAttrs} class="card card--special" style="background:${p.color}">
+        <a ${linkAttrs} class="card card--special${done ? "" : " card--undone"}" style="background:${p.color}">
           ${done ? `<span class="card-check" style="color:${checkFg}">✓</span>` : ""}
           <div class="card-name" style="color:${fg}">${p.name}</div>
           <div class="card-arrow" style="color:${arrowFg}">→</div>
@@ -238,7 +247,7 @@
           : `<div class="card-type">${p.group}</div>`;
 
     return `
-      <a ${linkAttrs} class="card">
+      <a ${linkAttrs} class="card${done ? " card--done" : " card--undone"}">
         ${done ? `<span class="card-check">✓</span>` : ""}
         ${expLabel}
         <div class="card-name">${p.name}</div>
